@@ -43,15 +43,8 @@ function getUsers() {
   .then(response => response.json())
   .then(users => {
     users.data.forEach(user => {
-      const userMarkup = `
-        <div data-id=${user.id}>
-          <h3>${user.attributes.username}</h3>
-          <p>${user.attributes.email}</p>
-          <button data-id=${user.id}>edit</button>
-        </div>
-        `;
-
-        document.querySelector('#user-container').innerHTML += userMarkup;
+      let newUser = new User(user, user.attributes);
+      document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
     });
   });
 }
