@@ -28,7 +28,7 @@ function postFetch(username, email) {
     const userData = user.data;
     let newUser = new User(userData, userData.attributes);
 
-    document.querySelector('#user-container').innerHTML += newUser.renderUserCard;
+    document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
   });
 }
 
