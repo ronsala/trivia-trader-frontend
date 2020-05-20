@@ -25,16 +25,10 @@ function postFetch(username, email) {
   })
   .then(response => response.json())
   .then(user => {
-    const userData = user.data.attributes;
-    const userMarkup = `
-    <div data-id=${user.id}>
-      <h3>${userData.username}</h3>
-      <p>${userData.email}</p>
-      <button data-id=${userData.id}>edit</button>
-    </div>
-    <br>`;
+    const userData = user.data;
+    let newUser = new User(userData, userData.attributes);
 
-    document.querySelector('#user-container').innerHTML += userMarkup;
+    document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
   });
 }
 
