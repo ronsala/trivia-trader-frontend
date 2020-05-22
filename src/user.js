@@ -17,6 +17,9 @@ class User {
     <br>
     `;
   }
-}
 
+  static findById(id) {
+    return this.all.find(user => user.id === id);
+  }
+}
 User.all = [];
