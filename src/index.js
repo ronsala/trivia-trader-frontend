@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const createUserForm = document.querySelector("#create-user-form");
 
   createUserForm.addEventListener("submit", (e) => createFormHandler(e));
+
+  const userContainer = document.querySelector('#user-container');
+
+  userContainer.addEventListener('click', e => {
+    const id = parseInt(e.target.dataset.id);
+    const user = User.findById(id);
+    console.log('userContainer.addEventListener parseInt(e.target.dataset.id)', parseInt(e.target.dataset.id));
+  });
 });
 
 function createFormHandler(e) {

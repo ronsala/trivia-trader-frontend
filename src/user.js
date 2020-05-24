@@ -19,7 +19,9 @@ class User {
   }
 
   static findById(id) {
-    return this.all.find(user => user.id === id);
+    console.log('findById(id) id', id);
+    console.log('return', this.all.find(user => user.id == id));
+    return this.all.find(user => user.id == id);
   }
 }
 User.all = [];
