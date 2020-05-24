@@ -19,9 +19,25 @@ class User {
   }
 
   static findById(id) {
-    console.log('findById(id) id', id);
-    console.log('return', this.all.find(user => user.id == id));
     return this.all.find(user => user.id == id);
+  }
+
+  renderUpdateForm() {
+    return `
+      <form data-id=${this.id} >
+        <h3>Edit User</h3>
+
+        <label>Username</label>
+        <input id='input-username' type="text" name="username" value="${this.username}" class="input-text">
+        <br>
+
+        <label>Email</label>
+        <input id='input-email' type="text" name="email" value="${this.email}" class="input-text">
+        <br>
+
+        <input id='edit-button' type="submit" value="Edit User" class="submit">
+      </form>
+    `;
   }
 }
 User.all = [];
