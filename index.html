@@ -10,25 +10,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
+    <script type="text/javascript" src="src/adapter.js"></script>
     <script type="text/javascript" src="src/app.js"></script>
-    <script type="text/javascript" src="src/user.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
+    <script type="text/javascript" src="src/user.js"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="form-container">
-      <form id="create-user-form">
-        <h2>Sign Up</h2>
-
-        <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="input-text">
-        <br>
-        <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="input-text">
-        <br>
-        <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
-      </form>
-    </div>
+    <button id="signup-button">Sign Up</button>
+    <div class="form-container"></div>
     <div id="user-container"></div>
     <div id="update-user"></div>
     <script src="" async defer></script>

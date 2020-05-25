@@ -7,6 +7,35 @@ class User {
     User.all.push(this);
   }
 
+  static findById(id) {
+    return this.all.find(user => user.id == id);
+  }
+
+  static getUsers() {
+    fetch(endPoint)
+    .then(response => response.json())
+    .then(users => {
+      users.data.forEach(user => {
+        let newUser = new User(user, user.attributes);
+        document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
+      });
+    });
+  }
+
+  static renderNewForm() {
+    return `
+      <form id="create-user-form">
+        <h2>Sign Up</h2>
+
+        <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="input-text">
+        <br>
+        <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="input-text">
+        <br>
+        <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
+      </form>
+    `;
+  }
+
   renderUserCard() {
     return `
     <div data-id=${this.id}>
@@ -16,10 +45,6 @@ class User {
     </div>
     <br>
     `;
-  }
-
-  static findById(id) {
-    return this.all.find(user => user.id == id);
   }
 
   renderUpdateForm() {
