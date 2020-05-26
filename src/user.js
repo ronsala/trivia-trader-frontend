@@ -23,7 +23,7 @@ class User {
   }
 
   static renderNewForm() {
-    return `
+    document.querySelector('.form-container').innerHTML =  `
       <form id="create-user-form">
         <h2>Sign Up</h2>
 
@@ -34,6 +34,13 @@ class User {
         <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
+  }
+
+  static createFormHandler(e) {
+    e.preventDefault();
+    const usernameInput = document.querySelector('#input-username').value;
+    const emailInput = document.querySelector('#input-email').value;
+    postFetch(usernameInput, emailInput);
   }
 
   renderUserCard() {

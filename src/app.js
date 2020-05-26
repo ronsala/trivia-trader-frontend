@@ -11,9 +11,9 @@ class App {
       User.renderNewForm();
     });
 
-    // const createUserForm = document.querySelector("#create-user-form");
+    const createUserForm = document.querySelector(".form-container");
 
-    // createUserForm.addEventListener("submit", (e) => createFormHandler(e));
+    createUserForm.addEventListener("submit", (e) => createFormHandler(e));
 
     // const userContainer = document.querySelector('#user-container');
 

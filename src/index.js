@@ -6,13 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   User.getUsers();
 });
 
-// function createFormHandler(e) {
-//   e.preventDefault();
-//   const usernameInput = document.querySelector('#input-username').value;
-//   const emailInput = document.querySelector('#input-email').value;
-//   postFetch(usernameInput, emailInput);
-// }
-
 // function updateFormHandler(e) {
 //   e.preventDefault();
 //   const id = parseInt(e.target.dataset.id);
