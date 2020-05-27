@@ -11,7 +11,8 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
-  static getUsers() {
+  // INDEX
+  static renderUsers() {
     fetch(endPoint)
     .then(response => response.json())
     .then(users => {
@@ -22,6 +23,7 @@ class User {
     });
   }
 
+  // NEW
   static renderNewForm() {
     document.querySelector('.form-container').innerHTML =  `
       <form id="create-user-form">
@@ -36,14 +38,33 @@ class User {
     `;
   }
 
-  static createFormHandler(e) {
+  // CREATE
+  static handleCreateForm(e) {
     e.preventDefault();
     const usernameInput = document.querySelector('#input-username').value;
     const emailInput = document.querySelector('#input-email').value;
-    postFetch(usernameInput, emailInput);
+    fetchNewUser(usernameInput, emailInput);
   }
 
-  renderUserCard() {
+  fetchNewUser(username, email) {
+    const bodyData = {username, email};
+
+    fetch(endPoint, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => response.json())
+    .then(user => {
+      const userData = user.data;
+      let newUser = new User(userData, userData.attributes);
+
+      document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
+    });
+  }
+
+  // SHOW
+  renderUser() {
     return `
     <div data-id=${this.id}>
       <h3>${this.username}</h3>
@@ -54,6 +75,7 @@ class User {
     `;
   }
 
+  // EDIT
   renderUpdateForm() {
     return `
       <form data-id=${this.id} >
@@ -71,5 +93,30 @@ class User {
       </form>
     `;
   }
+
+  // UPDATE
+  static handleUpdateForm(e) {
+    e.preventDefault();
+    const id = parseInt(e.target.dataset.id);
+    const user = User.findById(id);
+    const username = e.target.querySelector('#input-username').value;
+    const email = e.target.querySelector('#input-email').value;
+    fetchUpdatedUser(user, username, email);
+  }
+
+  fetchUpdatedUser(user, username, email) {
+    const bodyJSON = { username, email };
+    fetch(`${endPoint}/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyJSON)
+      })
+      .then(res => res.json())
+      .then(updatedUser => console.log(updatedUser));
+  }
+
+  // DESTROY
+  // TODO
 }
+
 User.all = [];
