@@ -2,5 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App();
+  // TODO: app.renderHomePage();
   app.attachEventListeners();
 });
