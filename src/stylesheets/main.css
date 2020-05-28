@@ -1,0 +1,8 @@
+#hero {
+  position: absolute;
+  width: 664px;
+  height: 244px;
+  left: calc(50% - 664px/2 - 2px);
+  /* top: calc(50% - 244px/2 - 272px); */
+  top: 3%;
+}
