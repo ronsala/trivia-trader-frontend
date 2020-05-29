@@ -1,8 +1,20 @@
 #hero {
-  position: absolute;
-  width: 664px;
-  height: 244px;
+  position: relative;
+  width: 66%;
+  height: 24%;
   left: calc(50% - 664px/2 - 2px);
-  /* top: calc(50% - 244px/2 - 272px); */
   top: 3%;
+}
+
+#query {
+  position: relative;
+  width: 75%;
+  height: 40%;
+  left: 10.5%;
+  top: 50%;
+  box-sizing: border-box;
+  background: #F2F2F2;
+  border: 2px solid #2F80ED;
+  padding: 5px;
+  margin-top: 3%;
 }
