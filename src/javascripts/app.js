@@ -6,14 +6,21 @@ class App {
     this.adapter = new Adapter();
   }
 
+  static renderHomePage() {
+    let boxTop = document.querySelector('.box-top');
+    let p = document.createElement('p');
+    p.textContent = 'Q: What do you want to do?';
+    boxTop.appendChild(p);
+  }
+
   attachEventListeners() {
-    document.querySelector('#signup-button').addEventListener('click', e => {
-      User.renderNewForm();
-    });
+    // document.querySelector('#signup-button').addEventListener('click', e => {
+    //   User.renderNewForm();
+    // });
 
-    const createUserForm = document.querySelector(".form-container");
+    // const createUserForm = document.querySelector(".form-container");
 
-    createUserForm.addEventListener("submit", (e) => createFormHandler(e));
+    // createUserForm.addEventListener("submit", (e) => createFormHandler(e));
 
     // const userContainer = document.querySelector('#user-container');
 
