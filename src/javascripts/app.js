@@ -8,12 +8,58 @@ class App {
 
   static renderHomePage() {
     let boxTop = document.querySelector('.box-top');
-    let p = document.createElement('p');
-    p.textContent = 'Q: What do you want to do?';
-    boxTop.appendChild(p);
+    let boxTopP = document.createElement('p');
+    boxTopP.textContent = 'Q: What do you want to do?';
+    boxTop.appendChild(boxTopP);
+
+    let boxA = document.querySelector('#box-a');
+    let boxAP = document.createElement('p');
+    boxAP.textContent = 'A: Play game.';
+console.log(boxA)
+    boxA.appendChild(boxAP);
+    boxA.addEventListener('click', e => {
+      console.log('boxA clicked', e)
+    }
+    );
+
+    let boxB = document.querySelector('#box-b');
+    let boxBP = document.createElement('p');
+    boxBP.textContent = 'B: Create game.';
+    boxB.appendChild(boxBP);
+    boxB.addEventListener('click', e => {
+      console.log('boxB clicked', e)
+    }
+    );
+
+    let boxC = document.querySelector('#box-c');
+    let boxCP = document.createElement('p');
+    boxCP.textContent = 'C: See leader board.';
+    boxC.appendChild(boxCP);
+    boxC.addEventListener('click', e => {
+      console.log('boxC clicked', e)
+    }
+    );
+
+    let boxD = document.querySelector('#box-d');
+    let boxDP = document.createElement('p');
+    boxDP.textContent = 'D: Learn more about TriviaTrader.';
+    boxD.appendChild(boxDP);
+    boxD.addEventListener('click', e => {
+      console.log('boxD clicked', e)
+    }
+    );
+
+    let boxBottom = document.querySelector('.box-bottom');
+    let boxBottomP = document.createElement('p');
+    boxBottomP.textContent = 'Bottom: Play game.';
+    boxBottom.appendChild(boxBottomP);
+    boxBottom.addEventListener('click', e => {
+      console.log('boxBottom clicked', e)
+    }
+    );
   }
 
-  attachEventListeners() {
+  static attachEventListeners() {
     // document.querySelector('#signup-button').addEventListener('click', e => {
     //   User.renderNewForm();
     // });
