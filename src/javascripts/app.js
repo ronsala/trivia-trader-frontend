@@ -15,7 +15,6 @@ class App {
     let boxA = document.querySelector('#box-a');
     let boxAP = document.createElement('p');
     boxAP.textContent = 'A: Play game.';
-console.log(boxA)
     boxA.appendChild(boxAP);
     boxA.addEventListener('click', e => {
       console.log('boxA clicked', e)
