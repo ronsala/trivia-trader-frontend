@@ -2,5 +2,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App();
-  App.renderHomePage();
+  App.renderHome();
 });

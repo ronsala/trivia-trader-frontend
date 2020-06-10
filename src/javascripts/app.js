@@ -6,11 +6,20 @@ class App {
     this.adapter = new Adapter();
   }
 
-  static renderHomePage() {
+  static renderAbout() {
+    document.querySelector('.hero').style.display = 'none';
+    document.querySelector('#box-top').textContent = 'About TriviaTrader';
+    document.querySelector('#box-a').textContent = "TODO: Text Here";
+    document.querySelector('#box-b').style.display = 'none';
+    document.querySelector('#box-c').style.display = 'none';
+  }
+
+  static renderHome() {
     let boxes = document.querySelector('.boxes');
 
     let boxTop = document.createElement('div');
     boxTop.className = 'box-top';
+    boxTop.id = 'box-top';
     let boxTopP = document.createElement('p');
     boxTopP.textContent = 'Q: What do you want to do?';
     boxTop.appendChild(boxTopP);
@@ -40,13 +49,16 @@ class App {
 
     let boxC = document.createElement('div');
     boxC.className = 'box-middle';
-    boxC.id = 'box-a';
+    boxC.id = 'box-c';
     let boxCP = document.createElement('p');
     boxCP.textContent = 'C: Learn more about TriviaTrader.';
     boxC.appendChild(boxCP);
     boxes.appendChild(boxC);
     boxC.addEventListener('click', e => {
       console.log('boxC clicked', e);
+      this.renderAbout();
     });
   }
+
+
 }
