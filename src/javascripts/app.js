@@ -7,76 +7,46 @@ class App {
   }
 
   static renderHomePage() {
-    let boxTop = document.querySelector('.box-top');
+    let boxes = document.querySelector('.boxes');
+
+    let boxTop = document.createElement('div');
+    boxTop.className = 'box-top';
     let boxTopP = document.createElement('p');
     boxTopP.textContent = 'Q: What do you want to do?';
     boxTop.appendChild(boxTopP);
+    boxes.appendChild(boxTop);
 
-    let boxA = document.querySelector('#box-a');
+    let boxA = document.createElement('div');
+    boxA.className = 'box-middle';
+    boxA.id = 'box-a';
     let boxAP = document.createElement('p');
     boxAP.textContent = 'A: Play game.';
     boxA.appendChild(boxAP);
+    boxes.appendChild(boxA);
     boxA.addEventListener('click', e => {
-      console.log('boxA clicked', e)
-    }
-    );
+      console.log('boxA clicked', e);
+    });
 
-    let boxB = document.querySelector('#box-b');
+    let boxB = document.createElement('div');
+    boxB.className = 'box-middle';
+    boxB.id = 'box-b';
     let boxBP = document.createElement('p');
     boxBP.textContent = 'B: Create game.';
     boxB.appendChild(boxBP);
+    boxes.appendChild(boxB);
     boxB.addEventListener('click', e => {
-      console.log('boxB clicked', e)
-    }
-    );
+      console.log('boxB clicked', e);
+    });
 
-    let boxC = document.querySelector('#box-c');
+    let boxC = document.createElement('div');
+    boxC.className = 'box-middle';
+    boxC.id = 'box-a';
     let boxCP = document.createElement('p');
-    boxCP.textContent = 'C: See leader board.';
+    boxCP.textContent = 'C: Learn more about TriviaTrader.';
     boxC.appendChild(boxCP);
+    boxes.appendChild(boxC);
     boxC.addEventListener('click', e => {
-      console.log('boxC clicked', e)
-    }
-    );
-
-    let boxD = document.querySelector('#box-d');
-    let boxDP = document.createElement('p');
-    boxDP.textContent = 'D: Learn more about TriviaTrader.';
-    boxD.appendChild(boxDP);
-    boxD.addEventListener('click', e => {
-      console.log('boxD clicked', e)
-    }
-    );
-
-    let boxBottom = document.querySelector('.box-bottom');
-    let boxBottomP = document.createElement('p');
-    boxBottomP.textContent = 'Bottom: Play game.';
-    boxBottom.appendChild(boxBottomP);
-    boxBottom.addEventListener('click', e => {
-      console.log('boxBottom clicked', e)
-    }
-    );
-  }
-
-  static attachEventListeners() {
-    // document.querySelector('#signup-button').addEventListener('click', e => {
-    //   User.renderNewForm();
-    // });
-
-    // const createUserForm = document.querySelector(".form-container");
-
-    // createUserForm.addEventListener("submit", (e) => createFormHandler(e));
-
-    // const userContainer = document.querySelector('#user-container');
-
-    // // Render edit form once button is clicked.
-    // userContainer.addEventListener('click', e => {
-    //   const id = parseInt(e.target.dataset.id);
-    //   const user = User.findById(id);
-    //   document.querySelector('#update-user').innerHTML = user.renderUpdateForm();
-    // });
-
-    // // Listen for the submit event of the edit form and handle the data.
-    // document.querySelector('#update-user').addEventListener('submit', e => updateFormHandler(e));
+      console.log('boxC clicked', e);
+    });
   }
 }

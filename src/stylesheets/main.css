@@ -21,11 +21,14 @@ footer {
   background: yellow;
   border: 2px solid darkblue;
   margin-top: 20px;
+  padding: 5px;
 }
 
 .box-middle {
   background: white;
   border: 2px solid darkblue;
+  padding: 5px;
+  margin-bottom: 20px;
 }
 
 .box-top {
@@ -34,6 +37,7 @@ footer {
   border: 2px solid darkblue;
   margin-bottom: 20px;
   color: red;
+  padding: 5px;
 }
 
 .container {
