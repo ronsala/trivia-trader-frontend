@@ -8,6 +8,16 @@ class App {
 
   static renderAbout() {
     document.querySelector('.hero').style.display = 'none';
+    let buttonHomeDiv = document.createElement('div');
+    buttonHomeDiv.id = 'button-home';
+    let a = document.createElement('a');
+    a.href = "/";
+    buttonHomeDiv.appendChild(a);
+    let buttonHome = document.createElement('img');
+    buttonHome.src = "src/images/button-home.svg";
+    a.appendChild(buttonHome);
+
+    document.querySelector('.container').prepend(buttonHomeDiv);
     document.querySelector('#box-top').textContent = 'About TriviaTrader';
     document.querySelector('#box-a').textContent = "TODO: Text Here";
     document.querySelector('#box-b').style.display = 'none';

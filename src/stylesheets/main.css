@@ -52,3 +52,9 @@ footer {
   left: calc(50% - 661px/2 - 2px);
   margin-bottom: 15px;
 }
+
+#button-home {
+  /* position: relative;
+  display: block; */
+  margin: auto;
+}
