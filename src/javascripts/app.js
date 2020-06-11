@@ -9,12 +9,12 @@ class App {
   static renderAbout() {
     document.querySelector('.hero').style.display = 'none';
     let buttonHomeDiv = document.createElement('div');
-    buttonHomeDiv.id = 'button-home';
     let a = document.createElement('a');
     a.href = "/";
     buttonHomeDiv.appendChild(a);
     let buttonHome = document.createElement('img');
-    buttonHome.src = "src/images/button-home.svg";
+    buttonHome.src = "src/images/button-home.png";
+    buttonHome.id = 'button-home';
     a.appendChild(buttonHome);
 
     document.querySelector('.container').prepend(buttonHomeDiv);
