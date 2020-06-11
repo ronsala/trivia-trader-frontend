@@ -8,16 +8,7 @@ class App {
 
   static renderAbout() {
     document.querySelector('.hero').style.display = 'none';
-    let buttonHomeDiv = document.createElement('div');
-    let a = document.createElement('a');
-    a.href = "/";
-    buttonHomeDiv.appendChild(a);
-    let buttonHome = document.createElement('img');
-    buttonHome.src = "src/images/button-home.png";
-    buttonHome.id = 'button-home';
-    a.appendChild(buttonHome);
-
-    document.querySelector('.container').prepend(buttonHomeDiv);
+    document.querySelector('.button-home').style.display = 'block';
     document.querySelector('#box-top').textContent = 'About TriviaTrader';
     document.querySelector('#box-a').textContent = "TODO: Text Here";
     document.querySelector('#box-b').style.display = 'none';
@@ -25,6 +16,8 @@ class App {
   }
 
   static renderHome() {
+    document.querySelector('.button-home').style.display = 'none';
+
     let boxes = document.querySelector('.boxes');
 
     let boxTop = document.createElement('div');
@@ -43,8 +36,9 @@ class App {
     boxA.appendChild(boxAP);
     boxes.appendChild(boxA);
     boxA.addEventListener('click', e => {
-      console.log('boxA clicked', e);
+      this.renderSignupSignin();
     });
+    boxA.addEventListener('click', e => {this.renderSignupSignin();});
 
     let boxB = document.createElement('div');
     boxB.className = 'box-middle';
@@ -54,7 +48,6 @@ class App {
     boxB.appendChild(boxBP);
     boxes.appendChild(boxB);
     boxB.addEventListener('click', e => {
-      console.log('boxB clicked', e);
     });
 
     let boxC = document.createElement('div');
@@ -65,10 +58,25 @@ class App {
     boxC.appendChild(boxCP);
     boxes.appendChild(boxC);
     boxC.addEventListener('click', e => {
-      console.log('boxC clicked', e);
+      console.log('clicked');
       this.renderAbout();
     });
   }
 
+  static renderSignup() {
+
+  }
+
+  static renderSignupSignin() {
+    document.querySelector('.hero').style.display = 'none';
+    document.querySelector('.button-home').style.display = 'block';
+    document.querySelector('#box-top').textContent = 'Q: Have you signed up for TriviaTrader?';
+    let boxA = document.querySelector('#box-a');
+    boxA.removeEventListener('click', e => {this.renderSignupSignin();});
+    boxA.addEventListener('click', e => {this.renderSignup();});
+    boxA.textContent = "A) Yes";
+    document.querySelector('#box-b').textContent = "B) No";
+    document.querySelector('#box-c').style.display = 'none';
+  }
 
 }
