@@ -32,7 +32,7 @@ class App {
     boxA.className = 'box-middle';
     boxA.id = 'box-a';
     let boxAP = document.createElement('p');
-    boxAP.textContent = 'A: Play game.';
+    boxAP.textContent = 'A) Play game.';
     boxA.appendChild(boxAP);
     boxes.appendChild(boxA);
     boxA.addEventListener('click', e => {
@@ -44,17 +44,16 @@ class App {
     boxB.className = 'box-middle';
     boxB.id = 'box-b';
     let boxBP = document.createElement('p');
-    boxBP.textContent = 'B: Create game.';
+    boxBP.textContent = 'B) Make game.';
     boxB.appendChild(boxBP);
     boxes.appendChild(boxB);
-    boxB.addEventListener('click', e => {
-    });
+    // boxB.addEventListener('click', e => {});
 
     let boxC = document.createElement('div');
     boxC.className = 'box-middle';
     boxC.id = 'box-c';
     let boxCP = document.createElement('p');
-    boxCP.textContent = 'C: Learn more about TriviaTrader.';
+    boxCP.textContent = 'C) Learn more about TriviaTrader.';
     boxC.appendChild(boxCP);
     boxes.appendChild(boxC);
     boxC.addEventListener('click', e => {
@@ -64,6 +63,26 @@ class App {
   }
 
   static renderSignup() {
+    let boxes = document.querySelector('#boxes');
+
+    document.querySelector('#box-top').textContent = 'Q: What is your info?';
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+
+    let signupForm = document.createElement('form');
+
+    let lineA = document.createElement('div');
+
+    let labelA = document.createElement('span');
+    labelA.className = 'label';
+    labelA.id = 'label-a';
+    let labelAP = document.createElement('p');
+    labelAP.textContent = 'Username:';
+    labelA.appendChild(labelAP);
+    lineA.appendChild(labelA);
+    signupForm.appendChild(lineA);
+    boxes.appendChild(signupForm);
+
 
   }
 
@@ -73,10 +92,11 @@ class App {
     document.querySelector('#box-top').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
-    boxA.addEventListener('click', e => {this.renderSignup();});
     boxA.textContent = "A) Yes";
-    document.querySelector('#box-b').textContent = "B) No";
+    let boxB = document.querySelector('#box-b');
+    // boxB.removeEventListener('click', e => {this.renderSignupSignin();});
+    boxB.addEventListener('click', e => {this.renderSignup();});
+    boxB.textContent = "B) No";
     document.querySelector('#box-c').style.display = 'none';
   }
-
 }
