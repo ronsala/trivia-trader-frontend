@@ -25,17 +25,22 @@ class User {
 
   // NEW
   static renderNewForm() {
-    document.querySelector('.form-container').innerHTML =  `
-      <form id="create-user-form">
-        <h2>Sign Up</h2>
+    let boxes = document.querySelector('.boxes');
 
-        <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="input-text">
-        <br>
-        <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="input-text">
-        <br>
+    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+    let form = document.createElement('div');
+    form.innerHTML =  `
+      <form id="create-user-form">
+        <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
+        <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+        <input id="input-password" type="text" name="email" value="" placeholder="Enter a password..." class="boxes box-middle">
+        <input id="input-password-confirm" type="text" name="email" value="" placeholder="Retype password..." class="boxes box-middle">
         <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
+    boxes.appendChild(form);
   }
 
   // CREATE

@@ -24,6 +24,7 @@ class App {
     boxTop.className = 'box-top';
     boxTop.id = 'box-top';
     let boxTopP = document.createElement('p');
+    boxTopP.id = 'box-top-p';
     boxTopP.textContent = 'Q: What do you want to do?';
     boxTop.appendChild(boxTopP);
     boxes.appendChild(boxTop);
@@ -32,18 +33,17 @@ class App {
     boxA.className = 'box-middle';
     boxA.id = 'box-a';
     let boxAP = document.createElement('p');
+    boxAP.id = 'box-a-p';
     boxAP.textContent = 'A) Play game.';
     boxA.appendChild(boxAP);
     boxes.appendChild(boxA);
-    boxA.addEventListener('click', e => {
-      this.renderSignupSignin();
-    });
     boxA.addEventListener('click', e => {this.renderSignupSignin();});
 
     let boxB = document.createElement('div');
     boxB.className = 'box-middle';
     boxB.id = 'box-b';
     let boxBP = document.createElement('p');
+    boxBP.id = 'box-b-p';
     boxBP.textContent = 'B) Make game.';
     boxB.appendChild(boxBP);
     boxes.appendChild(boxB);
@@ -53,6 +53,7 @@ class App {
     boxC.className = 'box-middle';
     boxC.id = 'box-c';
     let boxCP = document.createElement('p');
+    boxCP.id = 'box-c-p';
     boxCP.textContent = 'C) Learn more about TriviaTrader.';
     boxC.appendChild(boxCP);
     boxes.appendChild(boxC);
@@ -62,41 +63,16 @@ class App {
     });
   }
 
-  static renderSignup() {
-    let boxes = document.querySelector('#boxes');
-
-    document.querySelector('#box-top').textContent = 'Q: What is your info?';
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
-
-    let signupForm = document.createElement('form');
-
-    let lineA = document.createElement('div');
-
-    let labelA = document.createElement('span');
-    labelA.className = 'label';
-    labelA.id = 'label-a';
-    let labelAP = document.createElement('p');
-    labelAP.textContent = 'Username:';
-    labelA.appendChild(labelAP);
-    lineA.appendChild(labelA);
-    signupForm.appendChild(lineA);
-    boxes.appendChild(signupForm);
-
-
-  }
-
   static renderSignupSignin() {
     document.querySelector('.hero').style.display = 'none';
     document.querySelector('.button-home').style.display = 'block';
-    document.querySelector('#box-top').textContent = 'Q: Have you signed up for TriviaTrader?';
+    document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
-    boxA.textContent = "A) Yes";
+    document.querySelector('#box-a-p').textContent = 'A) Yes';
     let boxB = document.querySelector('#box-b');
-    // boxB.removeEventListener('click', e => {this.renderSignupSignin();});
-    boxB.addEventListener('click', e => {this.renderSignup();});
-    boxB.textContent = "B) No";
+    boxB.addEventListener('click', e => {User.renderNewForm();});
+    document.querySelector('#box-b-p').textContent = 'B) No';
     document.querySelector('#box-c').style.display = 'none';
   }
 }
