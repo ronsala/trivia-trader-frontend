@@ -13,7 +13,7 @@ class User {
 
   // INDEX
   static renderUsers() {
-    fetch(endPoint)
+    fetch('http://localhost:3000/api/v1/users')
     .then(response => response.json())
     .then(users => {
       users.data.forEach(user => {
@@ -35,12 +35,13 @@ class User {
       <form id="create-user-form">
         <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
         <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
-        <input id="input-password" type="text" name="email" value="" placeholder="Enter a password..." class="boxes box-middle">
-        <input id="input-password-confirm" type="text" name="email" value="" placeholder="Retype password..." class="boxes box-middle">
+        <input id="input-password" type="password" name="email" value="" placeholder="Enter a password..." class="boxes box-middle">
+        <input id="input-password-confirm" type="password" name="email" value="" placeholder="Retype password..." class="boxes box-middle">
         <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
     boxes.appendChild(form);
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);} );
   }
 
   // CREATE
@@ -48,24 +49,26 @@ class User {
     e.preventDefault();
     const usernameInput = document.querySelector('#input-username').value;
     const emailInput = document.querySelector('#input-email').value;
-    fetchNewUser(usernameInput, emailInput);
+    this.fetchNewUser(usernameInput, emailInput);
   }
 
-  fetchNewUser(username, email) {
+  static fetchNewUser(username, email) {
+
     const bodyData = {username, email};
 
-    fetch(endPoint, {
+    fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
     })
-    .then(response => response.json())
-    .then(user => {
-      const userData = user.data;
-      let newUser = new User(userData, userData.attributes);
+    .then(response => console.log(response));
+    // .then(response => response.json())
+    // .then(user => {
+    //   const userData = user.data;
+    //   let newUser = new User(userData, userData.attributes);
 
-      document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
-    });
+    //   document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
+    // });
   }
 
   // SHOW

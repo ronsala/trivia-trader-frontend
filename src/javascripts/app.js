@@ -3,7 +3,7 @@
 class App {
 
   constructor() {
-    this.adapter = new Adapter();
+    // this.adapter = new Adapter();
   }
 
   static renderAbout() {
