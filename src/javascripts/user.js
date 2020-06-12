@@ -34,9 +34,13 @@ class User {
     form.innerHTML =  `
       <form id="create-user-form">
         <input id="input-username" type="text" autocomplete="username" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
+
         <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+
         <input id="input-password" type="password" autocomplete="new-password" name="password" value="" placeholder="Enter a password..." class="boxes box-middle">
+
         <input id="input-password-confirm" type="password" autocomplete="new-password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
+
         <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
@@ -51,42 +55,53 @@ class User {
     const emailInput = document.querySelector('#input-email').value;
     const passwordInput = document.querySelector('#input-password').value;
     const passwordConfirmInput = document.querySelector('#input-password-confirm').value;
+
     if (passwordInput != passwordConfirmInput) {
       alert("Passwords do not match. Please try again");
       return false;
     }
-    this.fetchNewUser(usernameInput, emailInput, passwordInput, passwordConfirmInput);
+
+    this.fetchNewUser(usernameInput, emailInput, passwordInput);
   }
 
-  static fetchNewUser(username, email, password, password_confirm) {
+  static fetchNewUser(username, email, password) {
 
-    const bodyData = {username, email, password, password_confirm};
+    const bodyData = {username, email, password};
 
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
     })
-    .then(response => console.log(response));
-    // .then(response => response.json())
-    // .then(user => {
-    //   const userData = user.data;
-    //   let newUser = new User(userData, userData.attributes);
+    .then(response => response.json())
+    .then(user => {
+      const userData = user.data;
+      let newUser = new User(userData, userData.attributes);
 
-    //   document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
-    // });
+      this.renderUser(newUser);
+    });
   }
 
   // SHOW
-  renderUser() {
-    return `
-    <div data-id=${this.id}>
-      <h3>${this.username}</h3>
-      <p>${this.email}</p>
-      <button data-id=${this.id}>edit</button>
-    </div>
-    <br>
-    `;
+  static renderUser(user) {
+    document.querySelector("#create-user-form").style.display = 'none';
+
+    let boxes = document.querySelector('#boxes');
+
+    let q = `<p>Q: Who is ${user.username}?</p>`;
+    document.querySelector('#box-top-p').innerHTML = q;
+
+    let boxA = document.querySelector('#box-a');
+    boxA.style.display = 'block';
+    boxA.innerHTML = `<p>Username: ${user.username}</p>`;
+
+    let boxB = document.querySelector('#box-b');
+    boxB.style.display = 'block';
+    boxB.innerHTML = `<p>Email: ${user.email}</p>`;
+
+    let editButton = document.createElement('div');
+    editButton.innerHTML = `<button data-id=${user.id}>edit</button>`;
+    boxes.appendChild(editButton);
   }
 
   // EDIT
