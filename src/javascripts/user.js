@@ -33,10 +33,10 @@ class User {
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="create-user-form">
-        <input id="input-username" type="text" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
-        <input id="input-email" type="text" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
-        <input id="input-password" type="password" name="email" value="" placeholder="Enter a password..." class="boxes box-middle">
-        <input id="input-password-confirm" type="password" name="email" value="" placeholder="Retype password..." class="boxes box-middle">
+        <input id="input-username" type="text" autocomplete="username" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
+        <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+        <input id="input-password" type="password" autocomplete="new-password" name="password" value="" placeholder="Enter a password..." class="boxes box-middle">
+        <input id="input-password-confirm" type="password" autocomplete="new-password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
         <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
@@ -49,12 +49,18 @@ class User {
     e.preventDefault();
     const usernameInput = document.querySelector('#input-username').value;
     const emailInput = document.querySelector('#input-email').value;
-    this.fetchNewUser(usernameInput, emailInput);
+    const passwordInput = document.querySelector('#input-password').value;
+    const passwordConfirmInput = document.querySelector('#input-password-confirm').value;
+    if (passwordInput != passwordConfirmInput) {
+      alert("Passwords do not match. Please try again");
+      return false;
+    }
+    this.fetchNewUser(usernameInput, emailInput, passwordInput, passwordConfirmInput);
   }
 
-  static fetchNewUser(username, email) {
+  static fetchNewUser(username, email, password, password_confirm) {
 
-    const bodyData = {username, email};
+    const bodyData = {username, email, password, password_confirm};
 
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
