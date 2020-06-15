@@ -20,7 +20,7 @@ class Category {
         let div = document.createElement('div');
         div.className = "box-middle";
         div.innerHTML = `<p>${newCategory.name}</p>`;
-        div.addEventListener('click', e => Game.renderGames());
+        div.addEventListener('click', e => Game.renderGames(newCategory.id));
         document.querySelector('#boxes').appendChild(div);
       });
     });
