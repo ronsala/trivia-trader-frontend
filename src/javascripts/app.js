@@ -69,6 +69,8 @@ class App {
     document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
+    // TODO: Switch the event listener to login after fixing auth.
+    boxA.addEventListener('click', e => {Category.renderCategories();});
     document.querySelector('#box-a-p').textContent = 'A) Yes';
     let boxB = document.querySelector('#box-b');
     boxB.addEventListener('click', e => {User.renderNewForm();});
