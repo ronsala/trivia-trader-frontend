@@ -1,3 +1,5 @@
+// TODO: rm this file (and reference in SpecRunner.html) when no longer needed.
+
 function Song() {
 }
 
