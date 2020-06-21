@@ -1,6 +1,7 @@
 class User {
 
   constructor(user, userAttributes) {
+    debugger
     this.id = user.id;
     this.username = userAttributes.username;
     this.email = userAttributes.email;
@@ -149,3 +150,5 @@ class User {
 }
 
 User.all = [];
+
+module.exports = User;
