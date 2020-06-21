@@ -2,6 +2,6 @@
 
 This is the frontend for Trivia Trader. See a more extensive README at <https://github.com/ronsala/trivia-trader-backend>.
 
-## How To Run the Tests
+## How To Run the Tests From Command Line
 
-`yarn test`
+`jest`
