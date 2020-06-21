@@ -1,0 +1,22 @@
+{
+  "name": "trivia-trader-frontend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronsala/trivia-trader-frontend.git"
+  },
+  "author": "Ron Sala",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ronsala/trivia-trader-frontend/issues"
+  },
+  "homepage": "https://github.com/ronsala/trivia-trader-frontend#readme",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}
