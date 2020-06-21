@@ -8,7 +8,7 @@ let u =
     username: "Andy",
     email: "andy@ex.io"
   }
-}
+};
 
 describe("User", () => {
   test('creates a user', () => {
