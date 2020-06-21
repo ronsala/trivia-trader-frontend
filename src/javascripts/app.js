@@ -16,7 +16,10 @@ class App {
   }
 
   static renderHome() {
-    document.querySelector('.button-home').style.display = 'none';
+    let buttonHome = document.querySelector('.button-home');
+    if (buttonHome != null) {
+      buttonHome.style.display = 'none';
+    }
 
     let boxes = document.querySelector('.boxes');
 
