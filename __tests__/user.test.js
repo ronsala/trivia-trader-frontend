@@ -37,6 +37,7 @@ describe('findById', () => {
 
 describe('fetchNewUser', () => {
   it('posts to create a user', () => {
-// TODO
+    // TODO: Complete
+    return false
   });
 });
