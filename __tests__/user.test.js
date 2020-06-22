@@ -28,9 +28,15 @@ describe("constructor", () => {
   });
 });
 
-describe("findById", () => {
+describe('findById', () => {
   it('finds a user', () => {
     const foundUser = User.findById(2);
     expect(foundUser.attributes.username).toMatch(/Jenny/);
+  });
+});
+
+describe('fetchNewUser', () => {
+  it('posts to create a user', () => {
+// TODO
   });
 });

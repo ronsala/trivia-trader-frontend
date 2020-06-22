@@ -11,6 +11,7 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
+  // TODO
   // INDEX
   static renderUsers() {
     fetch('http://localhost:3000/api/v1/users')
@@ -144,8 +145,8 @@ class User {
       .then(updatedUser => console.log(updatedUser));
   }
 
-  // DESTROY
   // TODO
+  // DESTROY
 }
 
 User.all = [];
