@@ -34,10 +34,3 @@ describe('findById', () => {
     expect(foundUser.attributes.username).toMatch(/Jenny/);
   });
 });
-
-describe('fetchNewUser', () => {
-  it('posts to create a user', () => {
-    // TODO: Complete
-    return false
-  });
-});
