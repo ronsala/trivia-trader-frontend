@@ -66,7 +66,7 @@ class User {
   }
 
   static fetchNewUser(username, email, password) {
-
+debugger
     const bodyData = {username, email, password};
 
     fetch("http://localhost:3000/api/v1/users", {
@@ -80,6 +80,8 @@ class User {
       let newUser = new User(userData, userData.attributes);
 
       this.renderUser(newUser);
+      // TODO: rm?
+      return newUser;
     });
   }
 

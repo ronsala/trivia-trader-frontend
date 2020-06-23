@@ -1,4 +1,21 @@
 const User = require('../src/javascripts/user');
+
+let x = 1;
+console.log(x)
+console.log(User.fetchNewUser)
+
+// import { User.fetchNewUser } from "./src/javascripts/user.js";
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ data: { attributes: { email: "milt@example.com", username: "Milt" }}})
+  })
+);
+
+beforeEach(() => {
+  fetch.mockClear();
+});
+
 let user1 =
 {
   id: "1",
@@ -36,8 +53,11 @@ describe('findById', () => {
 });
 
 describe('fetchNewUser', () => {
-  it('posts to create a user', () => {
+  it('posts to create a user', async () => {
     // TODO: Complete
-    return false
+    debugger
+    const createdUser = await User.fetchNewUser("Milt", "milt@example.com", "password");
+
+    expect(createdUser.username)
   });
 });
