@@ -73,7 +73,8 @@ class App {
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
     // TODO: Switch the event listener to login after fixing auth.
-    boxA.addEventListener('click', e => {Category.renderCategories();});
+    // boxA.addEventListener('click', e => {Category.renderCategories();});
+    boxA.addEventListener('click', e => {User.renderSigninForm();});
     document.querySelector('#box-a-p').textContent = 'A) Yes';
     let boxB = document.querySelector('#box-b');
     boxB.addEventListener('click', e => {User.renderNewForm();});

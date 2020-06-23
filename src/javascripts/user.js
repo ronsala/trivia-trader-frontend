@@ -147,8 +147,57 @@ class User {
 
   // TODO
   // DESTROY
+
+  // SIGNIN
+  static renderSigninForm() {
+    let boxes = document.querySelector('.boxes');
+
+    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+    let form = document.createElement('div');
+    form.innerHTML =  `
+      <form id="create-user-form">
+
+        <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+
+        <input id="input-password" type="password" autocomplete="password" name="password" value="" placeholder="Enter your password..." class="boxes box-middle">
+
+        <input id="create-button" type="submit" name="submit" value="Sign In" class="submit">
+      </form>
+    `;
+    boxes.appendChild(form);
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleSigninForm(e);} );
+  }
+
+  static handleSigninForm(e) {
+    e.preventDefault();
+    const emailInput = document.querySelector('#input-email').value;
+    const passwordInput = document.querySelector('#input-password').value;
+
+    this.fetchAuthUser(emailInput, passwordInput);
+  }
+
+  // static fetchAuthUser(email, password) {
+
+  //   const bodyData = {"auth": {"email": email, "password": password}};
+
+  //   fetch("http://localhost:3000/api/v1/user_token", {
+  //     method: "POST",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify(bodyData)
+  //   })
+  //   .then(response => response.json())
+  //   .then(console.log(response))
+  //   // .then(user => {
+  //     // const userData = user.data;
+  //     // let newUser = new User(userData, userData.attributes);
+
+  //     // this.renderUser(newUser);
+  //   // });
+  // }
 }
 
 User.all = [];
 
-module.exports = User;
+// module.exports = User;
