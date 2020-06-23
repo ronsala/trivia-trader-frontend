@@ -46,7 +46,7 @@ class User {
       </form>
     `;
     boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);} );
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);});
   }
 
   // CREATE
@@ -101,27 +101,36 @@ class User {
     boxB.innerHTML = `<p>Email: ${user.email}</p>`;
 
     let editButton = document.createElement('div');
+    editButton.id = "editButton";
     editButton.innerHTML = `<button data-id=${user.id}>edit</button>`;
+    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     boxes.appendChild(editButton);
   }
 
   // EDIT
-  renderUpdateForm() {
-    return `
-      <form data-id=${this.id} >
-        <h3>Edit User</h3>
+  static renderUpdateForm(user) {
+    let boxes = document.querySelector('.boxes');
 
+    document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+    document.querySelector('#editButton').style.display = 'none';
+    let form = document.createElement('div');
+    form.innerHTML =  `
+      <form data-id=${user.id} >
         <label>Username</label>
-        <input id='input-username' type="text" name="username" value="${this.username}" class="input-text">
+        <input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle">
         <br>
 
         <label>Email</label>
-        <input id='input-email' type="text" name="email" value="${this.email}" class="input-text">
+        <input id='input-email' type="text" name="email" value="${user.email}" class="boxes box-middle">
         <br>
 
-        <input id='edit-button' type="submit" value="Edit User" class="submit">
+        <input id='submit' type="submit" value="Save" class="submit">
       </form>
     `;
+    boxes.appendChild(form);
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleUpdateForm(e);});
   }
 
   // UPDATE
@@ -167,7 +176,7 @@ class User {
       </form>
     `;
     boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleSigninForm(e);} );
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleSigninForm(e); });
   }
 
   static handleSigninForm(e) {
