@@ -1,5 +1,9 @@
 const User = require('../src/javascripts/user');
 
+const helpers = require('/test/helpers');
+
+// console.log(src);
+
 describe('User', () => {
   it('should exist', function() {
     expect(User).to.not.be.undefined;
