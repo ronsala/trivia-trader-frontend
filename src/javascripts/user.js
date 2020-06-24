@@ -102,7 +102,7 @@ class User {
 
     let editButton = document.createElement('div');
     editButton.id = "editButton";
-    editButton.innerHTML = `<button data-id=${user.id}>edit</button>`;
+    editButton.innerHTML = `<button data-id=${user.id}>Edit</button>`;
     editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     boxes.appendChild(editButton);
   }
@@ -117,10 +117,9 @@ class User {
     document.querySelector('#editButton').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
-      <form data-id=${user.id} >
+      <form id="edit-user-form" "data-id=${user.id} >
         <label>Username</label>
-        <input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle">
-        <br>
+        <p><input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
 
         <label>Email</label>
         <input id='input-email' type="text" name="email" value="${user.email}" class="boxes box-middle">
@@ -130,28 +129,29 @@ class User {
       </form>
     `;
     boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleUpdateForm(e);});
+    document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
   }
 
   // UPDATE
-  static handleUpdateForm(e) {
+  static handleUpdateForm(e, user) {
     e.preventDefault();
-    const id = parseInt(e.target.dataset.id);
-    const user = User.findById(id);
+    // const id = parseInt(e.target.dataset.id);
+    // const user = User.findById(id);
     const username = e.target.querySelector('#input-username').value;
     const email = e.target.querySelector('#input-email').value;
-    fetchUpdatedUser(user, username, email);
+    this.fetchUpdatedUser(user, username, email);
   }
 
-  fetchUpdatedUser(user, username, email) {
+  static fetchUpdatedUser(user, username, email) {
+    debugger
     const bodyJSON = { username, email };
-    fetch(`${endPoint}/${user.id}`, {
+    fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bodyJSON)
       })
       .then(res => res.json())
-      .then(updatedUser => console.log(updatedUser));
+      .then(updatedUser => console.log("updatedUser", updatedUser));
   }
 
   // TODO
@@ -166,7 +166,7 @@ class User {
     document.querySelector('#box-b').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
-      <form id="create-user-form">
+      <form id="signin-user-form">
 
         <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
 
