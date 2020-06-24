@@ -30,7 +30,7 @@ let user2 =
 
 describe("constructor", () => {
   it('creates a user', () => {
-    const newUser = new User(user1, user1.attributes);
+    const newUser = new User.constructor(user1, user1.attributes);
     expect(newUser).toBeInstanceOf(User);
   });
 });
