@@ -1,6 +1,6 @@
-var expect = require('chai').expect;
 const User = require('../src/javascripts/user');
-describe('User', function() {
+
+describe('User', () => {
   it('should exist', function() {
     var User = require('../src/javascripts/user.js');
     debugger
@@ -31,7 +31,12 @@ let user2 =
 describe("constructor", () => {
   it('creates a user', () => {
     const newUser = new User.constructor(user1, user1.attributes);
-    expect(newUser).toBeInstanceOf(User);
+    console.log("newUser", newUser)
+    expect(newUser).to.be.an('object');
+    expect(newUser.id).to.equal('1');
+    expect(newUser.type).to.equal('user');
+    expect(newUser.attributes.username).to.equal('Andy');
+    expect(newUser.attributes.email).to.equal('andy@ex.io');
   });
 });
 
