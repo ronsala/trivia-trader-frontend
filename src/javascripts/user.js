@@ -78,7 +78,6 @@ class User {
     .then(user => {
       const userData = user.data;
       let newUser = new User(userData, userData.attributes);
-
       this.renderUser(newUser);
     });
   }
@@ -100,11 +99,18 @@ class User {
     boxB.style.display = 'block';
     boxB.innerHTML = `<p>Email: ${user.email}</p>`;
 
-    let editButton = document.createElement('div');
-    editButton.id = "editButton";
-    editButton.innerHTML = `<button data-id=${user.id}>Edit</button>`;
-    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
-    boxes.appendChild(editButton);
+    let editButtonDiv = document.querySelector('#edit-button-div');
+
+    if(editButtonDiv == null) {
+      let editButtonDiv = document.createElement('div');
+      editButtonDiv.id = "edit-button-div";
+      editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
+      boxes.appendChild(editButtonDiv);
+      let editButton = document.getElementById('edit-button');
+      editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
+    } else {
+      editButtonDiv.style.display = 'block';
+    }
   }
 
   // EDIT
@@ -114,7 +120,7 @@ class User {
     document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
     document.querySelector('#box-a').style.display = 'none';
     document.querySelector('#box-b').style.display = 'none';
-    document.querySelector('#editButton').style.display = 'none';
+    document.querySelector('#edit-button-div').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="edit-user-form" "data-id=${user.id} >
@@ -128,21 +134,22 @@ class User {
         <input id='submit' type="submit" value="Save" class="submit">
       </form>
     `;
+    form.style.display = 'block';
     boxes.appendChild(form);
-    document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    // document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    form.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
   }
 
   // UPDATE
   static handleUpdateForm(e, user) {
     e.preventDefault();
-    // const id = parseInt(e.target.dataset.id);
-    // const user = User.findById(id);
     const username = e.target.querySelector('#input-username').value;
     const email = e.target.querySelector('#input-email').value;
     this.fetchUpdatedUser(user, username, email);
   }
 
   static fetchUpdatedUser(user, username, email) {
+    document.getElementById('edit-user-form').style.display = 'none';
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
@@ -150,7 +157,11 @@ class User {
       body: JSON.stringify(bodyJSON)
       })
       .then(res => res.json())
-      .then(updatedUser => console.log("updatedUser", updatedUser));
+      .then(user => {
+        const userData = user.data;
+        let newUser = new User(userData, userData.attributes);
+        this.renderUser(newUser);
+      });
   }
 
   // TODO
