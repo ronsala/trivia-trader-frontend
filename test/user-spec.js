@@ -1,8 +1,6 @@
 var expect = require('chai').expect;
 const User = require('../src/javascripts/user');
 describe('User', function() {
-  debugger
-
   it('should exist', function() {
     var User = require('../src/javascripts/user.js');
     debugger
