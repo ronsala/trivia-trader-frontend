@@ -1,6 +1,6 @@
 const User = require('../src/javascripts/user');
 
-const helpers = require('/test/helpers');
+// const helpers = require('/test/helpers');
 
 // console.log(src);
 
