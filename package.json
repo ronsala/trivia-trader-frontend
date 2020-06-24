@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "jest-fetch-mock": "^3.0.3",
+    "chai": "*",
     "mocha": "^8.0.1",
     "mocha-jsdom": "^2.0.0"
   },
