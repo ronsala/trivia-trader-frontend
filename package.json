@@ -1,6 +1,5 @@
 {
   "devDependencies": {
-    "jest": "^26.0.1",
     "jest-fetch-mock": "^3.0.3"
   },
   "license": "UNLICENSED",
