@@ -6,5 +6,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "chai": "^4.2.0"
   }
 }
