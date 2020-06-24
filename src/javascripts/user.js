@@ -143,7 +143,6 @@ class User {
   }
 
   static fetchUpdatedUser(user, username, email) {
-    debugger
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
