@@ -8,5 +8,8 @@
     "mocha": "^8.0.1",
     "mocha-jsdom": "^2.0.0"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "mocha-multi": "^1.1.3"
+  }
 }
