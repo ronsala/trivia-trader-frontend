@@ -1,3 +1,12 @@
+// module.exports = {
+  // sayHello: function(){
+  //   return 'hello';
+  // },
+  // addNumbers: function(value1, value2){
+  //   return value1 + value2;
+  // },
+
+
 class User {
 
   constructor(user, userAttributes) {
@@ -7,10 +16,15 @@ class User {
     User.all.push(this);
   }
 
+  static testFunction() {
+    return "this is a test";
+  }
+
   static findById(id) {
     return this.all.find(user => user.id == id);
   }
 
+  // TODO
   // INDEX
   static renderUsers() {
     fetch('http://localhost:3000/api/v1/users')
@@ -45,7 +59,7 @@ class User {
       </form>
     `;
     boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);} );
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);});
   }
 
   // CREATE
@@ -77,7 +91,6 @@ class User {
     .then(user => {
       const userData = user.data;
       let newUser = new User(userData, userData.attributes);
-
       this.renderUser(newUser);
     });
   }
@@ -99,53 +112,125 @@ class User {
     boxB.style.display = 'block';
     boxB.innerHTML = `<p>Email: ${user.email}</p>`;
 
-    let editButton = document.createElement('div');
-    editButton.innerHTML = `<button data-id=${user.id}>edit</button>`;
-    boxes.appendChild(editButton);
+    let editButtonDiv = document.querySelector('#edit-button-div');
+
+    if(editButtonDiv == null) {
+      let editButtonDiv = document.createElement('div');
+      editButtonDiv.id = "edit-button-div";
+      editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
+      boxes.appendChild(editButtonDiv);
+      let editButton = document.getElementById('edit-button');
+      editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
+    } else {
+      editButtonDiv.style.display = 'block';
+    }
   }
 
   // EDIT
-  renderUpdateForm() {
-    return `
-      <form data-id=${this.id} >
-        <h3>Edit User</h3>
+  static renderUpdateForm(user) {
+    let boxes = document.querySelector('.boxes');
 
+    document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+    document.querySelector('#edit-button-div').style.display = 'none';
+    let form = document.createElement('div');
+    form.innerHTML =  `
+      <form id="edit-user-form" "data-id=${user.id} >
         <label>Username</label>
-        <input id='input-username' type="text" name="username" value="${this.username}" class="input-text">
-        <br>
+        <p><input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
 
         <label>Email</label>
-        <input id='input-email' type="text" name="email" value="${this.email}" class="input-text">
+        <input id='input-email' type="text" name="email" value="${user.email}" class="boxes box-middle">
         <br>
 
-        <input id='edit-button' type="submit" value="Edit User" class="submit">
+        <input id='submit' type="submit" value="Save" class="submit">
       </form>
     `;
+    form.style.display = 'block';
+    boxes.appendChild(form);
+    // document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    form.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
   }
 
   // UPDATE
-  static handleUpdateForm(e) {
+  static handleUpdateForm(e, user) {
     e.preventDefault();
-    const id = parseInt(e.target.dataset.id);
-    const user = User.findById(id);
     const username = e.target.querySelector('#input-username').value;
     const email = e.target.querySelector('#input-email').value;
-    fetchUpdatedUser(user, username, email);
+    this.fetchUpdatedUser(user, username, email);
   }
 
-  fetchUpdatedUser(user, username, email) {
+  static fetchUpdatedUser(user, username, email) {
+    document.getElementById('edit-user-form').style.display = 'none';
     const bodyJSON = { username, email };
-    fetch(`${endPoint}/${user.id}`, {
+    fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bodyJSON)
       })
       .then(res => res.json())
-      .then(updatedUser => console.log(updatedUser));
+      .then(user => {
+        const userData = user.data;
+        let newUser = new User(userData, userData.attributes);
+        this.renderUser(newUser);
+      });
   }
 
-  // DESTROY
   // TODO
+  // DESTROY
+
+  // SIGNIN
+  static renderSigninForm() {
+    let boxes = document.querySelector('.boxes');
+
+    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
+    document.querySelector('#box-a').style.display = 'none';
+    document.querySelector('#box-b').style.display = 'none';
+    let form = document.createElement('div');
+    form.innerHTML =  `
+      <form id="signin-user-form">
+
+        <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+
+        <input id="input-password" type="password" autocomplete="password" name="password" value="" placeholder="Enter your password..." class="boxes box-middle">
+
+        <input id="create-button" type="submit" name="submit" value="Sign In" class="submit">
+      </form>
+    `;
+    boxes.appendChild(form);
+    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleSigninForm(e); });
+  }
+
+  static handleSigninForm(e) {
+    e.preventDefault();
+    const emailInput = document.querySelector('#input-email').value;
+    const passwordInput = document.querySelector('#input-password').value;
+
+    this.fetchAuthUser(emailInput, passwordInput);
+  }
+
+  // static fetchAuthUser(email, password) {
+
+  //   const bodyData = {"auth": {"email": email, "password": password}};
+
+  //   fetch("http://localhost:3000/api/v1/user_token", {
+  //     method: "POST",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify(bodyData)
+  //   })
+  //   .then(response => response.json())
+  //   .then(console.log(response))
+  //   // .then(user => {
+  //     // const userData = user.data;
+  //     // let newUser = new User(userData, userData.attributes);
+
+  //     // this.renderUser(newUser);
+  //   // });
+  // }
 }
+// }
 
 User.all = [];
+
+module.exports = User;
