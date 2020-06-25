@@ -52,6 +52,6 @@ describe('User.findById', () => {
     expect(User.findById(1).username).to.match(/Andy/);
     expect(User.findById(1).username).to.not.match(/Connie/);
     expect(User.findById(2).username).to.match(/Jenny/);
-    expect(User.findById(2).username).to.not.match(/Connie/);
+    expect(User.findById(2).username).to.not.match(/Andy/);
   });
 });
