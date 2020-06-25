@@ -47,7 +47,7 @@ describe('User.findById', () => {
   })
 })
 
-describe('findById', () => {
+describe('User.findById', () => {
   it('finds a user', () => {
     expect(User.findById(1).username).to.match(/Andy/);
     expect(User.findById(1).username).to.not.match(/Connie/);
