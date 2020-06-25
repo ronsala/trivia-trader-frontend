@@ -1,8 +1,36 @@
+// Adapted from https://github.com/learn-co-students/fewpjs-oo-static-methods-lab-v-000
+
+const chai = require('chai')
+global.expect = chai.expect
+const fs = require('file-system')
+const jsdom = require('mocha-jsdom')
+const path = require('path')
+const babel = require('babel-core');
+const html = fs.readFileSync(path.resolve(__dirname, '..', 'index.html'), 'utf-8');
+
+const { JSDOM } = jsdom;
+
+const babelResult = babel.transformFileSync(
+  path.resolve(__dirname, '..', './src/javascripts/user.js')//, {
+//     presets: ['env']
+//   }
+);
+
+const src = babelResult.code
+
+jsdom({
+  html,
+  src,
+  url: "http://localhost"
+});
+
 const User = require('../src/javascripts/user');
 
-// const helpers = require('/test/helpers');
+const testFunction = require('../src/javascripts/user').testFunction;
+console.log("testFunction", testFunction())
 
-// console.log(src);
+
+// const helpers = require('/test/helpers');
 
 describe('User', () => {
   it('should exist', function() {
@@ -30,15 +58,14 @@ let user2 =
   }
 };
 
-describe("constructor", () => {
+describe("User constructor", () => {
   it('creates a user', () => {
-    const newUser = new User.constructor(user1, user1.attributes);
-    console.log("newUser", newUser)
+    const newUser = new User(user1, user1.attributes);
+    console.log("newUser:", newUser)
     expect(newUser).to.be.an('object');
     expect(newUser.id).to.equal('1');
-    expect(newUser.type).to.equal('user');
-    expect(newUser.attributes.username).to.equal('Andy');
-    expect(newUser.attributes.email).to.equal('andy@ex.io');
+    expect(newUser.username).to.equal('Andy');
+    expect(newUser.email).to.equal('andy@ex.io');
   });
 });
 
