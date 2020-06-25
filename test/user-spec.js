@@ -21,11 +21,6 @@ let user2 =
 };
 
 describe('user.js', () => {
-  describe('User', () => {
-    it('should exist', function() {
-      expect(User).to.not.be.undefined;
-    });
-  });
 
   describe("User constructor", () => {
     it('creates a user', () => {
