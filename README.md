@@ -6,4 +6,4 @@ This is the frontend for Trivia Trader. See a more extensive README at <https://
 
 `mocha` or `npm run test`
 
-To include Mocha test coverage report: `istanbul cover _mocha` or `npm run test-c`
+To include Istanbul test coverage report: `istanbul cover _mocha` or `npm run test-c`
