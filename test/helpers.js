@@ -1,5 +1,5 @@
 // Adapted from https://github.com/learn-co-students/fewpjs-oo-static-methods-lab-v-000
-
+const sinon = require('sinon');
 const chai = require('chai');
 global.expect = chai.expect;
 const fs = require('file-system');
