@@ -28,6 +28,7 @@
     "chai": "4.2.0",
     "file-system": "2.2.2",
     "jsdom": "11.12.0",
+    "karma": "^5.1.0",
     "mocha": "8.0.1",
     "mocha-jsdom": "2.0.0",
     "phantomjs": "^2.1.7",
