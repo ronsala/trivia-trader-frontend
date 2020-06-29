@@ -5,3 +5,5 @@ This is the frontend for Trivia Trader. See a more extensive README at <https://
 ## How To Run the Tests From Command Line
 
 `mocha` or `npm run test`
+
+To include Mocha test coverage report: `istanbul cover _mocha` or `npm run test-c`

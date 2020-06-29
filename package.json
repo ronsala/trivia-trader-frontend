@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test-c": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",
