@@ -4,4 +4,4 @@ This is the frontend for Trivia Trader. See a more extensive README at <https://
 
 ## How To Run the Tests From Command Line
 
-`mocha`
+`mocha` or `npm run test`
