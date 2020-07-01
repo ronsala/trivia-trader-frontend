@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function (config) {
-  let customBrowsers = ['Chrome', 'Safari', 'Firefox', 'PhantomJS']
+  let customBrowsers = ['Chrome', 'Safari', 'PhantomJS']
   if (process.env.TRAVIS) {
     customBrowsers = ['PhantomJS']
   }
