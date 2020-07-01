@@ -1,9 +1,15 @@
 // Adapted from https://github.com/learn-co-students/fewpjs-oo-static-methods-lab-v-000
+
+// If using ES6 syntax:
+// import { before, after, describe, it } from "mocha";
+// import { expect, assert, should } from "chai";
 const sinon = require('sinon');
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 global.expect = chai.expect;
+global.assert = chai.assert;
+global.should = chai.should();
 const fs = require('file-system');
 const jsdom = require('mocha-jsdom');
 const path = require('path');
