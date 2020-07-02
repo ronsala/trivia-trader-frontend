@@ -1,10 +1,9 @@
-'use strict'
-
 module.exports = function (config) {
-  let customBrowsers = ['Chrome', 'Safari', 'PhantomJS']
-  if (process.env.TRAVIS) {
-    customBrowsers = ['PhantomJS']
-  }
+  'use strict';
+  let customBrowsers = ['Chrome'];
+  // if (process.env.TRAVIS) {
+  //   customBrowsers = ['PhantomJS'];
+  // }
 
   config.set({
 
@@ -67,7 +66,7 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     // coverage is from karma-coverage and provides Istanbul code coverage reports
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha'],
 
     // web server port
     port: 9876,
@@ -93,5 +92,5 @@ module.exports = function (config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};
