@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/ronsala/trivia-trader-frontend",
   "dependencies": {
-    "esutils": "2.0.3"
+    "esutils": "2.0.3",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -33,7 +34,9 @@
     "browserify-istanbul": "^3.0.1",
     "browserify-test": "^3.1.0",
     "chai": "4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-fetch": "^0.3.1",
+    "chromedriver": "^83.0.0",
     "codecov.io": "^0.1.6",
     "file-system": "2.2.2",
     "istanbul": "^0.4.4",
@@ -52,8 +55,10 @@
     "lolex": "^2.7.1",
     "mocha": "8.0.1",
     "mocha-jsdom": "2.0.0",
+    "mochawesome": "^6.1.1",
     "phantomjs": "^2.1.7",
     "phantomjs-prebuilt": "^2.1.7",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "watchify": "^3.7.0"
