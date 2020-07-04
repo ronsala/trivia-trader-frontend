@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "test:browser": "live-server --port=9000 --mount=/:public",
+    "test:watch": "mocha --watch",
     "test-c": "istanbul cover _mocha"
   },
   "repository": {
