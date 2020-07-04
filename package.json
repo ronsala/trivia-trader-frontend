@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
+    "start": "node src/javascripts/index.js",
     "test": "mocha",
     "test:watch": "mocha --watch",
     "test-c": "istanbul cover _mocha"

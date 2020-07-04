@@ -3,8 +3,16 @@
 // If using ES6 syntax:
 // import { before, after, describe, it } from "mocha";
 // import { expect, assert, should } from "chai";
+require('chromedriver');
+const webdriver = require('selenium-webdriver');
+const { By, until } = webdriver;
+const express = require('express');
+const app = express();
 const sinon = require('sinon');
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const driver = new webdriver.Builder().forBrowser('chrome').build();
 const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 global.expect = chai.expect;
