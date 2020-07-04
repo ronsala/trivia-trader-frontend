@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "test:browser": "live-server --port=9000 --mount=/:public",
     "test-c": "istanbul cover _mocha"
   },
   "repository": {
@@ -46,6 +47,7 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-safari-launcher": "^1.0.0",
     "karma-sinon-chai": "^2.0.2",
+    "live-server": "^1.2.1",
     "lolex": "^2.7.1",
     "mocha": "8.0.1",
     "mocha-jsdom": "2.0.0",

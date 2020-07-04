@@ -1,6 +1,5 @@
 // TODO: rm this sample code from https://blog.logrocket.com/a-quick-and-complete-guide-to-mocha-testing-d0e0ea09f09d/.
 
-var bob = "Bob";
 var md5 = require('../md5');
 var expect = require('chai').expect;
 
