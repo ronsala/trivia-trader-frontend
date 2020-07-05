@@ -123,16 +123,22 @@ class User {
     boxes.appendChild(boxEmail);
 
     let editButtonDiv = document.querySelector('#edit-button-div');
-
-    if(editButtonDiv == null) {
-      let editButtonDiv = document.createElement('div');
+    if(editButtonDiv != null) {
+      boxes.removeChild(editButtonDiv);
+      editButtonDiv = document.createElement('div');
       editButtonDiv.id = "edit-button-div";
       editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
       boxes.appendChild(editButtonDiv);
       let editButton = document.getElementById('edit-button');
       editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     } else {
-      editButtonDiv.style.display = 'block';
+    //   editButtonDiv.style.display = 'block';
+    let editButtonDiv = document.createElement('div');
+    editButtonDiv.id = "edit-button-div";
+    editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
+    boxes.appendChild(editButtonDiv);
+    let editButton = document.getElementById('edit-button');
+    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     }
 
     let editUserForms = document.querySelectorAll('#edit-user-form');
@@ -149,9 +155,24 @@ class User {
     let boxes = document.querySelector('.boxes');
 
     document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
-    document.querySelector('#edit-button-div').style.display = 'none';
+
+    let boxUsername = document.getElementById('box-username');
+    if(boxUsername != null) {
+      boxUsername.remove();
+    }
+
+    let boxEmail = document.getElementById('box-email');
+    if(boxEmail != null) {
+      boxEmail.remove();
+    }
+
+    let editButtonDiv = document.getElementById('edit-button-div');
+    if(editButtonDiv != null) {
+      editButtonDiv.remove();
+    }
+
+    // document.querySelector('#box-email').style.display = 'none';
+    // document.querySelector('#edit-button-div').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="edit-user-form" "data-id=${user.id} >
