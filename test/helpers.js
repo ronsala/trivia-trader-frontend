@@ -12,7 +12,7 @@ const sinon = require('sinon');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
-const driver = new webdriver.Builder().forBrowser('chrome').build();
+// const driver = new webdriver.Builder().forBrowser('chrome').build();
 const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 global.expect = chai.expect;
