@@ -16,12 +16,23 @@ class App {
   }
 
   static renderHome() {
+    let hero = document.createElement('div');
+    hero.className = 'hero';
+    hero.id = 'hero';
+    let heroImage = document.createElement('img');
+    heroImage.src = 'src/images/trivia-trader-hero.png';
+    heroImage.id = 'hero_image';
+    hero.appendChild(heroImage);
+    window.content.appendChild(hero);
+
     let buttonHome = document.querySelector('#button_home');
     if (buttonHome != null) {
       buttonHome.style.display = 'none';
     }
 
-    let boxes = document.querySelector('.boxes');
+    let boxes = document.createElement('div');
+    boxes.class = 'boxes';
+    boxes.id = 'boxes';
 
     let boxTop = document.createElement('div');
     boxTop.className = 'box-top';
@@ -64,6 +75,7 @@ class App {
       console.log('clicked');
       this.renderAbout();
     });
+    window.content.appendChild(boxes);
   }
 
   static renderSignupSignin() {
