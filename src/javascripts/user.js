@@ -26,7 +26,7 @@ class User {
 
   // NEW
   static renderNewForm() {
-    let boxes = document.querySelector('.boxes');
+    let boxes = document.querySelector('#boxes');
 
     document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
     document.querySelector('#box-a').style.display = 'none';
