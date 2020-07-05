@@ -104,13 +104,23 @@ class User {
     let q = `<p>Q: Who is ${user.username}?</p>`;
     document.querySelector('#box-top-p').innerHTML = q;
 
-    let boxA = document.querySelector('#box-a');
-    boxA.style.display = 'block';
-    boxA.innerHTML = `<p>Username: ${user.username}</p>`;
+    let boxUsername = document.createElement('div');
+    boxUsername.className = 'box-middle';
+    boxUsername.id = 'box-username';
+    let boxUsernameP = document.createElement('p');
+    boxUsernameP.id = 'box-username-p';
+    boxUsernameP.textContent = `Username: ${user.username}`;
+    boxUsername.appendChild(boxUsernameP);
+    boxes.appendChild(boxUsername);
 
-    let boxB = document.querySelector('#box-b');
-    boxB.style.display = 'block';
-    boxB.innerHTML = `<p>Email: ${user.email}</p>`;
+    let boxEmail = document.createElement('div');
+    boxEmail.className = 'box-middle';
+    boxEmail.id = 'box-email';
+    let boxEmailP = document.createElement('p');
+    boxEmailP.id = 'box-email-p';
+    boxEmailP.textContent = `Email: ${user.email}`;
+    boxEmail.appendChild(boxEmailP);
+    boxes.appendChild(boxEmail);
 
     let editButtonDiv = document.querySelector('#edit-button-div');
 
@@ -123,6 +133,14 @@ class User {
       editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     } else {
       editButtonDiv.style.display = 'block';
+    }
+
+    let editUserForms = document.querySelectorAll('#edit-user-form');
+
+    if(editUserForms.length != 0) {
+      editUserForms.forEach( form => {
+        form.style.display = 'none';
+      });
     }
   }
 
