@@ -79,9 +79,18 @@ class App {
   }
 
   static renderSignupSignin() {
-    window.hero.style.display = 'none';
-    // document.querySelector('#button_home').style.display = 'block';
-    window.button_home.style.display = 'block';
+    window.hero.remove();
+
+    let buttonHome = document.createElement('div');
+    let buttonHomeA = document.createElement('a');
+    buttonHomeA.href = '/';
+    let buttonHomeImage = document.createElement('img');
+    buttonHomeImage.src = 'src/images/button-home.png';
+    buttonHomeImage.id = 'button_home';
+    buttonHomeA.appendChild(buttonHomeImage);
+    buttonHome.appendChild(buttonHomeA);
+    window.content.appendChild(buttonHome);
+
     document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
