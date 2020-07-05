@@ -42,7 +42,7 @@ class User {
 
         <input id="input-password-confirm" type="password" autocomplete="new-password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
 
-        <input id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
+        <input class="btn" id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
     boxes.appendChild(form);
@@ -139,7 +139,7 @@ class User {
 
   // EDIT
   static renderUpdateForm(user) {
-    let boxes = document.querySelector('.boxes');
+    let boxes = document.querySelector('#boxes');
 
     document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
 
