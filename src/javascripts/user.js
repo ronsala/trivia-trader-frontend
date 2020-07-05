@@ -1,12 +1,3 @@
-// module.exports = {
-  // sayHello: function(){
-  //   return 'hello';
-  // },
-  // addNumbers: function(value1, value2){
-  //   return value1 + value2;
-  // },
-
-
 class User {
 
   constructor(user, userAttributes) {
@@ -14,10 +5,6 @@ class User {
     this.username = userAttributes.username;
     this.email = userAttributes.email;
     User.all.push(this);
-  }
-
-  static testFunction() {
-    return "this is a test";
   }
 
   static findById(id) {
@@ -104,25 +91,49 @@ class User {
     let q = `<p>Q: Who is ${user.username}?</p>`;
     document.querySelector('#box-top-p').innerHTML = q;
 
-    let boxA = document.querySelector('#box-a');
-    boxA.style.display = 'block';
-    boxA.innerHTML = `<p>Username: ${user.username}</p>`;
+    let boxUsername = document.createElement('div');
+    boxUsername.className = 'box-middle';
+    boxUsername.id = 'box-username';
+    let boxUsernameP = document.createElement('p');
+    boxUsernameP.id = 'box-username-p';
+    boxUsernameP.textContent = `Username: ${user.username}`;
+    boxUsername.appendChild(boxUsernameP);
+    boxes.appendChild(boxUsername);
 
-    let boxB = document.querySelector('#box-b');
-    boxB.style.display = 'block';
-    boxB.innerHTML = `<p>Email: ${user.email}</p>`;
+    let boxEmail = document.createElement('div');
+    boxEmail.className = 'box-middle';
+    boxEmail.id = 'box-email';
+    let boxEmailP = document.createElement('p');
+    boxEmailP.id = 'box-email-p';
+    boxEmailP.textContent = `Email: ${user.email}`;
+    boxEmail.appendChild(boxEmailP);
+    boxes.appendChild(boxEmail);
 
     let editButtonDiv = document.querySelector('#edit-button-div');
-
-    if(editButtonDiv == null) {
-      let editButtonDiv = document.createElement('div');
+    if(editButtonDiv != null) {
+      boxes.removeChild(editButtonDiv);
+      editButtonDiv = document.createElement('div');
       editButtonDiv.id = "edit-button-div";
       editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
       boxes.appendChild(editButtonDiv);
       let editButton = document.getElementById('edit-button');
       editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
     } else {
-      editButtonDiv.style.display = 'block';
+    //   editButtonDiv.style.display = 'block';
+    let editButtonDiv = document.createElement('div');
+    editButtonDiv.id = "edit-button-div";
+    editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
+    boxes.appendChild(editButtonDiv);
+    let editButton = document.getElementById('edit-button');
+    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
+    }
+
+    let editUserForms = document.querySelectorAll('#edit-user-form');
+
+    if(editUserForms.length != 0) {
+      editUserForms.forEach( form => {
+        form.style.display = 'none';
+      });
     }
   }
 
@@ -131,9 +142,24 @@ class User {
     let boxes = document.querySelector('.boxes');
 
     document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
-    document.querySelector('#edit-button-div').style.display = 'none';
+
+    let boxUsername = document.getElementById('box-username');
+    if(boxUsername != null) {
+      boxUsername.remove();
+    }
+
+    let boxEmail = document.getElementById('box-email');
+    if(boxEmail != null) {
+      boxEmail.remove();
+    }
+
+    let editButtonDiv = document.getElementById('edit-button-div');
+    if(editButtonDiv != null) {
+      editButtonDiv.remove();
+    }
+
+    // document.querySelector('#box-email').style.display = 'none';
+    // document.querySelector('#edit-button-div').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="edit-user-form" "data-id=${user.id} >

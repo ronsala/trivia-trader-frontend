@@ -8,7 +8,7 @@ class App {
 
   static renderAbout() {
     document.querySelector('.hero').style.display = 'none';
-    document.querySelector('.button-home').style.display = 'block';
+    document.querySelector('#button_home').style.display = 'block';
     document.querySelector('#box-top').textContent = 'About TriviaTrader';
     document.querySelector('#box-a').textContent = "TODO: Text Here";
     document.querySelector('#box-b').style.display = 'none';
@@ -16,7 +16,7 @@ class App {
   }
 
   static renderHome() {
-    let buttonHome = document.querySelector('.button-home');
+    let buttonHome = document.querySelector('#button_home');
     if (buttonHome != null) {
       buttonHome.style.display = 'none';
     }
@@ -67,8 +67,9 @@ class App {
   }
 
   static renderSignupSignin() {
-    document.querySelector('.hero').style.display = 'none';
-    document.querySelector('.button-home').style.display = 'block';
+    window.hero.style.display = 'none';
+    // document.querySelector('#button_home').style.display = 'block';
+    window.button_home.style.display = 'block';
     document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
