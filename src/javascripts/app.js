@@ -16,12 +16,23 @@ class App {
   }
 
   static renderHome() {
+    let hero = document.createElement('div');
+    hero.className = 'hero';
+    hero.id = 'hero';
+    let heroImage = document.createElement('img');
+    heroImage.src = 'src/images/trivia-trader-hero.png';
+    heroImage.id = 'hero_image';
+    hero.appendChild(heroImage);
+    window.content.appendChild(hero);
+
     let buttonHome = document.querySelector('#button_home');
     if (buttonHome != null) {
       buttonHome.style.display = 'none';
     }
 
-    let boxes = document.querySelector('.boxes');
+    let boxes = document.createElement('div');
+    boxes.class = 'boxes';
+    boxes.id = 'boxes';
 
     let boxTop = document.createElement('div');
     boxTop.className = 'box-top';
@@ -64,12 +75,22 @@ class App {
       console.log('clicked');
       this.renderAbout();
     });
+    window.content.appendChild(boxes);
   }
 
   static renderSignupSignin() {
-    window.hero.style.display = 'none';
-    // document.querySelector('#button_home').style.display = 'block';
-    window.button_home.style.display = 'block';
+    window.hero.remove();
+
+    let buttonHome = document.createElement('div');
+    let buttonHomeA = document.createElement('a');
+    buttonHomeA.href = '/';
+    let buttonHomeImage = document.createElement('img');
+    buttonHomeImage.src = 'src/images/button-home.png';
+    buttonHomeImage.id = 'button_home';
+    buttonHomeA.appendChild(buttonHomeImage);
+    buttonHome.appendChild(buttonHomeA);
+    window.content.appendChild(buttonHome);
+
     document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
