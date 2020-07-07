@@ -15,6 +15,13 @@ class App {
     document.querySelector('#box-c').style.display = 'none';
   }
 
+  static renderBoxes() {
+    let boxes = document.createElement('div');
+    boxes.class = 'boxes';
+    boxes.id = 'boxes';
+    window.content.appendChild(boxes);
+  }
+
   static renderHome() {
     let hero = document.createElement('div');
     hero.className = 'hero';
@@ -25,14 +32,22 @@ class App {
     hero.appendChild(heroImage);
     window.content.appendChild(hero);
 
-    let buttonHome = document.querySelector('#button_home');
-    if (buttonHome != null) {
-      buttonHome.style.display = 'none';
-    }
+    let buttonHome = document.createElement('div');
+    let buttonHomeA = document.createElement('a');
+    buttonHomeA.href = '/';
+    let buttonHomeImage = document.createElement('img');
+    buttonHomeImage.src = 'src/images/button-home.png';
+    buttonHomeImage.id = 'button_home';
+    buttonHomeA.appendChild(buttonHomeImage);
+    buttonHome.appendChild(buttonHomeA);
+    window.content.appendChild(buttonHome);
+    window.button_home.style.display = 'none';
 
-    let boxes = document.createElement('div');
-    boxes.class = 'boxes';
-    boxes.id = 'boxes';
+    // let buttonHome = document.querySelector('#button_home');
+    // let buttonHome = window.button_home;
+    // if (buttonHome != null) {
+    //   buttonHome.style.display = 'none';
+    // }
 
     let boxTop = document.createElement('div');
     boxTop.className = 'box-top';
@@ -41,7 +56,9 @@ class App {
     boxTopP.id = 'box-top-p';
     boxTopP.textContent = 'Q: What do you want to do?';
     boxTop.appendChild(boxTopP);
-    boxes.appendChild(boxTop);
+    window.content.appendChild(boxTop);
+
+    this.renderBoxes();
 
     let boxA = document.createElement('div');
     boxA.className = 'box-middle';
@@ -80,17 +97,8 @@ class App {
 
   static renderSignupSignin() {
     window.hero.remove();
-
-    let buttonHome = document.createElement('div');
-    let buttonHomeA = document.createElement('a');
-    buttonHomeA.href = '/';
-    let buttonHomeImage = document.createElement('img');
-    buttonHomeImage.src = 'src/images/button-home.png';
-    buttonHomeImage.id = 'button_home';
-    buttonHomeA.appendChild(buttonHomeImage);
-    buttonHome.appendChild(buttonHomeA);
-    window.content.appendChild(buttonHome);
-
+    window.boxes.remove();
+    window.button_home.style.display = 'block';
     document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
     let boxA = document.querySelector('#box-a');
     boxA.removeEventListener('click', e => {this.renderSignupSignin();});
