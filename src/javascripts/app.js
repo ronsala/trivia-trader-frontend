@@ -7,7 +7,7 @@ class App {
   }
 
   static renderAbout() {
-    document.querySelector('.hero').style.display = 'none';
+    window.hero.style.display = 'none';
     document.querySelector('#button_home').style.display = 'block';
     document.querySelector('#box-top').textContent = 'About TriviaTrader';
     document.querySelector('#box-a').textContent = "TODO: Text Here";
@@ -53,68 +53,29 @@ class App {
     window.content.appendChild(boxTop);
 
     this.renderBoxes();
-    this.renderMiddleBoxes(3);
 
-    let box1 = window.box1;
-    box1P.textContent = 'A) Play game.';
-    box1.appendChild(box1P);
-    box1.addEventListener('click', e => {this.renderSignupSignin();});
+    this.renderMiddleBox('A', 'A) Play game.');
+    window.boxA.addEventListener('click', e => {this.renderSignupSignin();});
 
-    // let boxB = document.createElement('div');
-    // boxB.className = 'box-middle';
-    // boxB.id = 'box-b';
-    // let boxBP = document.createElement('p');
-    // boxBP.id = 'box-b-p';
-    // boxBP.textContent = 'B) Make game.';
-    // boxB.appendChild(boxBP);
-    // boxes.appendChild(boxB);
+    this.renderMiddleBox('B', 'B) Make game.');
+    let boxB = window.boxB;
     // // boxB.addEventListener('click', e => {});
 
-    // let boxC = document.createElement('div');
-    // boxC.className = 'box-middle';
-    // boxC.id = 'box-c';
-    // let boxCP = document.createElement('p');
-    // boxCP.id = 'box-c-p';
-    // boxCP.textContent = 'C) Learn more about TriviaTrader.';
-    // boxC.appendChild(boxCP);
-    // boxes.appendChild(boxC);
-    // boxC.addEventListener('click', e => {
-    //   console.log('clicked');
-    //   this.renderAbout();
-    // });
-    // window.content.appendChild(boxes);
+    this.renderMiddleBox('C', 'C) Learn more about TriviaTrader.');
+    boxC.addEventListener('click', e => {this.renderAbout();});
   }
 
-  // static renderMiddleBoxes(num) {
-  //   let i;
-  //   let boxName;
-  //   for (let i = 1; i <= num; i++) {
-  //     boxName = `box${i}`;
-  //     window[boxName] = document.createElement('div');
-  //     window[boxName].className = 'box-middle';
-  //     window[boxName].id = boxName;
-  //     let boxP = document.createElement('p');
-  //     let pID = `${boxName}P`;
-  //     boxP.id = pID;
-  //     window[boxName].appendChild(boxP);
-  //     window.boxes.appendChild(window[boxName]);
-  //   }
-  // }
-
-  static renderMiddleBox(text) {
-    let i;
-    let boxName;
-    for (let i = 1; i <= num; i++) {
-      boxName = `box${i}`;
+  static renderMiddleBox(id, text) {
+      let boxName = `box${id}`;
       window[boxName] = document.createElement('div');
       window[boxName].className = 'box-middle';
       window[boxName].id = boxName;
       let boxP = document.createElement('p');
       let pID = `${boxName}P`;
       boxP.id = pID;
+      boxP.textContent = text;
       window[boxName].appendChild(boxP);
       window.boxes.appendChild(window[boxName]);
-    }
   }
 
   static renderSignupSignin() {
