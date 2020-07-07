@@ -43,12 +43,6 @@ class App {
     window.content.appendChild(buttonHome);
     window.button_home.style.display = 'none';
 
-    // let buttonHome = document.querySelector('#button_home');
-    // let buttonHome = window.button_home;
-    // if (buttonHome != null) {
-    //   buttonHome.style.display = 'none';
-    // }
-
     let boxTop = document.createElement('div');
     boxTop.className = 'box-top';
     boxTop.id = 'box-top';
@@ -59,40 +53,68 @@ class App {
     window.content.appendChild(boxTop);
 
     this.renderBoxes();
+    this.renderMiddleBoxes(3);
 
-    let boxA = document.createElement('div');
-    boxA.className = 'box-middle';
-    boxA.id = 'box-a';
-    let boxAP = document.createElement('p');
-    boxAP.id = 'box-a-p';
-    boxAP.textContent = 'A) Play game.';
-    boxA.appendChild(boxAP);
-    boxes.appendChild(boxA);
-    boxA.addEventListener('click', e => {this.renderSignupSignin();});
+    let box1 = window.box1;
+    box1P.textContent = 'A) Play game.';
+    box1.appendChild(box1P);
+    box1.addEventListener('click', e => {this.renderSignupSignin();});
 
-    let boxB = document.createElement('div');
-    boxB.className = 'box-middle';
-    boxB.id = 'box-b';
-    let boxBP = document.createElement('p');
-    boxBP.id = 'box-b-p';
-    boxBP.textContent = 'B) Make game.';
-    boxB.appendChild(boxBP);
-    boxes.appendChild(boxB);
-    // boxB.addEventListener('click', e => {});
+    // let boxB = document.createElement('div');
+    // boxB.className = 'box-middle';
+    // boxB.id = 'box-b';
+    // let boxBP = document.createElement('p');
+    // boxBP.id = 'box-b-p';
+    // boxBP.textContent = 'B) Make game.';
+    // boxB.appendChild(boxBP);
+    // boxes.appendChild(boxB);
+    // // boxB.addEventListener('click', e => {});
 
-    let boxC = document.createElement('div');
-    boxC.className = 'box-middle';
-    boxC.id = 'box-c';
-    let boxCP = document.createElement('p');
-    boxCP.id = 'box-c-p';
-    boxCP.textContent = 'C) Learn more about TriviaTrader.';
-    boxC.appendChild(boxCP);
-    boxes.appendChild(boxC);
-    boxC.addEventListener('click', e => {
-      console.log('clicked');
-      this.renderAbout();
-    });
-    window.content.appendChild(boxes);
+    // let boxC = document.createElement('div');
+    // boxC.className = 'box-middle';
+    // boxC.id = 'box-c';
+    // let boxCP = document.createElement('p');
+    // boxCP.id = 'box-c-p';
+    // boxCP.textContent = 'C) Learn more about TriviaTrader.';
+    // boxC.appendChild(boxCP);
+    // boxes.appendChild(boxC);
+    // boxC.addEventListener('click', e => {
+    //   console.log('clicked');
+    //   this.renderAbout();
+    // });
+    // window.content.appendChild(boxes);
+  }
+
+  // static renderMiddleBoxes(num) {
+  //   let i;
+  //   let boxName;
+  //   for (let i = 1; i <= num; i++) {
+  //     boxName = `box${i}`;
+  //     window[boxName] = document.createElement('div');
+  //     window[boxName].className = 'box-middle';
+  //     window[boxName].id = boxName;
+  //     let boxP = document.createElement('p');
+  //     let pID = `${boxName}P`;
+  //     boxP.id = pID;
+  //     window[boxName].appendChild(boxP);
+  //     window.boxes.appendChild(window[boxName]);
+  //   }
+  // }
+
+  static renderMiddleBox(text) {
+    let i;
+    let boxName;
+    for (let i = 1; i <= num; i++) {
+      boxName = `box${i}`;
+      window[boxName] = document.createElement('div');
+      window[boxName].className = 'box-middle';
+      window[boxName].id = boxName;
+      let boxP = document.createElement('p');
+      let pID = `${boxName}P`;
+      boxP.id = pID;
+      window[boxName].appendChild(boxP);
+      window.boxes.appendChild(window[boxName]);
+    }
   }
 
   static renderSignupSignin() {
