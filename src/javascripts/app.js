@@ -75,7 +75,10 @@ class App {
     boxP.id = pID;
     boxP.textContent = text;
     window[boxName].appendChild(boxP);
-    window.boxes.appendChild(window[boxName]);
+    console.log("boxName:", boxName)
+    console.log("window[boxName]:", window[boxName])
+    let boxes = document.getElementById('boxes');
+    boxes.appendChild(window[boxName]);
   }
 
   static renderSignupSignin() {
