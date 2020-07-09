@@ -23,6 +23,14 @@ class App {
     window.content.appendChild(boxes);
   }
 
+  static renderButton(id, text, user) {
+    let b = document.createElement('button');
+    b.id = `button_${id}`;
+    b.setAttribute('data-id', `${user.id}`);
+    b.innerHTML = text;
+    window.boxes.appendChild(b);
+  }
+
   static renderHome() {
     let hero = document.createElement('div');
     hero.className = 'hero';
@@ -75,8 +83,6 @@ class App {
     boxP.id = pID;
     boxP.textContent = text;
     window[boxName].appendChild(boxP);
-    console.log("boxName:", boxName)
-    console.log("window[boxName]:", window[boxName])
     let boxes = document.getElementById('boxes');
     boxes.appendChild(window[boxName]);
   }

@@ -83,44 +83,16 @@ class User {
 
   // SHOW
   static renderUser(user) {
-    // TODO NEXT:
     window.boxes.remove();
-
-    let q = `<p>Q: Who is ${user.username}?</p>`;
-    document.querySelector('#box_top_p').innerHTML = q;
-
-
+    window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
     App.renderMiddleBox('username', `Username: ${user.username}`);
+    App.renderMiddleBox('email', `Email: ${user.email}`);
 
-    let boxEmail = document.createElement('div');
-    boxEmail.className = 'box-middle';
-    boxEmail.id = 'box-email';
-    let boxEmailP = document.createElement('p');
-    boxEmailP.id = 'box-email-p';
-    boxEmailP.textContent = `Email: ${user.email}`;
-    boxEmail.appendChild(boxEmailP);
-    boxes.appendChild(boxEmail);
-
-    let editButtonDiv = document.querySelector('#edit_button_div');
-    if(editButtonDiv != null) {
-      boxes.removeChild(editButtonDiv);
-      editButtonDiv = document.createElement('div');
-      editButtonDiv.id = "edit_button_div";
-      editButtonDiv.innerHTML = `<button id="edit_button" data-id=${user.id}>Edit</button>`;
-      boxes.appendChild(editButtonDiv);
-      let editButton = document.getElementById('edit_button');
-      editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
-    } else {
-    //   editButtonDiv.style.display = 'block';
-    let editButtonDiv = document.createElement('div');
-    editButtonDiv.id = "edit_button_div";
-    editButtonDiv.innerHTML = `<button id="edit_button" data-id=${user.id}>Edit</button>`;
-    boxes.appendChild(editButtonDiv);
-    let editButton = document.getElementById('edit_button');
-    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
-    }
-
+    App.renderButton('edit', 'Edit', user);
+    window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
+    
+    // TODO NEXT:
     let editUserForms = document.querySelectorAll('#edit_user_form');
 
     if(editUserForms.length != 0) {
@@ -132,6 +104,7 @@ class User {
 
   // EDIT
   static renderUpdateForm(user) {
+    debugger
     let boxes = document.querySelector('#boxes');
 
     document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
