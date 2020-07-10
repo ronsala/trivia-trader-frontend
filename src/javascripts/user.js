@@ -94,56 +94,37 @@ class User {
 
   // EDIT
   static renderUpdateForm(user) {
-    // let boxes = document.querySelector('#boxes');
+    window.box_top_p.textContent = "Q: What's your new info?";
+    window.boxes.remove();
+    App.renderBoxes();
 
-    document.querySelector('#box_top_p').textContent = "Q: What's your new info?";
-
-    let boxUsername = document.getElementById('box_username');
-    if(boxUsername != null) {
-      boxUsername.remove();
-    }
-
-    let boxEmail = document.getElementById('box_email');
-    if(boxEmail != null) {
-      boxEmail.remove();
-    }
-
-    let editButtonDiv = document.getElementById('edit_button_div');
-    if(editButtonDiv != null) {
-      editButtonDiv.remove();
-    }
-
-    // document.querySelector('#box-email').style.display = 'none';
-    // document.querySelector('#edit-button-div').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
-      <form id="edit-user-form" "data-id=${user.id} >
+      <form id="edit_user_form" "data-id=${user.id} >
         <label>Username</label>
-        <p><input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
+        <p><input id='input_username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
 
         <label>Email</label>
-        <input id='input-email' type="text" name="email" value="${user.email}" class="boxes box-middle">
+        <input id='input_email' type="text" name="email" value="${user.email}" class="boxes box-middle">
         <br>
 
         <input id='submit' type="submit" value="Save" class="submit">
       </form>
     `;
-    form.style.display = 'block';
     boxes.appendChild(form);
-    // document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
     form.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
   }
 
   // UPDATE
   static handleUpdateForm(e, user) {
     e.preventDefault();
-    const username = e.target.querySelector('#input-username').value;
-    const email = e.target.querySelector('#input-email').value;
+    const username = e.target.querySelector('#input_username').value;
+    const email = e.target.querySelector('#input_email').value;
     this.fetchUpdatedUser(user, username, email);
   }
 
   static fetchUpdatedUser(user, username, email) {
-    document.getElementById('edit-user-form').style.display = 'none';
+    document.getElementById('edit_user_form').style.display = 'none';
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
