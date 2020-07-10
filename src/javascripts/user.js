@@ -88,38 +88,27 @@ class User {
     App.renderBoxes();
     App.renderMiddleBox('username', `Username: ${user.username}`);
     App.renderMiddleBox('email', `Email: ${user.email}`);
-
     App.renderButton('edit', 'Edit', user);
     window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
-    
-    // TODO NEXT:
-    let editUserForms = document.querySelectorAll('#edit_user_form');
-
-    if(editUserForms.length != 0) {
-      editUserForms.forEach( form => {
-        form.style.display = 'none';
-      });
-    }
   }
 
   // EDIT
   static renderUpdateForm(user) {
-    debugger
-    let boxes = document.querySelector('#boxes');
+    // let boxes = document.querySelector('#boxes');
 
-    document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
+    document.querySelector('#box_top_p').textContent = "Q: What's your new info?";
 
-    let boxUsername = document.getElementById('box-username');
+    let boxUsername = document.getElementById('box_username');
     if(boxUsername != null) {
       boxUsername.remove();
     }
 
-    let boxEmail = document.getElementById('box-email');
+    let boxEmail = document.getElementById('box_email');
     if(boxEmail != null) {
       boxEmail.remove();
     }
 
-    let editButtonDiv = document.getElementById('edit-button-div');
+    let editButtonDiv = document.getElementById('edit_button_div');
     if(editButtonDiv != null) {
       editButtonDiv.remove();
     }
@@ -176,9 +165,9 @@ class User {
   static renderSigninForm() {
     let boxes = document.querySelector('.boxes');
 
-    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
+    document.querySelector('#box_top_p').textContent = 'Q: What is your info?';
+    document.querySelector('#box_a').style.display = 'none';
+    document.querySelector('#box_b').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="signin-user-form">

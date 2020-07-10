@@ -23,10 +23,10 @@ class App {
     window.content.appendChild(boxes);
   }
 
-  static renderButton(id, text, user) {
+  static renderButton(id, text, model) {
     let b = document.createElement('button');
     b.id = `button_${id}`;
-    b.setAttribute('data-id', `${user.id}`);
+    b.setAttribute('data-id', `${model.id}`);
     b.innerHTML = text;
     window.boxes.appendChild(b);
   }
