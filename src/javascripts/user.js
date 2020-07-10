@@ -97,10 +97,11 @@ class User {
     window.box_top_p.textContent = "Q: What's your new info?";
     window.boxes.remove();
     App.renderBoxes();
-
-    let form = document.createElement('div');
-    form.innerHTML =  `
-      <form id="edit_user_form" "data-id=${user.id} >
+    
+    let f = document.createElement('form');
+    f.id = "edit_user_form";
+    f.setAttribute('data-id', `${user.id}`);
+    f.innerHTML =  `
         <label>Username</label>
         <p><input id='input_username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
 
@@ -109,10 +110,9 @@ class User {
         <br>
 
         <input id='submit' type="submit" value="Save" class="submit">
-      </form>
     `;
-    boxes.appendChild(form);
-    form.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    boxes.appendChild(f);
+    f.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
   }
 
   // UPDATE
