@@ -26,36 +26,35 @@ class User {
 
   // NEW
   static renderNewForm() {
-    let boxes = document.querySelector('#boxes');
-
-    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
+    window.boxes.remove();
+    window.box_top_p.textContent = 'Q: What is your info?';
+    App.renderBoxes();
     let form = document.createElement('div');
     form.innerHTML =  `
-      <form id="create-user-form">
-        <input id="input-username" type="text" autocomplete="username" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
+      <form id="create_user_form">
+        <input id="input_username" type="text" autocomplete="username" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
 
-        <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+        <input id="input_email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
 
-        <input id="input-password" type="password" autocomplete="new-password" name="password" value="" placeholder="Enter a password..." class="boxes box-middle">
+        <input id="input_password" type="password" autocomplete="new-password" name="password" value="" placeholder="Enter a password..." class="boxes box-middle">
 
-        <input id="input-password-confirm" type="password" autocomplete="new-password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
+        <input id="input_password_confirm" type="password" autocomplete="new_password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
 
-        <input class="btn" id="create-button" type="submit" name="submit" value="Sign Up" class="submit">
+        <input class="btn" id="create_button" type="submit" name="submit" value="Sign Up" class="submit">
       </form>
     `;
     boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleCreateForm(e);});
+    document.querySelector('#create_user_form').addEventListener('submit', e => { this.handleCreateForm(e);});
   }
 
   // CREATE
   static handleCreateForm(e) {
     e.preventDefault();
-    const usernameInput = document.querySelector('#input-username').value;
-    const emailInput = document.querySelector('#input-email').value;
-    const passwordInput = document.querySelector('#input-password').value;
-    const passwordConfirmInput = document.querySelector('#input-password-confirm').value;
+    // const usernameInput = document.querySelector('#input_username').value;
+    const usernameInput = window.input_username.value;
+    const emailInput = window.input_email.value;
+    const passwordInput = window.input_password.value;
+    const passwordConfirmInput = window.input_password_confirm.value;
 
     if (passwordInput != passwordConfirmInput) {
       alert("Passwords do not match. Please try again");
@@ -84,111 +83,85 @@ class User {
 
   // SHOW
   static renderUser(user) {
-    document.querySelector("#create-user-form").style.display = 'none';
-
-    let boxes = document.querySelector('#boxes');
-
-    let q = `<p>Q: Who is ${user.username}?</p>`;
-    document.querySelector('#box-top-p').innerHTML = q;
-
-    let boxUsername = document.createElement('div');
-    boxUsername.className = 'box-middle';
-    boxUsername.id = 'box-username';
-    let boxUsernameP = document.createElement('p');
-    boxUsernameP.id = 'box-username-p';
-    boxUsernameP.textContent = `Username: ${user.username}`;
-    boxUsername.appendChild(boxUsernameP);
-    boxes.appendChild(boxUsername);
-
-    let boxEmail = document.createElement('div');
-    boxEmail.className = 'box-middle';
-    boxEmail.id = 'box-email';
-    let boxEmailP = document.createElement('p');
-    boxEmailP.id = 'box-email-p';
-    boxEmailP.textContent = `Email: ${user.email}`;
-    boxEmail.appendChild(boxEmailP);
-    boxes.appendChild(boxEmail);
-
-    let editButtonDiv = document.querySelector('#edit-button-div');
-    if(editButtonDiv != null) {
-      boxes.removeChild(editButtonDiv);
-      editButtonDiv = document.createElement('div');
-      editButtonDiv.id = "edit-button-div";
-      editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
-      boxes.appendChild(editButtonDiv);
-      let editButton = document.getElementById('edit-button');
-      editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
-    } else {
-    //   editButtonDiv.style.display = 'block';
-    let editButtonDiv = document.createElement('div');
-    editButtonDiv.id = "edit-button-div";
-    editButtonDiv.innerHTML = `<button id="edit-button" data-id=${user.id}>Edit</button>`;
-    boxes.appendChild(editButtonDiv);
-    let editButton = document.getElementById('edit-button');
-    editButton.addEventListener('click', e => { this.renderUpdateForm(user);});
-    }
-
-    let editUserForms = document.querySelectorAll('#edit-user-form');
-
-    if(editUserForms.length != 0) {
-      editUserForms.forEach( form => {
-        form.style.display = 'none';
-      });
-    }
+    window.boxes.remove();
+    window.box_top_p.textContent = `Q: Who is ${user.username}?`;
+    App.renderBoxes();
+    App.renderMiddleBox('username', `Username: ${user.username}`);
+    App.renderMiddleBox('email', `Email: ${user.email}`);
+    App.renderButton('edit', 'Edit', user);
+    window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
   }
 
   // EDIT
   static renderUpdateForm(user) {
-    let boxes = document.querySelector('#boxes');
+    window.box_top_p.textContent = "Q: What's your new info?";
+    window.boxes.remove();
+    App.renderBoxes();
 
-    document.querySelector('#box-top-p').textContent = "Q: What's your new info?";
+    let f = document.createElement('form');
+    App.setAttributes(f, {
+      'id': 'edit_user_form',
+      'data-id': `${user.id}`
+    });
 
-    let boxUsername = document.getElementById('box-username');
-    if(boxUsername != null) {
-      boxUsername.remove();
-    }
+    let l_u = document.createElement('label');
+    App.setAttributes(l_u, {
+      'innerText': 'Username',
+    });
 
-    let boxEmail = document.getElementById('box-email');
-    if(boxEmail != null) {
-      boxEmail.remove();
-    }
+    let p_u = document.createElement('p');
 
-    let editButtonDiv = document.getElementById('edit-button-div');
-    if(editButtonDiv != null) {
-      editButtonDiv.remove();
-    }
+    let i_u = document.createElement('input');
+    App.setAttributes(i_u, {
+      'id': 'input_username', 
+      'type': 'text', 
+      'name': 'username', 
+      'value': `${user.username}`, 
+      'class': 'box-middle'});
 
-    // document.querySelector('#box-email').style.display = 'none';
-    // document.querySelector('#edit-button-div').style.display = 'none';
-    let form = document.createElement('div');
-    form.innerHTML =  `
-      <form id="edit-user-form" "data-id=${user.id} >
-        <label>Username</label>
-        <p><input id='input-username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
+    p_u.append(i_u);
 
-        <label>Email</label>
-        <input id='input-email' type="text" name="email" value="${user.email}" class="boxes box-middle">
-        <br>
+    let l_e = document.createElement('label');
+    App.setAttributes(l_e, {
+      'innerText': 'Email',
+    });
 
-        <input id='submit' type="submit" value="Save" class="submit">
-      </form>
-    `;
-    form.style.display = 'block';
-    boxes.appendChild(form);
-    // document.querySelector('#edit-user-form').addEventListener('submit', e => { this.handleUpdateForm(e, user);});
-    form.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    let p_e = document.createElement('p');
+
+    let i_e = document.createElement('input');
+    App.setAttributes(i_e, {
+      'id': 'input_email', 
+      'type': 'text', 
+      'name': 'email', 
+      'value': `${user.email}`, 
+      'class': 'box-middle'
+    });
+
+    p_e.append(i_e);
+
+    let i_s = document.createElement('input');
+    App.setAttributes(i_s, {
+      'id': 'submit',
+      'type': 'submit',
+      'value': 'Save',
+      'class': 'submit'
+    });
+
+    f.append(l_u, p_u, l_e, p_e, i_s);
+    f.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    boxes.append(f);
   }
 
   // UPDATE
   static handleUpdateForm(e, user) {
     e.preventDefault();
-    const username = e.target.querySelector('#input-username').value;
-    const email = e.target.querySelector('#input-email').value;
+    const username = e.target.querySelector('#input_username').value;
+    const email = e.target.querySelector('#input_email').value;
     this.fetchUpdatedUser(user, username, email);
   }
 
   static fetchUpdatedUser(user, username, email) {
-    document.getElementById('edit-user-form').style.display = 'none';
+    document.getElementById('edit_user_form').style.display = 'none';
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
@@ -210,9 +183,9 @@ class User {
   static renderSigninForm() {
     let boxes = document.querySelector('.boxes');
 
-    document.querySelector('#box-top-p').textContent = 'Q: What is your info?';
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
+    document.querySelector('#box_top_p').textContent = 'Q: What is your info?';
+    document.querySelector('#box_a').style.display = 'none';
+    document.querySelector('#box_b').style.display = 'none';
     let form = document.createElement('div');
     form.innerHTML =  `
       <form id="signin-user-form">

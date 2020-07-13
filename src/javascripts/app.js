@@ -7,12 +7,28 @@ class App {
   }
 
   static renderAbout() {
-    document.querySelector('.hero').style.display = 'none';
-    document.querySelector('#button_home').style.display = 'block';
-    document.querySelector('#box-top').textContent = 'About TriviaTrader';
-    document.querySelector('#box-a').textContent = "TODO: Text Here";
-    document.querySelector('#box-b').style.display = 'none';
-    document.querySelector('#box-c').style.display = 'none';
+    window.hero.style.display = 'none';
+    window.button_home.style.display = 'block';
+    window.box_top.textContent = 'About TriviaTrader';
+    // TODO:
+    window.box_a.textContent = "TODO: Text Here";
+    window.box_b.style.display = 'none';
+    window.box_c.style.display = 'none';
+  }
+
+  static renderBoxes() {
+    let boxes = document.createElement('div');
+    boxes.class = 'boxes';
+    boxes.id = 'boxes';
+    window.content.appendChild(boxes);
+  }
+
+  static renderButton(id, text, model) {
+    let b = document.createElement('button');
+    b.id = `button_${id}`;
+    b.setAttribute('data-id', `${model.id}`);
+    b.innerHTML = text;
+    window.boxes.appendChild(b);
   }
 
   static renderHome() {
@@ -25,62 +41,6 @@ class App {
     hero.appendChild(heroImage);
     window.content.appendChild(hero);
 
-    let buttonHome = document.querySelector('#button_home');
-    if (buttonHome != null) {
-      buttonHome.style.display = 'none';
-    }
-
-    let boxes = document.createElement('div');
-    boxes.class = 'boxes';
-    boxes.id = 'boxes';
-
-    let boxTop = document.createElement('div');
-    boxTop.className = 'box-top';
-    boxTop.id = 'box-top';
-    let boxTopP = document.createElement('p');
-    boxTopP.id = 'box-top-p';
-    boxTopP.textContent = 'Q: What do you want to do?';
-    boxTop.appendChild(boxTopP);
-    boxes.appendChild(boxTop);
-
-    let boxA = document.createElement('div');
-    boxA.className = 'box-middle';
-    boxA.id = 'box-a';
-    let boxAP = document.createElement('p');
-    boxAP.id = 'box-a-p';
-    boxAP.textContent = 'A) Play game.';
-    boxA.appendChild(boxAP);
-    boxes.appendChild(boxA);
-    boxA.addEventListener('click', e => {this.renderSignupSignin();});
-
-    let boxB = document.createElement('div');
-    boxB.className = 'box-middle';
-    boxB.id = 'box-b';
-    let boxBP = document.createElement('p');
-    boxBP.id = 'box-b-p';
-    boxBP.textContent = 'B) Make game.';
-    boxB.appendChild(boxBP);
-    boxes.appendChild(boxB);
-    // boxB.addEventListener('click', e => {});
-
-    let boxC = document.createElement('div');
-    boxC.className = 'box-middle';
-    boxC.id = 'box-c';
-    let boxCP = document.createElement('p');
-    boxCP.id = 'box-c-p';
-    boxCP.textContent = 'C) Learn more about TriviaTrader.';
-    boxC.appendChild(boxCP);
-    boxes.appendChild(boxC);
-    boxC.addEventListener('click', e => {
-      console.log('clicked');
-      this.renderAbout();
-    });
-    window.content.appendChild(boxes);
-  }
-
-  static renderSignupSignin() {
-    window.hero.remove();
-
     let buttonHome = document.createElement('div');
     let buttonHomeA = document.createElement('a');
     buttonHomeA.href = '/';
@@ -90,17 +50,61 @@ class App {
     buttonHomeA.appendChild(buttonHomeImage);
     buttonHome.appendChild(buttonHomeA);
     window.content.appendChild(buttonHome);
+    window.button_home.style.display = 'none';
 
-    document.querySelector('#box-top-p').textContent = 'Q: Have you signed up for TriviaTrader?';
-    let boxA = document.querySelector('#box-a');
-    boxA.removeEventListener('click', e => {this.renderSignupSignin();});
+    let boxTop = document.createElement('div');
+    boxTop.className = 'box-top';
+    boxTop.id = 'box_top';
+    let boxTopP = document.createElement('p');
+    boxTopP.id = 'box_top_p';
+    boxTopP.textContent = 'Q: What do you want to do?';
+    boxTop.appendChild(boxTopP);
+    window.content.appendChild(boxTop);
+
+    this.renderBoxes();
+
+    this.renderMiddleBox('a', 'A) Play game.');
+    window.box_a.addEventListener('click', e => {this.renderSignupSignin();});
+
+    this.renderMiddleBox('b', 'B) Make game.');
+    window.box_b.addEventListener('click', e => {});
+
+    this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
+    window.box_c.addEventListener('click', e => {this.renderAbout();});
+  }
+
+  static renderMiddleBox(id, text) {
+    let boxName = `box_${id}`;
+    window[boxName] = document.createElement('div');
+    window[boxName].className = 'box-middle';
+    window[boxName].id = boxName;
+    let boxP = document.createElement('p');
+    let pID = `${boxName}_p`;
+    boxP.id = pID;
+    boxP.textContent = text;
+    window[boxName].appendChild(boxP);
+    let boxes = document.getElementById('boxes');
+    boxes.appendChild(window[boxName]);
+  }
+
+  static renderSignupSignin() {
+    window.hero.remove();
+    window.boxes.remove();
+    window.button_home.style.display = 'block';
+    window.box_top_p.textContent = 'Q: Have you signed up for TriviaTrader?';
+    this.renderBoxes();
+
+    this.renderMiddleBox('a', 'A) Yes');
     // TODO: Switch the event listener to login after fixing auth.
-    // boxA.addEventListener('click', e => {Category.renderCategories();});
-    boxA.addEventListener('click', e => {User.renderSigninForm();});
-    document.querySelector('#box-a-p').textContent = 'A) Yes';
-    let boxB = document.querySelector('#box-b');
-    boxB.addEventListener('click', e => {User.renderNewForm();});
-    document.querySelector('#box-b-p').textContent = 'B) No';
-    document.querySelector('#box-c').style.display = 'none';
+    window.box_a.addEventListener('click', e => {User.renderSigninForm();});
+
+    this.renderMiddleBox('b', 'B) No');
+    window.box_b.addEventListener('click', e => {User.renderNewForm();});
+  }
+
+  static setAttributes(el, attrs) {
+    for(let key in attrs) {
+      el.setAttribute(key, attrs[key]);
+    }
   }
 }
