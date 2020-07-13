@@ -26,25 +26,73 @@ class User {
 
   // NEW
   static renderNewForm() {
-    window.boxes.remove();
     window.box_top_p.textContent = 'Q: What is your info?';
+    window.boxes.remove();
     App.renderBoxes();
-    let form = document.createElement('div');
-    form.innerHTML =  `
-      <form id="create_user_form">
-        <input id="input_username" type="text" autocomplete="username" name="username" value="" placeholder="Enter a username..." class="boxes box-middle">
 
-        <input id="input_email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
+    let f = document.createElement('form');
+    f.setAttribute('id', 'edit_user_form');
 
-        <input id="input_password" type="password" autocomplete="new-password" name="password" value="" placeholder="Enter a password..." class="boxes box-middle">
+    let iu = document.createElement('input');
+    App.setAttributes(iu, {
+      'id': 'input_username',
+      'class': 'box-middle',
+      'type': 'text', 
+      'autocomplete': 'username',
+      'name': 'username', 
+      'placeholder': 'Enter a username...'
+    });
 
-        <input id="input_password_confirm" type="password" autocomplete="new_password" name="password_confirm" value="" placeholder="Retype password..." class="boxes box-middle">
+    let ubr = document.createElement('br');
 
-        <input class="btn" id="create_button" type="submit" name="submit" value="Sign Up" class="submit">
-      </form>
-    `;
-    boxes.appendChild(form);
-    document.querySelector('#create_user_form').addEventListener('submit', e => { this.handleCreateForm(e);});
+    let ie = document.createElement('input');
+    App.setAttributes(ie, {
+      'id': 'input_email', 
+      'class': 'box-middle',
+      'type': 'text', 
+      'autocomplete': 'email',
+      'name': 'email', 
+      'placeholder': 'Enter your email...', 
+    });
+
+    let ebr = document.createElement('br');
+
+    let ip = document.createElement('input');
+    App.setAttributes(ip, {
+      'id': 'input_password', 
+      'class': 'box-middle',
+      'type': 'password', 
+      'autocomplete': 'new-password',
+      'name': 'password', 
+      'placeholder': 'Enter a password...', 
+    });
+
+    let pbr = document.createElement('br');
+
+    let ipc = document.createElement('input');
+    App.setAttributes(ipc, {
+      'id': 'input_password_confirm', 
+      'class': 'box-middle',
+      'type': 'password', 
+      'autocomplete': 'new-password',
+      'name': 'password_confirm', 
+      'placeholder': 'Retype password...', 
+    });
+
+    let pcbr = document.createElement('br');
+
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'create_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Sign Up'
+    });
+
+    f.append(iu, ubr, ie, ebr, ip, pbr, ipc, pcbr, is);
+    f.addEventListener('submit', e => { this.handleCreateForm(e);});
+    boxes.append(f);
+    //
   }
 
   // CREATE
