@@ -101,4 +101,10 @@ class App {
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});
   }
+
+  static setAttributes(el, attrs) {
+    for(let key in attrs) {
+      el.setAttribute(key, attrs[key]);
+    }
+  }
 }

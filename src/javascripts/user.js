@@ -97,22 +97,59 @@ class User {
     window.box_top_p.textContent = "Q: What's your new info?";
     window.boxes.remove();
     App.renderBoxes();
-    
+
     let f = document.createElement('form');
-    f.id = "edit_user_form";
-    f.setAttribute('data-id', `${user.id}`);
-    f.innerHTML =  `
-        <label>Username</label>
-        <p><input id='input_username' type="text" name="username" value="${user.username}" class="boxes box-middle"></p>
+    App.setAttributes(f, {
+      'id': 'edit_user_form',
+      'data-id': `${user.id}`
+    });
 
-        <label>Email</label>
-        <input id='input_email' type="text" name="email" value="${user.email}" class="boxes box-middle">
-        <br>
+    let l_u = document.createElement('label');
+    App.setAttributes(l_u, {
+      'innerText': 'Username',
+    });
 
-        <input id='submit' type="submit" value="Save" class="submit">
-    `;
-    boxes.appendChild(f);
+    let p_u = document.createElement('p');
+
+    let i_u = document.createElement('input');
+    App.setAttributes(i_u, {
+      'id': 'input_username', 
+      'type': 'text', 
+      'name': 'username', 
+      'value': `${user.username}`, 
+      'class': 'box-middle'});
+
+    p_u.append(i_u);
+
+    let l_e = document.createElement('label');
+    App.setAttributes(l_e, {
+      'innerText': 'Email',
+    });
+
+    let p_e = document.createElement('p');
+
+    let i_e = document.createElement('input');
+    App.setAttributes(i_e, {
+      'id': 'input_email', 
+      'type': 'text', 
+      'name': 'email', 
+      'value': `${user.email}`, 
+      'class': 'box-middle'
+    });
+
+    p_e.append(i_e);
+
+    let i_s = document.createElement('input');
+    App.setAttributes(i_s, {
+      'id': 'submit',
+      'type': 'submit',
+      'value': 'Save',
+      'class': 'submit'
+    });
+
+    f.append(l_u, p_u, l_e, p_e, i_s);
     f.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
+    boxes.append(f);
   }
 
   // UPDATE
