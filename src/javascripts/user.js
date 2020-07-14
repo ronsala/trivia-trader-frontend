@@ -11,6 +11,87 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
+  // SIGN IN
+
+  static renderSigninForm() {
+    window.box_top_p.textContent = 'Q: What is your info?';
+    window.boxes.remove();
+    App.renderBoxes();
+
+    let f = document.createElement('form');
+    f.setAttribute('id', 'signin_form');
+
+    let ie = document.createElement('input');
+    App.setAttributes(ie, {
+      'id': 'input_email', 
+      'class': 'box-middle',
+      'type': 'text', 
+      'autocomplete': 'email',
+      'name': 'email', 
+      'placeholder': 'Enter your email...', 
+    });
+
+    let ip = document.createElement('input');
+    App.setAttributes(ip, {
+      'id': 'input_password', 
+      'class': 'box-middle',
+      'type': 'password', 
+      'autocomplete': 'password',
+      'name': 'password', 
+      'placeholder': 'Enter your password...', 
+    });
+
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'signin_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Sign In'
+    });
+
+    f.append(ie, ip, is);
+    f.addEventListener('submit', e => { this.handleSigninForm(e);});
+    boxes.append(f);
+  }
+
+  // static handleSigninForm(e) {
+  //   e.preventDefault();
+  //   const emailInput = document.querySelector('#input-email').value;
+  //   const passwordInput = document.querySelector('#input-password').value;
+
+  //   this.fetchAuthUser(emailInput, passwordInput);
+  // }
+
+  static handleSigninForm(e) {
+    e.preventDefault();
+    const emailInput = window.input_email.value;
+    const passwordInput = window.input_password.value;
+    debugger
+
+    this.fetchAuthUser(emailInput, passwordInput);
+  }
+
+  static fetchAuthUser(email, password) {
+    console.log('in fetchAuthUser')
+  //   const bodyData = {"auth": {"email": email, "password": password}};
+
+  //   fetch("http://localhost:3000/api/v1/user_token", {
+  //     method: "POST",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify(bodyData)
+  //   })
+  //   .then(response => response.json())
+  //   .then(console.log(response))
+  //   // .then(user => {
+  //     // const userData = user.data;
+  //     // let newUser = new User(userData, userData.attributes);
+
+  //     // this.renderUser(newUser);
+  //   // });
+  }
+
+  // SIGN OUT
+
   // NEW
   static renderNewForm() {
     window.box_top_p.textContent = 'Q: What is your info?';
@@ -77,7 +158,6 @@ class User {
   // CREATE
   static handleCreateForm(e) {
     e.preventDefault();
-    // const usernameInput = document.querySelector('#input_username').value;
     const usernameInput = window.input_username.value;
     const emailInput = window.input_email.value;
     const passwordInput = window.input_password.value;
@@ -194,54 +274,7 @@ class User {
   // TODO
   // DESTROY
 
-  // SIGNIN
-  static renderSigninForm() {
-    let boxes = document.querySelector('.boxes');
 
-    document.querySelector('#box_top_p').textContent = 'Q: What is your info?';
-    document.querySelector('#box_a').style.display = 'none';
-    document.querySelector('#box_b').style.display = 'none';
-    let form = document.createElement('div');
-    form.innerHTML =  `
-      <form id="signin-user-form">
-
-        <input id="input-email" type="text" autocomplete="email" name="email" value="" placeholder="Enter your email..." class="boxes box-middle">
-
-        <input id="input-password" type="password" autocomplete="password" name="password" value="" placeholder="Enter your password..." class="boxes box-middle">
-
-        <input id="create-button" type="submit" name="submit" value="Sign In" class="submit">
-      </form>
-    `;
-    boxes.appendChild(form);
-    document.querySelector('#create-user-form').addEventListener('submit', e => { this.handleSigninForm(e); });
-  }
-
-  static handleSigninForm(e) {
-    e.preventDefault();
-    const emailInput = document.querySelector('#input-email').value;
-    const passwordInput = document.querySelector('#input-password').value;
-
-    this.fetchAuthUser(emailInput, passwordInput);
-  }
-
-  // static fetchAuthUser(email, password) {
-
-  //   const bodyData = {"auth": {"email": email, "password": password}};
-
-  //   fetch("http://localhost:3000/api/v1/user_token", {
-  //     method: "POST",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify(bodyData)
-  //   })
-  //   .then(response => response.json())
-  //   .then(console.log(response))
-  //   // .then(user => {
-  //     // const userData = user.data;
-  //     // let newUser = new User(userData, userData.attributes);
-
-  //     // this.renderUser(newUser);
-  //   // });
-  // }
 }
 // }
 

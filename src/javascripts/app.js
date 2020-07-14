@@ -95,7 +95,6 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Yes');
-    // TODO: Switch the event listener to login after fixing auth.
     window.box_a.addEventListener('click', e => {User.renderSigninForm();});
 
     this.renderMiddleBox('b', 'B) No');
