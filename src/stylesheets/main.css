@@ -76,6 +76,10 @@ footer {
   margin-right: auto;
 }
 
+input {
+  display: block;
+}
+
 .label {
   position: absolute;
   width: 187px;

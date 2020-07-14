@@ -43,8 +43,6 @@ class User {
       'placeholder': 'Enter a username...'
     });
 
-    let ubr = document.createElement('br');
-
     let ie = document.createElement('input');
     App.setAttributes(ie, {
       'id': 'input_email', 
@@ -54,8 +52,6 @@ class User {
       'name': 'email', 
       'placeholder': 'Enter your email...', 
     });
-
-    let ebr = document.createElement('br');
 
     let ip = document.createElement('input');
     App.setAttributes(ip, {
@@ -67,8 +63,6 @@ class User {
       'placeholder': 'Enter a password...', 
     });
 
-    let pbr = document.createElement('br');
-
     let ipc = document.createElement('input');
     App.setAttributes(ipc, {
       'id': 'input_password_confirm', 
@@ -79,8 +73,6 @@ class User {
       'placeholder': 'Retype password...', 
     });
 
-    let pcbr = document.createElement('br');
-
     let is = document.createElement('input');
     App.setAttributes(is, {
       'id': 'create_button',
@@ -89,7 +81,7 @@ class User {
       'value': 'Sign Up'
     });
 
-    f.append(iu, ubr, ie, ebr, ip, pbr, ipc, pcbr, is);
+    f.append(iu, ie, ip, ipc, is);
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.append(f);
     //
@@ -152,32 +144,22 @@ class User {
       'data-id': `${user.id}`
     });
 
-    let l_u = document.createElement('label');
-    App.setAttributes(l_u, {
-      'innerText': 'Username',
-    });
+    let lu = document.createElement('label');
+    lu.textContent = 'Username';
 
-    let p_u = document.createElement('p');
-
-    let i_u = document.createElement('input');
-    App.setAttributes(i_u, {
+    let iu = document.createElement('input');
+    App.setAttributes(iu, {
       'id': 'input_username', 
       'type': 'text', 
       'name': 'username', 
       'value': `${user.username}`, 
       'class': 'box-middle'});
 
-    p_u.append(i_u);
+    let le = document.createElement('label');
+    le.textContent = 'Email';
 
-    let l_e = document.createElement('label');
-    App.setAttributes(l_e, {
-      'innerText': 'Email',
-    });
-
-    let p_e = document.createElement('p');
-
-    let i_e = document.createElement('input');
-    App.setAttributes(i_e, {
+    let ie = document.createElement('input');
+    App.setAttributes(ie, {
       'id': 'input_email', 
       'type': 'text', 
       'name': 'email', 
@@ -185,17 +167,15 @@ class User {
       'class': 'box-middle'
     });
 
-    p_e.append(i_e);
-
-    let i_s = document.createElement('input');
-    App.setAttributes(i_s, {
+    let is = document.createElement('input');
+    App.setAttributes(is, {
       'id': 'submit',
       'type': 'submit',
       'value': 'Save',
       'class': 'submit'
     });
 
-    f.append(l_u, p_u, l_e, p_e, i_s);
+    f.append(lu, iu, le, ie, is);
     f.addEventListener('submit', e => { this.handleUpdateForm(e, user);});
     boxes.append(f);
   }
