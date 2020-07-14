@@ -64,7 +64,8 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Play game.');
-    window.box_a.addEventListener('click', e => {this.renderSignupSignin();});
+    let destination = 'play';
+    window.box_a.addEventListener('click', e => {this.renderSignupSignin(destination);});
 
     this.renderMiddleBox('b', 'B) Make game.');
     window.box_b.addEventListener('click', e => {});
@@ -87,7 +88,7 @@ class App {
     boxes.appendChild(window[boxName]);
   }
 
-  static renderSignupSignin() {
+  static renderSignupSignin(destination) {
     window.hero.remove();
     window.boxes.remove();
     window.button_home.style.display = 'block';
@@ -95,7 +96,7 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Yes');
-    window.box_a.addEventListener('click', e => {User.renderSigninForm();});
+    window.box_a.addEventListener('click', e => {User.renderSigninForm(destination);});
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});

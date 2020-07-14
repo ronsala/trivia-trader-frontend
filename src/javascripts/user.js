@@ -13,7 +13,8 @@ class User {
 
   // SIGN IN
 
-  static renderSigninForm() {
+  static renderSigninForm(destination) {
+    debugger
     window.box_top_p.textContent = 'Q: What is your info?';
     window.boxes.remove();
     App.renderBoxes();
@@ -50,44 +51,33 @@ class User {
     });
 
     f.append(ie, ip, is);
-    f.addEventListener('submit', e => { this.handleSigninForm(e);});
+    f.addEventListener('submit', e => { this.handleSigninForm(e, destination);});
     boxes.append(f);
   }
 
-  // static handleSigninForm(e) {
-  //   e.preventDefault();
-  //   const emailInput = document.querySelector('#input-email').value;
-  //   const passwordInput = document.querySelector('#input-password').value;
-
-  //   this.fetchAuthUser(emailInput, passwordInput);
-  // }
-
-  static handleSigninForm(e) {
+  static handleSigninForm(e, destination) {
     e.preventDefault();
     const emailInput = window.input_email.value;
     const passwordInput = window.input_password.value;
-    debugger
-
     this.fetchAuthUser(emailInput, passwordInput);
   }
 
-  static fetchAuthUser(email, password) {
-    console.log('in fetchAuthUser')
-  //   const bodyData = {"auth": {"email": email, "password": password}};
+  static fetchAuthUser(email, password, destination) {
+    const bodyData = {"auth": {"email": email, "password": password}};
 
-  //   fetch("http://localhost:3000/api/v1/user_token", {
-  //     method: "POST",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify(bodyData)
-  //   })
-  //   .then(response => response.json())
-  //   .then(console.log(response))
-  //   // .then(user => {
-  //     // const userData = user.data;
-  //     // let newUser = new User(userData, userData.attributes);
+    fetch("http://localhost:3000/api/v1/user_token", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => response.json())
+    .then(debugger))
+    .then(user => {
+      const userData = user.data;
+      let newUser = new User(userData, userData.attributes);
 
-  //     // this.renderUser(newUser);
-  //   // });
+      this.renderUser(newUser);
+    });
   }
 
   // SIGN OUT
