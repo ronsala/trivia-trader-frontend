@@ -11,19 +11,6 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
-  // TODO
-  // INDEX
-  static renderUsers() {
-    fetch('http://localhost:3000/api/v1/users')
-    .then(response => response.json())
-    .then(users => {
-      users.data.forEach(user => {
-        let newUser = new User(user, user.attributes);
-        document.querySelector('#user-container').innerHTML += newUser.renderUserCard();
-      });
-    });
-  }
-
   // NEW
   static renderNewForm() {
     window.box_top_p.textContent = 'Q: What is your info?';

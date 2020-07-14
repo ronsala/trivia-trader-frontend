@@ -31,7 +31,6 @@ class App {
     window.boxes.appendChild(b);
   }
 
-  // TODO NEXT
   static renderHome() {
     let hero = document.createElement('div');
     hero.className = 'hero';
