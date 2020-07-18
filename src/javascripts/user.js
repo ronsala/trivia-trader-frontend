@@ -14,7 +14,6 @@ class User {
   // SIGN IN
 
   static renderSigninForm(destination) {
-    debugger
     window.box_top_p.textContent = 'Q: What is your info?';
     window.boxes.remove();
     App.renderBoxes();
@@ -71,8 +70,8 @@ class User {
       body: JSON.stringify(bodyData)
     })
     .then(response => response.json())
-    .then(debugger))
     .then(user => {
+      debugger
       const userData = user.data;
       let newUser = new User(userData, userData.attributes);
 
