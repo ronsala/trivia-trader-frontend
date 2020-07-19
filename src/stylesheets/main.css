@@ -5,25 +5,18 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 3px;
-  margin-top: 10px;
+  padding: 1px;
+  /* margin-top: 10px; */
   margin: 5px auto;
   background: lightblue;
   color: darkblue;
 }
 
-.box-bottom {
-  background: yellow;
-  border: 2px solid darkblue;
-  margin-top: 20px;
-  padding: 5px;
-}
-
 .box-middle {
   background: white;
   border: 2px solid darkblue;
-  padding: 5px;
-  margin-bottom: 20px;
+  padding: 1px;
+  margin-bottom: 10px;
 }
 
 .box-top {
@@ -53,6 +46,12 @@
   background-color: lightblue;
 }
 
+.correct {
+  background-color: green;
+  text-align: center;
+  color: white;
+}
+
 footer {
   display: flex;
   justify-content: center;
@@ -74,6 +73,12 @@ footer {
   height: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.incorrect {
+  background-color: red;
+  text-align: center;
+  color: white;
 }
 
 input {
