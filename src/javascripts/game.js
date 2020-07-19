@@ -28,7 +28,7 @@ class Game {
       categoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
-        document.getElementById(gameId).addEventListener('click', e => console.log(`${game.title} clicked`));
+        document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
       });
     })
     .catch(error => console.error(error));

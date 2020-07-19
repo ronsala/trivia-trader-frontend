@@ -78,17 +78,17 @@ class App {
   }
 
   static renderMiddleBox(id, text) {
-    let boxName = `box_${id}`;
-    window[boxName] = document.createElement('div');
-    window[boxName].className = 'box-middle';
-    window[boxName].id = boxName;
+    let boxId = `box_${id}`;
+    window[boxId] = document.createElement('div');
+    window[boxId].className = 'box-middle';
+    window[boxId].id = boxId;
     let boxP = document.createElement('p');
-    let pID = `${boxName}_p`;
+    let pID = `${boxId}_p`;
     boxP.id = pID;
     boxP.textContent = text;
-    window[boxName].appendChild(boxP);
+    window[boxId].appendChild(boxP);
     let boxes = document.getElementById('boxes');
-    boxes.append(window[boxName]);
+    boxes.append(window[boxId]);
   }
 
   static renderSignupSignin(destination) {
