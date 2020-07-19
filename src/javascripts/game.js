@@ -10,11 +10,9 @@ class Game {
 
   // INDEX
   static renderGames(categoryId) {
-    document.querySelector('#box-top-p').textContent = 'Q: Which game do you want to play?';
-
-    document.querySelectorAll('.box-middle').forEach(box => {
-      box.style.display = 'none';
-    });
+    window.box_top_p.textContent = 'Q: Which game do you want to play?';
+    window.boxes.remove();
+    App.renderBoxes();
 
     fetch('http://localhost:3000/api/v1/games')
     .then(response => response.json())
@@ -27,18 +25,14 @@ class Game {
       let allGames = Game.all;
       let categoryGames = allGames.filter(el => el.category_id == categoryId);
 
-      categoryGames.forEach(categoryGame => {
-        let div = document.createElement('div');
-        div.className = "box-middle";
-        div.innerHTML = `<p>${categoryGame.title}</p>`;
-        div.addEventListener('click', e => console.log(`${categoryGame.title} clicked`))
-        document.querySelector('#boxes').appendChild(div);
+      categoryGames.forEach(game => {
+        App.renderMiddleBox(game.id, game.title);
+        let gameId = `box_${game.id}`;
+        document.getElementById(gameId).addEventListener('click', e => console.log(`${game.title} clicked`))
       });
     })
     .catch(error => console.error(error));
   }
 }
-
-
 
 Game.all = [];
