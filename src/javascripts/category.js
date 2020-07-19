@@ -20,8 +20,8 @@ class Category {
       categories.data.forEach(category => {
         let newCategory = new Category(category, category.attributes);
         App.renderMiddleBox(newCategory.id, newCategory.name);
-        let CategoryId = `box_${newCategory.id}`;
-        document.getElementById(CategoryId).addEventListener('click', e => Game.renderGames(newCategory.id));
+        let categoryId = `box_${newCategory.id}`;
+        document.getElementById(categoryId).addEventListener('click', e => Game.renderGames(newCategory.id));
       });
     });
   }
