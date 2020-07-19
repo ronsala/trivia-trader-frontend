@@ -8,20 +8,20 @@ class Category {
 
   // INDEX
   static renderCategories() {
-    document.querySelector('#box-top-p').textContent = 'Q: What category of game do you want to play?';
-    document.querySelector('#box-a').style.display = 'none';
-    document.querySelector('#box-b').style.display = 'none';
+    window.hero.remove();
+    window.boxes.remove();
+    window.button_home.style.display = 'block';
+    window.box_top_p.textContent = 'Q: What category of game do you want to play?';
+    App.renderBoxes();
 
     fetch('http://localhost:3000/api/v1/categories')
     .then(response => response.json())
     .then(categories => {
       categories.data.forEach(category => {
         let newCategory = new Category(category, category.attributes);
-        let div = document.createElement('div');
-        div.className = "box-middle";
-        div.innerHTML = `<p>${newCategory.name}</p>`;
-        div.addEventListener('click', e => Game.renderGames(newCategory.id));
-        document.querySelector('#boxes').appendChild(div);
+        App.renderMiddleBox(newCategory.id, newCategory.name);
+        let CategoryId = `box_${newCategory.id}`;
+        document.getElementById(CategoryId).addEventListener('click', e => Game.renderGames(newCategory.id));
       });
     });
   }

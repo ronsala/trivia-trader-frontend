@@ -31,7 +31,6 @@ class App {
     window.boxes.appendChild(b);
   }
 
-  // TODO NEXT
   static renderHome() {
     let hero = document.createElement('div');
     hero.className = 'hero';
@@ -65,7 +64,11 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Play game.');
-    window.box_a.addEventListener('click', e => {this.renderSignupSignin();});
+    let destination = 'play';
+    // TODO: Uncomment after JWT works:
+    // window.box_a.addEventListener('click', e => {this.renderSignupSignin(destination);});
+    // TODO: rm after JWT works:
+    window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
     window.box_b.addEventListener('click', e => {});
@@ -85,10 +88,10 @@ class App {
     boxP.textContent = text;
     window[boxName].appendChild(boxP);
     let boxes = document.getElementById('boxes');
-    boxes.appendChild(window[boxName]);
+    boxes.append(window[boxName]);
   }
 
-  static renderSignupSignin() {
+  static renderSignupSignin(destination) {
     window.hero.remove();
     window.boxes.remove();
     window.button_home.style.display = 'block';
@@ -96,8 +99,7 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Yes');
-    // TODO: Switch the event listener to login after fixing auth.
-    window.box_a.addEventListener('click', e => {User.renderSigninForm();});
+    window.box_a.addEventListener('click', e => {User.renderSigninForm(destination);});
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});
