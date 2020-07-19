@@ -18,7 +18,7 @@ class Game {
     .then(response => response.json())
     .then(games => {
       games.data.forEach(game => {
-        let newGame = new Game(game, game.attributes);
+        new Game(game, game.attributes);
       });
     })
     .then(() => {
