@@ -25,19 +25,17 @@ class Question {
     })
     .then(() => {
       let allQuestions = Question.all;
-      let gameQuestions = allQuestions.filter(el => el.game_id == gameId);
-
-      gameQuestions.forEach(question => {
-        this.renderQuestion(question);
-        // App.renderMiddleBox(question.id, question.title);
-        // let questionId = `box_${question.id}`;
-        // document.getElementById(questionId).addEventListener('click', e => console.log(`${question.title} clicked`));
+      this.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
+      this.remainingQuestions.forEach(question => {
+        this.renderQuestion(this.remainingQuestions);
       });
     })
     .catch(error => console.error(error));
   }
 
-  static renderQuestion(question) {
+  static renderQuestion(remainingQuestions) {
+    console.log('remainingQuestions: ', remainingQuestions)
+    let question = this.remainingQuestions.shift();
     window.box_top_p.textContent = question.q;
     window.boxes.remove();
     App.renderBoxes();
@@ -74,7 +72,14 @@ class Question {
     a.innerText = `Source: ${question.link}`;
     boxSourceP.appendChild(a);
     window.boxes.append(boxSource);
+    this.renderNext();
+  }
+
+  static renderNext() {
+    App.renderMiddleBox('next', 'Next');
+    window.box_next.addEventListener('click', e => {this.renderQuestion(this.remainingQuestions);});
   }
 }
 
 Question.all = [];
+remainingQuestions = [];
