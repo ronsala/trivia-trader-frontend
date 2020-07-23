@@ -15,7 +15,6 @@ class Question {
 
   // INDEX
   static fetchQuestions(gameId) {
-
     fetch('http://localhost:3000/api/v1/questions')
     .then(response => response.json())
     .then(questions => {
@@ -24,17 +23,19 @@ class Question {
       });
     })
     .then(() => {
-      let allQuestions = Question.all;
-      this.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
-      this.remainingQuestions.forEach(question => {
-        this.renderQuestion(this.remainingQuestions);
-      });
+      this.selectQuestions(gameId);
     })
     .catch(error => console.error(error));
   }
 
-  static renderQuestion(remainingQuestions) {
-    console.log('remainingQuestions: ', remainingQuestions)
+  static selectQuestions(gameId) {
+    let allQuestions = Question.all;
+    this.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
+    this.renderQuestion();
+  }
+
+  static renderQuestion() {
+
     let question = this.remainingQuestions.shift();
     window.box_top_p.textContent = question.q;
     window.boxes.remove();
@@ -54,10 +55,12 @@ class Question {
       App.renderMiddleBox('correct', 'CORRECT!');
       window.box_correct.classList.add('correct');
       this.renderSource(question);
+      Game.calculateScore('correct');
     } else {
       App.renderMiddleBox('incorrect', `INCORRECT. Correct answer: ${question.correct.toUpperCase()}`);
       window.box_incorrect.classList.add('incorrect');
       this.renderSource(question);
+      Game.calculateScore('incorrect');
     }
   }
 
@@ -72,14 +75,18 @@ class Question {
     a.innerText = `Source: ${question.link}`;
     boxSourceP.appendChild(a);
     window.boxes.append(boxSource);
-    this.renderNext();
+    if(this.remainingQuestions.length == 0) {
+      Game.renderGameOver();
+    } else {
+      this.renderNext();
+    }
   }
 
   static renderNext() {
     App.renderMiddleBox('next', 'Next');
-    window.box_next.addEventListener('click', e => {this.renderQuestion(this.remainingQuestions);});
+    window.box_next.addEventListener('click', e => {this.renderQuestion();});
   }
 }
 
 Question.all = [];
-remainingQuestions = [];
+Question.remainingQuestions = [];

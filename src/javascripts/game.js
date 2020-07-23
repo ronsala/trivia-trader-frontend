@@ -8,6 +8,22 @@ class Game {
     Game.all.push(this);
   }
 
+  static calculateScore(correctness) {
+    this.questionsPlayed ++;
+    if(correctness  == 'correct') {
+      this.corrects ++;
+    }
+    console.log('corrects:', this.corrects)
+    console.log('questionsPlayed:', this.questionsPlayed)
+    if(this.questionsPlayed == 5) {
+      this.renderGameOver()
+    }
+  }
+
+  static renderGameOver() {
+    console.log('in renderGameOver')
+  }
+
   // INDEX
   static renderGames(categoryId) {
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
@@ -36,3 +52,5 @@ class Game {
 }
 
 Game.all = [];
+Game.corrects = 0;
+Game.questionsPlayed = 0;
