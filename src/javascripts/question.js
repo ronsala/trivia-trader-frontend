@@ -15,6 +15,7 @@ class Question {
 
   // INDEX
   static fetchQuestions(gameId) {
+    Question.all = [];
     fetch('http://localhost:3000/api/v1/questions')
     .then(response => response.json())
     .then(questions => {

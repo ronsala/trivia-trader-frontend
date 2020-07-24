@@ -43,8 +43,6 @@ class Game {
       let categoryGames = allGames.filter(el => el.category_id == categoryId);
 
       categoryGames.forEach(game => {
-        // debugger
-
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
         document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
