@@ -8,7 +8,9 @@ class Category {
 
   // INDEX
   static renderCategories() {
-    window.hero.remove();
+    if(window.hero) {
+      window.hero.remove();
+    }
     window.boxes.remove();
     window.button_home.style.display = 'block';
     window.box_top_p.textContent = 'Q: What category of game do you want to play?';

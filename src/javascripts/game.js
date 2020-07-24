@@ -8,11 +8,28 @@ class Game {
     Game.all.push(this);
   }
 
+  static calculateScore(correctness) {
+    this.questionsPlayed ++;
+
+    if(correctness  == 'correct') {
+      this.corrects ++;
+    }
+  }
+
+  static renderScore() {
+    window.box_top_p.textContent = `You got ${this.corrects} out of ${this.questionsPlayed} right.`;
+    window.boxes.remove();
+    App.renderBoxes();
+    App.renderMiddleBox('categories', 'Back To Categories');
+    window.box_categories.addEventListener('click', e => {Category.renderCategories();});
+  }
+
   // INDEX
   static renderGames(categoryId) {
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
     window.boxes.remove();
     App.renderBoxes();
+    Game.all = [];
 
     fetch('http://localhost:3000/api/v1/games')
     .then(response => response.json())
@@ -28,7 +45,7 @@ class Game {
       categoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
-        document.getElementById(gameId).addEventListener('click', e => console.log(`${game.title} clicked`));
+        document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
       });
     })
     .catch(error => console.error(error));
@@ -36,3 +53,5 @@ class Game {
 }
 
 Game.all = [];
+Game.corrects = 0;
+Game.questionsPlayed = 0;

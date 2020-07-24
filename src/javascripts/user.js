@@ -71,7 +71,6 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
-      debugger
       const userData = user.data;
       let newUser = new User(userData, userData.attributes);
 
