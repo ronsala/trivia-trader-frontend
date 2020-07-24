@@ -35,7 +35,6 @@ class Question {
   }
 
   static renderQuestion() {
-
     let question = this.remainingQuestions.shift();
     window.box_top_p.textContent = question.q;
     window.boxes.remove();
@@ -75,16 +74,23 @@ class Question {
     a.innerText = `Source: ${question.link}`;
     boxSourceP.appendChild(a);
     window.boxes.append(boxSource);
-    if(this.remainingQuestions.length == 0) {
-      Game.renderGameOver();
-    } else {
+    if(this.remainingQuestions.length > 0) {
       this.renderNext();
+    } else {
+      this.renderGetScore();
     }
   }
 
   static renderNext() {
     App.renderMiddleBox('next', 'Next');
     window.box_next.addEventListener('click', e => {this.renderQuestion();});
+  }
+
+  static renderGetScore() {
+    App.renderMiddleBox('game_over', 'GAME OVER');
+    window.box_game_over.classList.add('incorrect');
+    App.renderMiddleBox('get_score', 'Get Score');
+    window.box_get_score.addEventListener('click', e => {Game.renderScore();});
   }
 }
 

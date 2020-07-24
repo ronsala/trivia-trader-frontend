@@ -10,18 +10,18 @@ class Game {
 
   static calculateScore(correctness) {
     this.questionsPlayed ++;
+
     if(correctness  == 'correct') {
       this.corrects ++;
     }
-    console.log('corrects:', this.corrects)
-    console.log('questionsPlayed:', this.questionsPlayed)
-    if(this.questionsPlayed == 5) {
-      this.renderGameOver()
-    }
   }
 
-  static renderGameOver() {
-    console.log('in renderGameOver')
+  static renderScore() {
+    window.box_top_p.textContent = `You got ${this.corrects} out of ${this.questionsPlayed} right.`;
+    window.boxes.remove();
+    App.renderBoxes();
+    App.renderMiddleBox('categories', 'Back To Categories');
+    window.box_categories.addEventListener('click', e => {Category.renderCategories();});
   }
 
   // INDEX
