@@ -29,6 +29,7 @@ class Game {
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
     window.boxes.remove();
     App.renderBoxes();
+    Game.all = [];
 
     fetch('http://localhost:3000/api/v1/games')
     .then(response => response.json())
@@ -42,6 +43,8 @@ class Game {
       let categoryGames = allGames.filter(el => el.category_id == categoryId);
 
       categoryGames.forEach(game => {
+        // debugger
+
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
         document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
