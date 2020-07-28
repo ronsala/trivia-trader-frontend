@@ -66,9 +66,9 @@ class App {
     this.renderMiddleBox('a', 'A) Play game.');
     let destination = 'play';
     // TODO: Uncomment after JWT works:
-    // window.box_a.addEventListener('click', e => {this.renderSignupLogin(destination);});
+    window.box_a.addEventListener('click', e => {this.renderSignupLogin(destination);});
     // TODO: rm after JWT works:
-    window.box_a.addEventListener('click', e => {Category.renderCategories();});
+    // window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
     window.box_b.addEventListener('click', e => {});

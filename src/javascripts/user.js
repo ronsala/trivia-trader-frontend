@@ -161,7 +161,8 @@ class User {
 
   static fetchNewUser(username, email, password) {
 
-    const bodyData = {username, email, password};
+    // const bodyData = {username, email, password};
+    const bodyData = {user: {username, email, password}};
 
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
@@ -170,14 +171,16 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
-      const userData = user.data;
+      const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
+      localStorage.setItem('jwt_token', user.jwt);
       this.renderUser(newUser);
     });
   }
 
   // SHOW
   static renderUser(user) {
+    debugger
     window.boxes.remove();
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
