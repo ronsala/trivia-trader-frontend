@@ -251,7 +251,10 @@ class User {
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        },
       body: JSON.stringify(bodyJSON)
       })
       .then(res => res.json())
