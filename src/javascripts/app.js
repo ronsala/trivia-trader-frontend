@@ -66,7 +66,7 @@ class App {
     this.renderMiddleBox('a', 'A) Play game.');
     let destination = 'play';
     // TODO: Uncomment after JWT works:
-    // window.box_a.addEventListener('click', e => {this.renderSignupSignin(destination);});
+    // window.box_a.addEventListener('click', e => {this.renderSignupLogin(destination);});
     // TODO: rm after JWT works:
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
@@ -91,7 +91,7 @@ class App {
     boxes.append(window[boxId]);
   }
 
-  static renderSignupSignin(destination) {
+  static renderSignupLogin(destination) {
     window.hero.remove();
     window.boxes.remove();
     window.button_home.style.display = 'block';
@@ -99,7 +99,7 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Yes');
-    window.box_a.addEventListener('click', e => {User.renderSigninForm(destination);});
+    window.box_a.addEventListener('click', e => {User.renderLoginForm(destination);});
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});

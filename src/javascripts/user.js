@@ -11,15 +11,15 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
-  // SIGN IN
+  // LOGIN
 
-  static renderSigninForm(destination) {
+  static renderLoginForm(destination) {
     window.box_top_p.textContent = 'Q: What is your info?';
     window.boxes.remove();
     App.renderBoxes();
 
     let f = document.createElement('form');
-    f.setAttribute('id', 'signin_form');
+    f.setAttribute('id', 'login_form');
 
     let ie = document.createElement('input');
     App.setAttributes(ie, {
@@ -43,10 +43,10 @@ class User {
 
     let is = document.createElement('input');
     App.setAttributes(is, {
-      'id': 'signin_button',
+      'id': 'login_button',
       'class': 'submit',
       'type': 'submit',
-      'value': 'Sign In'
+      'value': 'Log In'
     });
 
     f.append(ie, ip, is);
@@ -54,17 +54,17 @@ class User {
     boxes.append(f);
   }
 
-  static handleSigninForm(e, destination) {
+  static handleLoginForm(e, destination) {
     e.preventDefault();
     const emailInput = window.input_email.value;
     const passwordInput = window.input_password.value;
     this.fetchAuthUser(emailInput, passwordInput);
   }
 
-  static fetchAuthUser(email, password, destination) {
+  static fetchLogin(email, password, destination) {
     const bodyData = {"auth": {"email": email, "password": password}};
 
-    fetch("http://localhost:3000/api/v1/user_token", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
