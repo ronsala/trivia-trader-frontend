@@ -64,17 +64,16 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Play game.');
-    let destination = 'play';
-    // TODO: Uncomment after JWT works:
-    // window.box_a.addEventListener('click', e => {this.renderSignupSignin(destination);});
-    // TODO: rm after JWT works:
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
-    window.box_b.addEventListener('click', e => {});
+    window.box_b.addEventListener('click', e => {Game.renderCreateForm()});
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
+
+    this.renderMiddleBox('d', 'D) Sign Up/Log In');
+    window.box_d.addEventListener('click', e => {this.renderSignupLogin();});
   }
 
   static renderMiddleBox(id, text) {
@@ -91,7 +90,7 @@ class App {
     boxes.append(window[boxId]);
   }
 
-  static renderSignupSignin(destination) {
+  static renderSignupLogin() {
     window.hero.remove();
     window.boxes.remove();
     window.button_home.style.display = 'block';
@@ -99,7 +98,7 @@ class App {
     this.renderBoxes();
 
     this.renderMiddleBox('a', 'A) Yes');
-    window.box_a.addEventListener('click', e => {User.renderSigninForm(destination);});
+    window.box_a.addEventListener('click', e => {User.renderLoginForm();});
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});

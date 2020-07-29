@@ -11,15 +11,15 @@ class User {
     return this.all.find(user => user.id == id);
   }
 
-  // SIGN IN
+  // LOGIN
 
-  static renderSigninForm(destination) {
+  static renderLoginForm() {
     window.box_top_p.textContent = 'Q: What is your info?';
     window.boxes.remove();
     App.renderBoxes();
 
     let f = document.createElement('form');
-    f.setAttribute('id', 'signin_form');
+    f.setAttribute('id', 'login_form');
 
     let ie = document.createElement('input');
     App.setAttributes(ie, {
@@ -43,28 +43,28 @@ class User {
 
     let is = document.createElement('input');
     App.setAttributes(is, {
-      'id': 'signin_button',
+      'id': 'login_button',
       'class': 'submit',
       'type': 'submit',
-      'value': 'Sign In'
+      'value': 'Log In'
     });
 
     f.append(ie, ip, is);
-    f.addEventListener('submit', e => { this.handleSigninForm(e, destination);});
+    f.addEventListener('submit', e => { this.handleSigninForm(e);});
     boxes.append(f);
   }
 
-  static handleSigninForm(e, destination) {
+  static handleLoginForm(e) {
     e.preventDefault();
     const emailInput = window.input_email.value;
     const passwordInput = window.input_password.value;
     this.fetchAuthUser(emailInput, passwordInput);
   }
 
-  static fetchAuthUser(email, password, destination) {
+  static fetchLogin(email, password) {
     const bodyData = {"auth": {"email": email, "password": password}};
 
-    fetch("http://localhost:3000/api/v1/user_token", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
@@ -161,7 +161,7 @@ class User {
 
   static fetchNewUser(username, email, password) {
 
-    const bodyData = {username, email, password};
+    const bodyData = {user: {username, email, password}};
 
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
@@ -170,8 +170,9 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
-      const userData = user.data;
+      const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
+      localStorage.setItem('jwt_token', user.jwt);
       this.renderUser(newUser);
     });
   }
@@ -182,6 +183,8 @@ class User {
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
     App.renderMiddleBox('username', `Username: ${user.username}`);
+        // TODO: Only render below for current user.
+    // if(localStorage)
     App.renderMiddleBox('email', `Email: ${user.email}`);
     App.renderButton('edit', 'Edit', user);
     window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
@@ -248,7 +251,10 @@ class User {
     const bodyJSON = { username, email };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        },
       body: JSON.stringify(bodyJSON)
       })
       .then(res => res.json())
