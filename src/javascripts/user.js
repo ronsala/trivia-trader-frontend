@@ -50,7 +50,7 @@ class User {
     });
 
     f.append(ie, ip, is);
-    f.addEventListener('submit', e => { this.handleSigninForm(e);});
+    f.addEventListener('submit', e => { this.handleLoginForm(e);});
     boxes.append(f);
   }
 
@@ -58,7 +58,7 @@ class User {
     e.preventDefault();
     const emailInput = window.input_email.value;
     const passwordInput = window.input_password.value;
-    this.fetchAuthUser(emailInput, passwordInput);
+    this.fetchLogin(emailInput, passwordInput);
   }
 
   static fetchLogin(email, password) {
@@ -71,14 +71,12 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
-      const userData = user.data;
+      const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
 
       this.renderUser(newUser);
     });
   }
-
-  // SIGN OUT
 
   // NEW
   static renderNewForm() {
@@ -170,6 +168,7 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
+      console.log("user:", user)
       const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
       localStorage.setItem('jwt_token', user.jwt);
