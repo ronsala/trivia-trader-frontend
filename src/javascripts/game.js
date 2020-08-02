@@ -98,43 +98,36 @@ class Game {
       });
     });
 
+    f.append(it, window.box_category);
+
     // Questions
-    let questionNumbers = ['q1', 'q2', 'q3', 'q4', 'q5'];
-    
-    let q1 = document.createElement('input');
-    App.setAttributes(q1, {
-      'id': 'input_q1',
-      'class': 'box-middle',
-      'type': 'text', 
-      'name': 'q1', 
-      'placeholder': "Q: What is the first question?"
-    });
-    let br = document.createElement('br');
-
-    f.append(it, window.box_category, br, q1);
-
-    let answerLetters = ['A', 'B', 'C', 'D'];
-    answerLetters.forEach(answerLetter => {
-      let answer = document.createElement('input');
-      App.setAttributes(answer, {
-        'id': `input_${q1.name}_${answerLetter}`,
+    let questionNumbers = [1, 2, 3, 4, 5];
+    questionNumbers.forEach(questionNumber => {
+      let question = document.createElement('input');
+      App.setAttributes(question, {
+        'id': `input_question_${questionNumber}`,
         'class': 'box-middle',
         'type': 'text', 
-        'name': `${q1.name}_${answerLetter}`, 
-        'placeholder': `Q: What is answer ${answerLetter}?`
+        'name': `input_question_${questionNumber}`, 
+        'placeholder': `Q: What is question ${questionNumber}?`
       });
-      f.append(answer);
-    });
+      let br = document.createElement('br');
 
-    // Answer A
-    // let q1aa = document.createElement('input');
-    // App.setAttributes(q1aa, {
-    //   'id': 'input_q1aa',
-    //   'class': 'box-middle',
-    //   'type': 'text', 
-    //   'name': 'q1aa', 
-    //   'placeholder': "Q: What is answer A?"
-    // });
+      f.append(br, question);
+
+      let answerLetters = ['A', 'B', 'C', 'D'];
+      answerLetters.forEach(answerLetter => {
+        let answer = document.createElement('input');
+        App.setAttributes(answer, {
+          'id': `input_${question.name}_${answerLetter}`,
+          'class': 'box-middle',
+          'type': 'text', 
+          'name': `${question.name}_${answerLetter}`, 
+          'placeholder': `Q: What is answer ${answerLetter}?`
+        });
+        f.append(answer);
+      });
+    });
 
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.appendChild(f);
