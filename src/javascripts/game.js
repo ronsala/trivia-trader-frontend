@@ -60,6 +60,17 @@ class Game {
     let f = document.createElement('form');
     f.setAttribute('id', 'new_game_form');
 
+    // Title
+    let it = document.createElement('input');
+    App.setAttributes(it, {
+      'id': 'input_title',
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': 'title', 
+      'placeholder': "Q: What is your game's title?"
+    });
+
+    // Category
     App.renderMiddleBox('category', "Q: What is your game's category?");
     
     fetch('http://localhost:3000/api/v1/categories')
@@ -82,12 +93,16 @@ class Game {
         label.insertAdjacentElement('afterend', catButton);
         let br = document.createElement('br');
         window.box_category.append(br);
-        f.append(window.box_category);        
+        f.append(it, window.box_category);        
       });
     });
 
+    
+
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.appendChild(f);
+
+
   }
 }
 
