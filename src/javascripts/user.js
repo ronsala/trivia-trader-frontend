@@ -85,7 +85,7 @@ class User {
     App.renderBoxes();
 
     let f = document.createElement('form');
-    f.setAttribute('id', 'edit_user_form');
+    f.setAttribute('id', 'new_user_form');
 
     let iu = document.createElement('input');
     App.setAttributes(iu, {
@@ -138,7 +138,6 @@ class User {
     f.append(iu, ie, ip, ipc, is);
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.append(f);
-    //
   }
 
   // CREATE

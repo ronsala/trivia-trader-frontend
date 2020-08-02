@@ -67,7 +67,7 @@ class App {
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
-    window.box_b.addEventListener('click', e => {Game.renderCreateForm()});
+    window.box_b.addEventListener('click', e => {Game.renderNewForm()});
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});

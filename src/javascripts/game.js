@@ -50,6 +50,45 @@ class Game {
     })
     .catch(error => console.error(error));
   }
+
+  // NEW
+  static renderNewForm() {
+    window.box_top_p.textContent = "Q: What is your game's info?";
+    window.boxes.remove();
+    App.renderBoxes();
+
+    let f = document.createElement('form');
+    f.setAttribute('id', 'new_game_form');
+
+    App.renderMiddleBox('category', "Q: What is your game's category?");
+    
+    fetch('http://localhost:3000/api/v1/categories')
+    .then(response => response.json())
+    .then(categories => {
+      categories.data.forEach(category => {
+        let newCategory = new Category(category, category.attributes);
+        let catButton = document.createElement('input');
+        App.setAttributes(catButton, {
+          'id': newCategory.id,
+          'type': 'radio',
+          'name': 'category',
+          'value': newCategory.id,
+        });
+        let label = document.createElement('label');
+        label.htmlFor = newCategory.id;
+        let desc = document.createTextNode(newCategory.name);
+        label.append(desc);
+        window.box_category.append(label);
+        label.insertAdjacentElement('afterend', catButton);
+        let br = document.createElement('br');
+        window.box_category.append(br);
+        f.append(window.box_category);        
+      });
+    });
+
+    f.addEventListener('submit', e => { this.handleCreateForm(e);});
+    boxes.appendChild(f);
+  }
 }
 
 Game.all = [];
