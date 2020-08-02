@@ -7,6 +7,22 @@ class User {
     User.all.push(this);
   }
 
+  static getCurrentUser() {
+    fetch(`http://localhost:3000/api/v1/verify`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        }
+      })
+      .then(res => res.json())
+      .then(user => {
+        if(user) {
+          window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
+        }
+      });
+  }
+
   static findById(id) {
     return this.all.find(user => user.id == id);
   }
@@ -177,6 +193,7 @@ class User {
 
   // SHOW
   static renderUser(user) {
+    this.getCurrentUser();
     window.boxes.remove();
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();

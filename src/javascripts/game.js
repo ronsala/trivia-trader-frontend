@@ -161,6 +161,17 @@ class Game {
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.appendChild(f);
   }
+
+    // CREATE
+    static handleCreateForm(e) {
+      e.preventDefault();
+      const usernameInput = window.input_username.value;
+      const emailInput = window.input_email.value;
+      const passwordInput = window.input_password.value;
+      const passwordConfirmInput = window.input_password_confirm.value;
+  
+      this.fetchNewUser(usernameInput, emailInput, passwordInput);
+    }
 }
 
 Game.all = [];
