@@ -123,11 +123,40 @@ class Game {
           'class': 'box-middle',
           'type': 'text', 
           'name': `${question.name}_${answerLetter}`, 
-          'placeholder': `Q: What is answer ${answerLetter}?`
+          'placeholder': `What is answer ${answerLetter}?`
         });
         f.append(answer);
       });
+
+      let correct = document.createElement('input');
+      App.setAttributes(correct, {
+        'id': `input_${question.name}_correct`,
+        'class': 'box-middle',
+        'type': 'text', 
+        'name': `${question.name}_correct`, 
+        'placeholder': `What is the letter of the correct answer?`
+      });
+      f.append(correct);
+
+      let link = document.createElement('input');
+      App.setAttributes(link, {
+        'id': `input_${question.name}_link`,
+        'class': 'box-middle',
+        'type': 'text', 
+        'name': `${question.name}_link`, 
+        'placeholder': `What is a link that documents the correct answer?`
+      });
+      f.append(link);
     });
+
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'create_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Submit Game'
+    });
+    f.append(is);
 
     f.addEventListener('submit', e => { this.handleCreateForm(e);});
     boxes.appendChild(f);
