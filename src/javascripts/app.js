@@ -35,6 +35,7 @@ class App {
     let loginStatus = document.createElement('p');
     loginStatus.id = 'login_status';
     window.content.prepend(loginStatus);
+
     User.getCurrentUser();
 
     let hero = document.createElement('div');
@@ -78,9 +79,8 @@ class App {
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
 
-    this.renderMiddleBox('d', 'D) Sign Up/Log In');
-    window.box_d.addEventListener('click', e => {this.renderSignupLogin();});
-  }
+    window.setTimeout(this.selectLoggingBox, 2000);
+}
 
   static renderMiddleBox(id, text) {
     let boxId = `box_${id}`;
@@ -94,6 +94,16 @@ class App {
     window[boxId].appendChild(boxP);
     let boxes = document.getElementById('boxes');
     boxes.append(window[boxId]);
+  }
+
+  static selectLoggingBox() {
+    if(window.login_status.textContent) {
+      App.renderMiddleBox('d', 'D) Log Out');
+      window.box_d.addEventListener('click', e => {User.logout();});
+    } else {
+      App.renderMiddleBox('d', 'D) Sign Up/Log In');
+      window.box_d.addEventListener('click', e => {this.renderSignupLogin();});
+    }
   }
 
   static renderSignupLogin() {
