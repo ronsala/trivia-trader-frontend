@@ -17,10 +17,11 @@ class User {
       })
       .then(res => res.json())
       .then(user => {
-        if(user) {
+        if(user.data) {
           window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
         }
-      });
+      })
+      .catch(error => console.error('Error:', error));
   }
 
   static findById(id) {
@@ -89,9 +90,18 @@ class User {
     .then(user => {
       const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
-
+      localStorage.setItem('jwt_token', user.jwt);
       this.renderUser(newUser);
     });
+  }
+
+  // LOGOUT
+  static logout() {
+    window.localStorage.setItem('jwt_token', '');
+    window.login_status.textContent = '';
+    window.box_d.remove();
+    App.renderMiddleBox('d', 'D) Sign Up/Log In');
+    window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
   }
 
   // NEW
@@ -175,7 +185,6 @@ class User {
   static fetchNewUser(username, email, password) {
 
     const bodyData = {user: {username, email, password}};
-
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -183,17 +192,19 @@ class User {
     })
     .then(response => response.json())
     .then(user => {
-      console.log("user:", user)
       const userData = user.user.data;
       let newUser = new User(userData, userData.attributes);
       localStorage.setItem('jwt_token', user.jwt);
       this.renderUser(newUser);
-    });
+    })
+    .catch(error => console.error('Error:', error));
   }
 
   // SHOW
   static renderUser(user) {
-    this.getCurrentUser();
+    if (window.localStorage.getItem('jwt_token')) {
+      User.getCurrentUser();
+    }
     window.boxes.remove();
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
