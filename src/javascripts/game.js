@@ -48,7 +48,7 @@ class Game {
         document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
       });
     })
-    .catch(error => console.error(error));
+    .catch(error => console.log(error));
   }
 
   // NEW

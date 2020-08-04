@@ -36,7 +36,9 @@ class App {
     loginStatus.id = 'login_status';
     window.content.prepend(loginStatus);
 
-    User.getCurrentUser();
+    if (window.localStorage.getItem('jwt_token')) {
+      User.getCurrentUser();
+    }
 
     let hero = document.createElement('div');
     hero.className = 'hero';
@@ -74,12 +76,12 @@ class App {
 
     this.renderMiddleBox('b', 'B) Make game.');
     // window.box_b.addEventListener('click', e => {Game.renderNewForm()});
-    window.box_b.addEventListener('click', e => {User.getCurrentUser()});
+    window.box_b.addEventListener('click', e => {User.getCurrentUser();});
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
 
-    window.setTimeout(this.selectLoggingBox, 2000);
+    window.setTimeout(this.selectLoggingBox, 500);
 }
 
   static renderMiddleBox(id, text) {
@@ -98,11 +100,11 @@ class App {
 
   static selectLoggingBox() {
     if(window.login_status.textContent) {
-      App.renderMiddleBox('d', 'D) Log Out');
+      App.renderMiddleBox('d', 'D) Log out.');
       window.box_d.addEventListener('click', e => {User.logout();});
     } else {
-      App.renderMiddleBox('d', 'D) Sign Up/Log In');
-      window.box_d.addEventListener('click', e => {this.renderSignupLogin();});
+      App.renderMiddleBox('d', 'D) Sign up/Log in.');
+      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
     }
   }
 
