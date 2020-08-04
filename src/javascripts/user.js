@@ -21,8 +21,9 @@ class User {
           window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
         }
       })
-      .catch(error => console.error('Error:', error));
-  }
+      .catch((error) => {
+        console.error('Error:', error);
+      });  }
 
   static findById(id) {
     return this.all.find(user => user.id == id);
@@ -92,6 +93,10 @@ class User {
       let newUser = new User(userData, userData.attributes);
       localStorage.setItem('jwt_token', user.jwt);
       this.renderUser(newUser);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      window.alert('Email/Password not recognized. Please try again.')
     });
   }
 
