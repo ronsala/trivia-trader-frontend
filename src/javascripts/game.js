@@ -101,53 +101,53 @@ class Game {
     f.append(it, window.box_category);
 
     // Questions
-    let questionNumbers = [1, 2, 3, 4, 5];
-    questionNumbers.forEach(questionNumber => {
-      let question = document.createElement('input');
-      App.setAttributes(question, {
-        'id': `input_question_${questionNumber}`,
-        'class': 'box-middle',
-        'type': 'text', 
-        'name': `input_question_${questionNumber}`, 
-        'placeholder': `Q: What is question ${questionNumber}?`
-      });
-      let br = document.createElement('br');
+    // let questionNumbers = [1, 2, 3, 4, 5];
+    // questionNumbers.forEach(questionNumber => {
+    //   let question = document.createElement('input');
+    //   App.setAttributes(question, {
+    //     'id': `input_question_${questionNumber}`,
+    //     'class': 'box-middle',
+    //     'type': 'text', 
+    //     'name': `input_question_${questionNumber}`, 
+    //     'placeholder': `Q: What is question ${questionNumber}?`
+    //   });
+    //   let br = document.createElement('br');
 
-      f.append(br, question);
+    //   f.append(br, question);
 
-      let answerLetters = ['A', 'B', 'C', 'D'];
-      answerLetters.forEach(answerLetter => {
-        let answer = document.createElement('input');
-        App.setAttributes(answer, {
-          'id': `input_${question.name}_${answerLetter}`,
-          'class': 'box-middle',
-          'type': 'text', 
-          'name': `${question.name}_${answerLetter}`, 
-          'placeholder': `What is answer ${answerLetter}?`
-        });
-        f.append(answer);
-      });
+    //   let answerLetters = ['A', 'B', 'C', 'D'];
+    //   answerLetters.forEach(answerLetter => {
+    //     let answer = document.createElement('input');
+    //     App.setAttributes(answer, {
+    //       'id': `input_${question.name}_${answerLetter}`,
+    //       'class': 'box-middle',
+    //       'type': 'text', 
+    //       'name': `${question.name}_${answerLetter}`, 
+    //       'placeholder': `What is answer ${answerLetter}?`
+    //     });
+    //     f.append(answer);
+    //   });
 
-      let correct = document.createElement('input');
-      App.setAttributes(correct, {
-        'id': `input_${question.name}_correct`,
-        'class': 'box-middle',
-        'type': 'text', 
-        'name': `${question.name}_correct`, 
-        'placeholder': `What is the letter of the correct answer?`
-      });
-      f.append(correct);
+    //   let correct = document.createElement('input');
+    //   App.setAttributes(correct, {
+    //     'id': `input_${question.name}_correct`,
+    //     'class': 'box-middle',
+    //     'type': 'text', 
+    //     'name': `${question.name}_correct`, 
+    //     'placeholder': `What is the letter of the correct answer?`
+    //   });
+    //   f.append(correct);
 
-      let link = document.createElement('input');
-      App.setAttributes(link, {
-        'id': `input_${question.name}_link`,
-        'class': 'box-middle',
-        'type': 'text', 
-        'name': `${question.name}_link`, 
-        'placeholder': `What is a link that documents the correct answer?`
-      });
-      f.append(link);
-    });
+    //   let link = document.createElement('input');
+    //   App.setAttributes(link, {
+    //     'id': `input_${question.name}_link`,
+    //     'class': 'box-middle',
+    //     'type': 'text', 
+    //     'name': `${question.name}_link`, 
+    //     'placeholder': `What is a link that documents the correct answer?`
+    //   });
+    //   f.append(link);
+    // });
 
     let is = document.createElement('input');
     App.setAttributes(is, {
@@ -165,7 +165,7 @@ class Game {
     // CREATE
     static handleCreateForm(e) {
       e.preventDefault();
-      const usernameInput = window.input_username.value;
+      const titleInput = window.box_input_title.value;
       const emailInput = window.input_email.value;
       const passwordInput = window.input_password.value;
       const passwordConfirmInput = window.input_password_confirm.value;

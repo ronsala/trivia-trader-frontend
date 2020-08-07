@@ -17,7 +17,7 @@ class User {
       })
       .then(res => res.json())
       .then(user => {
-        if(user.data) {
+        if (user.data) {
           window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
         }
       })

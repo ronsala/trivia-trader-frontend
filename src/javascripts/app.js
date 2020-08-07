@@ -75,8 +75,13 @@ class App {
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
-    // window.box_b.addEventListener('click', e => {Game.renderNewForm()});
-    window.box_b.addEventListener('click', e => {User.getCurrentUser();});
+    window.setTimeout(() => {
+      if (window.login_status.textContent) {
+        window.box_b.addEventListener('click', e => {Game.renderNewForm();});
+      } else {
+        window.box_b.addEventListener('click', e => {App.renderSignupLogin();});
+      }
+    }, 500);
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
