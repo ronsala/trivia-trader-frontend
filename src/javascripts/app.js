@@ -103,16 +103,6 @@ class App {
     boxes.append(window[boxId]);
   }
 
-  static selectLoggingBox() {
-    if(window.login_status.textContent) {
-      App.renderMiddleBox('d', 'D) Log out.');
-      window.box_d.addEventListener('click', e => {User.logout();});
-    } else {
-      App.renderMiddleBox('d', 'D) Sign up/Log in.');
-      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
-    }
-  }
-
   static renderSignupLogin() {
     window.hero.remove();
     window.boxes.remove();
@@ -125,6 +115,16 @@ class App {
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});
+  }
+
+  static selectLoggingBox() {
+    if(window.login_status.textContent) {
+      App.renderMiddleBox('d', 'D) Log out.');
+      window.box_d.addEventListener('click', e => {User.logout();});
+    } else {
+      App.renderMiddleBox('d', 'D) Sign up/Log in.');
+      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
+    }
   }
 
   static setAttributes(el, attrs) {

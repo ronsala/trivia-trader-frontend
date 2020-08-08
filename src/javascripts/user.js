@@ -19,6 +19,7 @@ class User {
       .then(user => {
         if (user.data) {
           window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
+          User.currentUserId = user.data.id;
         }
       })
       .catch((error) => {
@@ -188,7 +189,6 @@ class User {
   }
 
   static fetchNewUser(username, email, password) {
-
     const bodyData = {user: {username, email, password}};
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
@@ -304,5 +304,6 @@ class User {
 // }
 
 User.all = [];
+User.currentUserId = '';
 
 module.exports = User;

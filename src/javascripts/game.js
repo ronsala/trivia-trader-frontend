@@ -40,7 +40,7 @@ class Game {
     })
     .then(() => {
       let allGames = Game.all;
-      let categoryGames = allGames.filter(el => el.category_id == categoryId);
+      let categoryGames = allGames.filter(game => game.category_id == categoryId && game.questions);
 
       categoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
@@ -154,7 +154,7 @@ class Game {
       'id': 'create_button',
       'class': 'submit',
       'type': 'submit',
-      'value': 'Submit Game'
+      'value': 'Next'
     });
     f.append(is);
 
@@ -165,12 +165,32 @@ class Game {
     // CREATE
     static handleCreateForm(e) {
       e.preventDefault();
-      const titleInput = window.box_input_title.value;
-      const emailInput = window.input_email.value;
-      const passwordInput = window.input_password.value;
-      const passwordConfirmInput = window.input_password_confirm.value;
-  
-      this.fetchNewUser(usernameInput, emailInput, passwordInput);
+      let titleInput = window.input_title.value;
+      let categoryInput;
+      document.querySelectorAll('input').forEach(input => {
+        if (input.checked) {
+          categoryInput = input.value;
+        }
+      });
+      let userId = User.currentUserId;
+      this.postGame(titleInput, categoryInput, userId);
+    }
+
+    static postGame(title, category_id, user_id) {
+      const bodyData = {game: {title, category_id, user_id}};
+      fetch("http://localhost:3000/api/v1/games", {
+        method: "POST",
+        headers: {"Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+      },
+        body: JSON.stringify(bodyData)
+      })
+      .then(response => response.json())
+      .then(game => {
+        const gameData = game.data;
+        let newGame = new Game(gameData, gameData.attributes);
+      })
+      .catch(error => console.error('Error:', error));
     }
 }
 
