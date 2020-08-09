@@ -75,8 +75,13 @@ class App {
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
     this.renderMiddleBox('b', 'B) Make game.');
-    // window.box_b.addEventListener('click', e => {Game.renderNewForm()});
-    window.box_b.addEventListener('click', e => {User.getCurrentUser();});
+    window.setTimeout(() => {
+      if (User.currentUserId) {
+        window.box_b.addEventListener('click', e => {Game.renderNewForm();});
+      } else {
+        window.box_b.addEventListener('click', e => {App.renderSignupLogin();});
+      }
+    }, 250);
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
@@ -98,16 +103,6 @@ class App {
     boxes.append(window[boxId]);
   }
 
-  static selectLoggingBox() {
-    if(window.login_status.textContent) {
-      App.renderMiddleBox('d', 'D) Log out.');
-      window.box_d.addEventListener('click', e => {User.logout();});
-    } else {
-      App.renderMiddleBox('d', 'D) Sign up/Log in.');
-      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
-    }
-  }
-
   static renderSignupLogin() {
     window.hero.remove();
     window.boxes.remove();
@@ -120,6 +115,16 @@ class App {
 
     this.renderMiddleBox('b', 'B) No');
     window.box_b.addEventListener('click', e => {User.renderNewForm();});
+  }
+
+  static selectLoggingBox() {
+    if(window.login_status.textContent) {
+      App.renderMiddleBox('d', 'D) Log out.');
+      window.box_d.addEventListener('click', e => {User.logout();});
+    } else {
+      App.renderMiddleBox('d', 'D) Sign up/Log in.');
+      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
+    }
   }
 
   static setAttributes(el, attrs) {
