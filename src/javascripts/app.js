@@ -74,7 +74,6 @@ class App {
     this.renderMiddleBox('a', 'A) Play game.');
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
-    // TODO NEXT
     this.renderMiddleBox('b', 'B) Make game.');
     window.setTimeout(() => {
       if (User.currentUserId) {
@@ -82,7 +81,7 @@ class App {
       } else {
         window.box_b.addEventListener('click', e => {App.renderSignupLogin();});
       }
-    }, 500);
+    }, 250);
 
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
