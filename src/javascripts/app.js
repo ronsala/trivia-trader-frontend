@@ -36,9 +36,9 @@ class App {
     loginStatus.id = 'login_status';
     window.content.prepend(loginStatus);
 
-    if (window.localStorage.getItem('jwt_token')) {
+    // if (window.localStorage.getItem('jwt_token')) {
       User.getCurrentUser();
-    }
+    // }
 
     let hero = document.createElement('div');
     hero.className = 'hero';
@@ -74,9 +74,10 @@ class App {
     this.renderMiddleBox('a', 'A) Play game.');
     window.box_a.addEventListener('click', e => {Category.renderCategories();});
 
+    // TODO NEXT
     this.renderMiddleBox('b', 'B) Make game.');
     window.setTimeout(() => {
-      if (window.login_status.textContent) {
+      if (User.currentUserId) {
         window.box_b.addEventListener('click', e => {Game.renderNewForm();});
       } else {
         window.box_b.addEventListener('click', e => {App.renderSignupLogin();});

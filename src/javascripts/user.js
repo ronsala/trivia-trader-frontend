@@ -105,6 +105,16 @@ class User {
   static logout() {
     window.localStorage.setItem('jwt_token', '');
     window.login_status.textContent = '';
+    User.currentUserId = '';
+
+    window.box_b.remove();
+    App.renderMiddleBox('b', 'B) Make game.');
+    window.box_b.addEventListener('click', e => {App.renderSignupLogin();});
+
+    window.box_c.remove();
+    App.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
+    window.box_c.addEventListener('click', e => {App.renderAbout();});
+
     window.box_d.remove();
     App.renderMiddleBox('d', 'D) Sign Up/Log In');
     window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
