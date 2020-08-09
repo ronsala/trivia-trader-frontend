@@ -36,9 +36,9 @@ class App {
     loginStatus.id = 'login_status';
     window.content.prepend(loginStatus);
 
-    // if (window.localStorage.getItem('jwt_token')) {
+    if (window.localStorage.getItem('jwt_token')) {
       User.getCurrentUser();
-    // }
+    }
 
     let hero = document.createElement('div');
     hero.className = 'hero';
