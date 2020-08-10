@@ -86,7 +86,7 @@ class App {
     this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
     window.box_c.addEventListener('click', e => {this.renderAbout();});
 
-    window.setTimeout(this.selectLoggingBox, 500);
+    window.setTimeout(this.selectLoggingBox, 750);
 }
 
   static renderMiddleBox(id, text) {
