@@ -41,7 +41,6 @@ class Game {
     .then(() => {
       let allGames = Game.all;
       let categoryGames = allGames.filter(game => game.category_id == categoryId);
-// TODO: Add a filter like '&& game.questions'.
       categoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;

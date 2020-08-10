@@ -24,7 +24,8 @@ class User {
       })
       .catch((error) => {
         console.error('Error:', error);
-      });  }
+      });  
+  }
 
   static findById(id) {
     return this.all.find(user => user.id == id);
@@ -96,7 +97,6 @@ class User {
       this.renderUser(newUser);
     })
     .catch((error) => {
-      console.error('Error:', error);
       window.alert('Email/Password not recognized. Please try again.')
     });
   }
@@ -205,12 +205,23 @@ class User {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
     })
-    .then(response => response.json())
-    .then(user => {
-      const userData = user.user.data;
-      let newUser = new User(userData, userData.attributes);
-      localStorage.setItem('jwt_token', user.jwt);
-      this.renderUser(newUser);
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(user => {
+          const userData = user.user.data;
+          let newUser = new User(userData, userData.attributes);
+          localStorage.setItem('jwt_token', user.jwt);
+          this.renderUser(newUser);
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
     })
     .catch(error => console.error('Error:', error));
   }
@@ -224,11 +235,15 @@ class User {
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
     App.renderMiddleBox('username', `Username: ${user.username}`);
-        // TODO: Only render below for current user.
-    // if(localStorage)
-    App.renderMiddleBox('email', `Email: ${user.email}`);
-    App.renderButton('edit', 'Edit', user);
-    window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
+    window.setTimeout(() => {
+      if (User.currentUserId === user.id) {
+        App.renderMiddleBox('email', `Email: ${user.email}`);
+        App.renderButton('edit', 'Edit', user);
+        window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
+        App.renderButton('delete', 'Delete', user);
+        window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
+      }
+    }, 250);
   }
 
   // EDIT
@@ -306,12 +321,26 @@ class User {
       });
   }
 
-  // TODO
   // DESTROY
-
-
+  static deleteUser(user) {
+    fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        }
+      })
+      .then(window.localStorage.setItem('jwt_token', ''))
+      .then()
+      .then(window.alert('User deleted.'))
+      .then(window.login_status.remove())
+      .then(window.button_home.remove())
+      .then(window.box_top.remove())
+      .then(window.boxes.remove())
+      .then(App.renderHome())
+      .catch(error => console.error('Error:', error));
+  }
 }
-// }
 
 User.all = [];
 User.currentUserId = '';
