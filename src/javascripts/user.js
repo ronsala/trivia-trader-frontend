@@ -323,7 +323,6 @@ class User {
 
   // DESTROY
   static deleteUser(user) {
-    // const bodyJSON = { user.id };
     fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
       method: "DELETE",
       headers: {
