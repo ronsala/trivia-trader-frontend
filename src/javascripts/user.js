@@ -105,7 +105,6 @@ class User {
   static logout() {
     window.localStorage.setItem('jwt_token', '');
     window.login_status.textContent = '';
-    console.log('User.currentUserId in logout:', User.currentUserId)
     User.currentUserId = '';
 
     window.box_b.remove();
@@ -322,12 +321,26 @@ class User {
       });
   }
 
-  // TODO
   // DESTROY
-  static deleteUser() {
-    console.log('in deleteUser()')
+  static deleteUser(user) {
+    // const bodyJSON = { user.id };
+    fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        }
+      })
+      .then(window.localStorage.setItem('jwt_token', ''))
+      .then()
+      .then(window.alert('User deleted.'))
+      .then(window.login_status.remove())
+      .then(window.button_home.remove())
+      .then(window.box_top.remove())
+      .then(window.boxes.remove())
+      .then(App.renderHome())
+      .catch(error => console.error('Error:', error));
   }
-
 }
 
 User.all = [];
