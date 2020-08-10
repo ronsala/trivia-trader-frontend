@@ -96,7 +96,6 @@ class User {
       this.renderUser(newUser);
     })
     .catch((error) => {
-      console.error('Error:', error);
       window.alert('Email/Password not recognized. Please try again.')
     });
   }
@@ -205,12 +204,23 @@ class User {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(bodyData)
     })
-    .then(response => response.json())
-    .then(user => {
-      const userData = user.user.data;
-      let newUser = new User(userData, userData.attributes);
-      localStorage.setItem('jwt_token', user.jwt);
-      this.renderUser(newUser);
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(user => {
+          const userData = user.user.data;
+          let newUser = new User(userData, userData.attributes);
+          localStorage.setItem('jwt_token', user.jwt);
+          this.renderUser(newUser);
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
     })
     .catch(error => console.error('Error:', error));
   }
