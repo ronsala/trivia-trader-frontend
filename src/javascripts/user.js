@@ -24,7 +24,8 @@ class User {
       })
       .catch((error) => {
         console.error('Error:', error);
-      });  }
+      });  
+  }
 
   static findById(id) {
     return this.all.find(user => user.id == id);
@@ -104,6 +105,7 @@ class User {
   static logout() {
     window.localStorage.setItem('jwt_token', '');
     window.login_status.textContent = '';
+    console.log('User.currentUserId in logout:', User.currentUserId)
     User.currentUserId = '';
 
     window.box_b.remove();
@@ -234,11 +236,15 @@ class User {
     window.box_top_p.textContent = `Q: Who is ${user.username}?`;
     App.renderBoxes();
     App.renderMiddleBox('username', `Username: ${user.username}`);
-        // TODO: Only render below for current user.
-    // if(localStorage)
-    App.renderMiddleBox('email', `Email: ${user.email}`);
-    App.renderButton('edit', 'Edit', user);
-    window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
+    window.setTimeout(() => {
+      if (User.currentUserId === user.id) {
+        App.renderMiddleBox('email', `Email: ${user.email}`);
+        App.renderButton('edit', 'Edit', user);
+        window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
+        App.renderButton('delete', 'Delete', user);
+        window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
+      }
+    }, 250);
   }
 
   // EDIT
@@ -318,10 +324,11 @@ class User {
 
   // TODO
   // DESTROY
-
+  static deleteUser() {
+    console.log('in deleteUser()')
+  }
 
 }
-// }
 
 User.all = [];
 User.currentUserId = '';
