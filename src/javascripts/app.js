@@ -76,7 +76,7 @@ class App {
 
     this.renderMiddleBox('b', 'B) Make game.');
     window.setTimeout(() => {
-      if (User.currentUserId) {
+      if (window.localStorage.getItem('jwt_token')) {
         window.box_b.addEventListener('click', e => {Game.renderNewForm();});
       } else {
         window.box_b.addEventListener('click', e => {App.renderSignupLogin();});
