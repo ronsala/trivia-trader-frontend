@@ -19,7 +19,8 @@ class User {
       .then(user => {
         if (user.data) {
           window.login_status.textContent = `Logged in as: ${user.data.attributes.username}`;
-          User.currentUserId = user.data.id;
+          let userId = user.data.id;
+          User.currentUserId = userId;
         }
       })
       .catch((error) => {
