@@ -99,55 +99,6 @@ class Game {
 
     f.append(it, window.box_category);
 
-    // Questions
-    // let questionNumbers = [1, 2, 3, 4, 5];
-    // questionNumbers.forEach(questionNumber => {
-    //   let question = document.createElement('input');
-    //   App.setAttributes(question, {
-    //     'id': `input_question_${questionNumber}`,
-    //     'class': 'box-middle',
-    //     'type': 'text', 
-    //     'name': `input_question_${questionNumber}`, 
-    //     'placeholder': `Q: What is question ${questionNumber}?`
-    //   });
-    //   let br = document.createElement('br');
-
-    //   f.append(br, question);
-
-    //   let answerLetters = ['A', 'B', 'C', 'D'];
-    //   answerLetters.forEach(answerLetter => {
-    //     let answer = document.createElement('input');
-    //     App.setAttributes(answer, {
-    //       'id': `input_${question.name}_${answerLetter}`,
-    //       'class': 'box-middle',
-    //       'type': 'text', 
-    //       'name': `${question.name}_${answerLetter}`, 
-    //       'placeholder': `What is answer ${answerLetter}?`
-    //     });
-    //     f.append(answer);
-    //   });
-
-    //   let correct = document.createElement('input');
-    //   App.setAttributes(correct, {
-    //     'id': `input_${question.name}_correct`,
-    //     'class': 'box-middle',
-    //     'type': 'text', 
-    //     'name': `${question.name}_correct`, 
-    //     'placeholder': `What is the letter of the correct answer?`
-    //   });
-    //   f.append(correct);
-
-    //   let link = document.createElement('input');
-    //   App.setAttributes(link, {
-    //     'id': `input_${question.name}_link`,
-    //     'class': 'box-middle',
-    //     'type': 'text', 
-    //     'name': `${question.name}_link`, 
-    //     'placeholder': `What is a link that documents the correct answer?`
-    //   });
-    //   f.append(link);
-    // });
-
     let is = document.createElement('input');
     App.setAttributes(is, {
       'id': 'create_button',
@@ -161,64 +112,48 @@ class Game {
     boxes.appendChild(f);
   }
 
-    // CREATE
-    static handleCreateForm(e) {
-      e.preventDefault();
-      let titleInput = window.input_title.value;
-      let categoryInput;
-      document.querySelectorAll('input').forEach(input => {
-        if (input.checked) {
-          categoryInput = input.value;
-        }
-      });
-      let userId = User.currentUserId;
-      this.postGame(titleInput, categoryInput, userId);
-    }
+  // CREATE
+  static handleCreateForm(e) {
+    e.preventDefault();
+    let titleInput = window.input_title.value;
+    let categoryInput;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        categoryInput = input.value;
+      }
+    });
+    let userId = User.currentUserId;
+    this.postGame(titleInput, categoryInput, userId);
+  }
 
-    // static postGame(title, category_id, user_id) {
-    //   const bodyData = {game: {title, category_id, user_id}};
-    //   fetch("http://localhost:3000/api/v1/games", {
-    //     method: "POST",
-    //     headers: {"Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
-    //   },
-    //     body: JSON.stringify(bodyData)
-    //   })
-    //   .then(response => response.json())
-    //   .then(game => {
-    //     const gameData = game.data;
-    //     let newGame = new Game(gameData, gameData.attributes);
-    //   })
-    //   .catch(error => console.error('Error:', error));
-    // }
-
-    static postGame(title, category_id, user_id) {
-      const bodyData = {game: {title, category_id, user_id}};
-      fetch("http://localhost:3000/api/v1/games", {
-        method: "POST",
-        headers: {"Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
-      },
-        body: JSON.stringify(bodyData)
-      })
-      .then(response => {
-        if(response.ok) {
-          response.json()
-          .then(game => {
-            const gameData = game.data;
-            let newGame = new Game(gameData, gameData.attributes);
+  static postGame(title, category_id, user_id) {
+    const bodyData = {game: {title, category_id, user_id}};
+    fetch("http://localhost:3000/api/v1/games", {
+      method: "POST",
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    },
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(game => {
+          const gameData = game.data;
+          let newGame = new Game(gameData, gameData.attributes);
+          Question.renderNewForm();
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
           });
-        } else {
-          response.json()
-          .then(errors => {
-            errors.errors.forEach(error => {
-              window.alert(error);
-            });
-          });
-        }
-      })
-      .catch(error => console.error('Error:', error));
-    }
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
 }
 
 Game.all = [];

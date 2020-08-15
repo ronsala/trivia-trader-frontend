@@ -93,7 +93,81 @@ class Question {
     App.renderMiddleBox('get_score', 'Get Score');
     window.box_get_score.addEventListener('click', e => {Game.renderScore();});
   }
+
+  // NEW
+  static renderNewForm() {
+    window.boxes.remove();
+    App.renderBoxes();
+    let f = document.createElement('form');
+    f.setAttribute('id', 'new_question_form');
+
+    this.questionNumber ++;
+
+    let question = document.createElement('input');
+    App.setAttributes(question, {
+      'id': `input_question_${this.questionNumber}`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `input_question_${this.questionNumber}`, 
+      'placeholder': `Q: What is question ${this.questionNumber}?`
+    });
+    let br = document.createElement('br');
+
+    f.append(br, question);
+
+    let answerLetters = ['A', 'B', 'C', 'D'];
+    answerLetters.forEach(answerLetter => {
+      let answer = document.createElement('input');
+      App.setAttributes(answer, {
+        'id': `input_${question.name}_${answerLetter}`,
+        'class': 'box-middle',
+        'type': 'text', 
+        'name': `${question.name}_${answerLetter}`, 
+        'placeholder': `What is answer ${answerLetter}?`
+      });
+      f.append(answer);
+    });
+
+    let correct = document.createElement('input');
+    App.setAttributes(correct, {
+      'id': `input_${question.name}_correct`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `${question.name}_correct`, 
+      'placeholder': `What is the letter of the correct answer?`
+    });
+    f.append(correct);
+
+    let link = document.createElement('input');
+    App.setAttributes(link, {
+      'id': `input_${question.name}_link`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `${question.name}_link`, 
+      'placeholder': `What is a link that documents the correct answer?`
+    });
+    f.append(link);
+
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'create_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Next'
+    });
+    f.append(is);
+
+    f.addEventListener('submit', e => { this.handleCreateForm(e);});
+    boxes.appendChild(f);
+  }
+
+  // TODO NEXT:
+  static handleCreateForm(e) {
+    e.preventDefault();
+    console.log('in Question.handleCreateForm(e)')
+  }
 }
 
 Question.all = [];
 Question.remainingQuestions = [];
+Question.questionNumber = 0;
