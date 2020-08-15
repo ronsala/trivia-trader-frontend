@@ -95,7 +95,7 @@ class Question {
   }
 
   // NEW
-  static renderNewForm() {
+  static renderNewForm(game_id) {
     window.boxes.remove();
     App.renderBoxes();
     let f = document.createElement('form');
@@ -119,7 +119,7 @@ class Question {
     answerLetters.forEach(answerLetter => {
       let answer = document.createElement('input');
       App.setAttributes(answer, {
-        'id': `input_${question.name}_${answerLetter}`,
+        'id': `${question.name}_${answerLetter}`,
         'class': 'box-middle',
         'type': 'text', 
         'name': `${question.name}_${answerLetter}`, 
@@ -130,7 +130,7 @@ class Question {
 
     let correct = document.createElement('input');
     App.setAttributes(correct, {
-      'id': `input_${question.name}_correct`,
+      'id': `${question.name}_correct`,
       'class': 'box-middle',
       'type': 'text', 
       'name': `${question.name}_correct`, 
@@ -140,7 +140,7 @@ class Question {
 
     let link = document.createElement('input');
     App.setAttributes(link, {
-      'id': `input_${question.name}_link`,
+      'id': `${question.name}_link`,
       'class': 'box-middle',
       'type': 'text', 
       'name': `${question.name}_link`, 
@@ -157,14 +157,63 @@ class Question {
     });
     f.append(is);
 
-    f.addEventListener('submit', e => { this.handleCreateForm(e);});
+    f.addEventListener('submit', e => { this.handleCreateForm(e, game_id);});
     boxes.appendChild(f);
   }
 
   // TODO NEXT:
-  static handleCreateForm(e) {
+  // CREATE
+  static handleCreateForm(e, game_id) {
     e.preventDefault();
-    console.log('in Question.handleCreateForm(e)')
+    let questionInputId = `input_question_${this.questionNumber}`;
+    let questionInput = document.getElementById(questionInputId).value;
+    let questionInputAId = `input_question_${this.questionNumber}_A`;
+    let questionInputA = document.getElementById(questionInputAId).value;
+    let questionInputBId = `input_question_${this.questionNumber}_B`;
+    let questionInputB = document.getElementById(questionInputBId).value;
+    let questionInputCId = `input_question_${this.questionNumber}_C`;
+    let questionInputC = document.getElementById(questionInputCId).value;
+    let questionInputDId = `input_question_${this.questionNumber}_D`;
+    let questionInputD = document.getElementById(questionInputDId).value;
+    let questionInputCorrectId = `input_question_${this.questionNumber}_correct`;
+    let questionInputCorrect = document.getElementById(questionInputCorrectId).value;
+    let questionInputLinkId = `input_question_${this.questionNumber}_link`;
+    let questionInputLink = document.getElementById(questionInputLinkId).value;
+    this.postQuestion(questionInput, questionInputA, questionInputB, questionInputC, questionInputD, questionInputCorrect, questionInputLink, game_id);
+  }
+
+  static postQuestion(q, aa, ab, ac, ad, correct, link, game_id) {
+    const bodyData = {question: {q, aa, ab, ac, ad, correct, link, game_id}};
+    fetch("http://localhost:3000/api/v1/questions", {
+      method: "POST",
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    },
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => {
+      console.log(response)
+      if(response.ok) {
+        response.json()
+        .then(question => {
+          let questionData = question.data;
+          let newQuestion = new Question(questionData, questionData.attributes);
+          if (this.questionNumber < 5) {
+            this.renderNewForm(game_id);
+          } else {
+            Question.fetchQuestions(game_id);
+          }
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
   }
 }
 

@@ -139,9 +139,9 @@ class Game {
       if(response.ok) {
         response.json()
         .then(game => {
-          const gameData = game.data;
+          let gameData = game.data;
           let newGame = new Game(gameData, gameData.attributes);
-          Question.renderNewForm();
+          Question.renderNewForm(newGame.id);
         });
       } else {
         response.json()
