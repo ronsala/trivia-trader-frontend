@@ -175,6 +175,23 @@ class Game {
       this.postGame(titleInput, categoryInput, userId);
     }
 
+    // static postGame(title, category_id, user_id) {
+    //   const bodyData = {game: {title, category_id, user_id}};
+    //   fetch("http://localhost:3000/api/v1/games", {
+    //     method: "POST",
+    //     headers: {"Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    //   },
+    //     body: JSON.stringify(bodyData)
+    //   })
+    //   .then(response => response.json())
+    //   .then(game => {
+    //     const gameData = game.data;
+    //     let newGame = new Game(gameData, gameData.attributes);
+    //   })
+    //   .catch(error => console.error('Error:', error));
+    // }
+
     static postGame(title, category_id, user_id) {
       const bodyData = {game: {title, category_id, user_id}};
       fetch("http://localhost:3000/api/v1/games", {
@@ -184,10 +201,21 @@ class Game {
       },
         body: JSON.stringify(bodyData)
       })
-      .then(response => response.json())
-      .then(game => {
-        const gameData = game.data;
-        let newGame = new Game(gameData, gameData.attributes);
+      .then(response => {
+        if(response.ok) {
+          response.json()
+          .then(game => {
+            const gameData = game.data;
+            let newGame = new Game(gameData, gameData.attributes);
+          });
+        } else {
+          response.json()
+          .then(errors => {
+            errors.errors.forEach(error => {
+              window.alert(error);
+            });
+          });
+        }
       })
       .catch(error => console.error('Error:', error));
     }
