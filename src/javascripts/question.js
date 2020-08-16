@@ -233,7 +233,7 @@ class Question {
 
     // Question
     let lq = document.createElement('label');
-    lq.textContent = 'Question';
+    lq.textContent = `Question ${this.questionNumber}`;
     let iq = document.createElement('input');
     App.setAttributes(iq, {
       'id': `question`,
@@ -322,7 +322,37 @@ class Question {
   }
 
   static updateQuestion(question_id, q, aa, ab, ac, ad, correct, link) {
-    debugger
+    const bodyData = {question: {q, aa, ab, ac, ad, correct, link}};
+    fetch(`http://localhost:3000/api/v1/questions/${question_id}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    },
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(question => {
+          let questionData = question.data;
+          let newQuestion = new Question(questionData, questionData.attributes);
+          if (this.questionNumber < 5) {
+            this.renderUpdateForm(newQuestion);
+          } else {
+            window.box_top_p.textContent = `Game updated!`;
+            window.boxes.remove();
+          }
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
   }
 }
 
