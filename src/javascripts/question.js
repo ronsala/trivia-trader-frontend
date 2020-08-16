@@ -214,6 +214,105 @@ class Question {
     })
     .catch(error => console.error('Error:', error));
   }
+
+  // EDIT
+  static selectUpdateQuestions(gameId) {
+    let allQuestions = Question.all;
+    this.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
+    this.renderUpdateForm();
+  }
+
+  static renderUpdateForm() {
+    window.boxes.remove();
+    App.renderBoxes();
+    let f = document.createElement('form');
+    f.setAttribute('id', 'update_question_form');
+
+    let thisQuestion = this.remainingQuestions.shift();
+    this.questionNumber ++;
+
+    // Question
+    let lq = document.createElement('label');
+    lq.textContent = 'Question';
+    let iq = document.createElement('input');
+    App.setAttributes(iq, {
+      'id': `input_question_${this.questionNumber}`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `input_question_${this.questionNumber}`, 
+      'value': `${thisQuestion.q}`
+    });
+    let br = document.createElement('br');
+
+    f.append(br, lq, iq);
+
+    // Answers
+    let answerLetters = ['A', 'B', 'C', 'D'];
+    answerLetters.forEach(answerLetter => {
+      let la = document.createElement('label');
+      lq.textContent = `Answer ${answerLetter}`;
+      let answer = document.createElement('input');
+      let val = eval(`thisQuestion.a${answerLetter.toLowerCase()}`);
+      App.setAttributes(answer, {
+        'id': `${question.name}_${answerLetter}`,
+        'class': 'box-middle',
+        'type': 'text', 
+        'name': `${question.name}_${answerLetter}`, 
+        'value': `${val}`
+      });
+      f.append(la, answer);
+    });
+
+    // Correct
+    let correct = document.createElement('input');
+    App.setAttributes(correct, {
+      'id': `${question.name}_correct`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `${question.name}_correct`, 
+      'value': `${thisQuestion.correct}`
+    });
+    f.append(correct);
+
+    // Link
+    let ll = document.createElement('label');
+    ll.textContent = 'What is a link that documents the correct answer?';
+    let link = document.createElement('input');
+    App.setAttributes(link, {
+      'id': `${question.name}_link`,
+      'class': 'box-middle',
+      'type': 'text', 
+      'name': `${question.name}_link`, 
+      'value': `${thisQuestion.link}`
+    });
+    f.append(ll, link);
+
+    // Submit
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'create_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Next'
+    });
+    f.append(is);
+
+    f.addEventListener('submit', e => { this.handleUpdateForm(e, thisQuestion.id);});
+    boxes.appendChild(f);
+  }
+
+  // UPDATE
+  static handleUpdateForm(e, questionId) {
+    e.preventDefault();
+    let questionInput = window.input_title.value;
+    let categoryInput;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        categoryInput = input.value;
+      }
+    });
+    this.updateGame(game, titleInput, categoryInput);
+  }
 }
 
 Question.all = [];

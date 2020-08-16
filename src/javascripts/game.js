@@ -208,6 +208,7 @@ class Game {
 
     f.append(lt, it, categoryLabel, window.box_category);
 
+    // Submit
     let is = document.createElement('input');
     App.setAttributes(is, {
       'id': 'create_button',
@@ -217,17 +218,54 @@ class Game {
     });
     f.append(is);
 
-    f.addEventListener('submit', e => { this.handleUpdateForm(e);});
+    f.addEventListener('submit', e => { this.handleUpdateForm(e, game);});
     boxes.appendChild(f);
   }
 
   // UPDATE
   static handleUpdateForm(e, game) {
-    console.log('in Game.handleUpdateForm()')
     e.preventDefault();
-    // const username = e.target.querySelector('#input_username').value;
-    // const email = e.target.querySelector('#input_email').value;
+    let titleInput = window.input_title.value;
+    let categoryInput;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        categoryInput = input.value;
+      }
+    });
+    this.updateGame(game, titleInput, categoryInput);
   }
+
+  static updateGame(game, title, category_id) {
+    const bodyData = {game: {title, category_id}};
+    fetch(`http://localhost:3000/api/v1/games/${game.id}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    },
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(game => {
+          let gameData = game.data;
+          let newGame = new Game(gameData, gameData.attributes);
+          let gameId = newGame.id;
+          Question.questionNumber = 0;
+          Question.selectUpdateQuestions(gameId);
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
 }
 
 Game.all = [];
