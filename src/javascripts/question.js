@@ -95,7 +95,7 @@ class Question {
   }
 
   // NEW
-  static renderNewForm(game_id) {
+  static renderNewForm(newGame) {
     window.boxes.remove();
     App.renderBoxes();
     let f = document.createElement('form');
@@ -157,13 +157,12 @@ class Question {
     });
     f.append(is);
 
-    f.addEventListener('submit', e => { this.handleCreateForm(e, game_id);});
+    f.addEventListener('submit', e => { this.handleCreateForm(e, newGame);});
     boxes.appendChild(f);
   }
 
-  // TODO NEXT:
   // CREATE
-  static handleCreateForm(e, game_id) {
+  static handleCreateForm(e, newGame) {
     e.preventDefault();
     let questionInputId = `input_question_${this.questionNumber}`;
     let questionInput = document.getElementById(questionInputId).value;
@@ -179,11 +178,12 @@ class Question {
     let questionInputCorrect = document.getElementById(questionInputCorrectId).value;
     let questionInputLinkId = `input_question_${this.questionNumber}_link`;
     let questionInputLink = document.getElementById(questionInputLinkId).value;
-    this.postQuestion(questionInput, questionInputA, questionInputB, questionInputC, questionInputD, questionInputCorrect, questionInputLink, game_id);
+    this.postQuestion(questionInput, questionInputA, questionInputB, questionInputC, questionInputD, questionInputCorrect, questionInputLink, newGame);
   }
 
-  static postQuestion(q, aa, ab, ac, ad, correct, link, game_id) {
-    const bodyData = {question: {q, aa, ab, ac, ad, correct, link, game_id}};
+  static postQuestion(q, aa, ab, ac, ad, correct, link, newGame) {
+    let game_id = newGame.id;
+    let bodyData = {question: {q, aa, ab, ac, ad, correct, link, game_id}};
     fetch("http://localhost:3000/api/v1/questions", {
       method: "POST",
       headers: {"Content-Type": "application/json",
@@ -192,16 +192,15 @@ class Question {
       body: JSON.stringify(bodyData)
     })
     .then(response => {
-      console.log(response)
       if(response.ok) {
         response.json()
         .then(question => {
           let questionData = question.data;
           let newQuestion = new Question(questionData, questionData.attributes);
           if (this.questionNumber < 5) {
-            this.renderNewForm(game_id);
+            this.renderNewForm(newGame);
           } else {
-            Question.fetchQuestions(game_id);
+            Game.renderUpdateForm(newGame);
           }
         });
       } else {

@@ -141,7 +141,7 @@ class Game {
         .then(game => {
           let gameData = game.data;
           let newGame = new Game(gameData, gameData.attributes);
-          Question.renderNewForm(newGame.id);
+          Question.renderNewForm(newGame);
         });
       } else {
         response.json()
@@ -153,6 +153,80 @@ class Game {
       }
     })
     .catch(error => console.error('Error:', error));
+  }
+
+  // EDIT
+  static renderUpdateForm(game) {
+    window.box_top_p.textContent = `Review ${game.title}`;
+    window.boxes.remove();
+    App.renderBoxes();
+
+    let f = document.createElement('form');
+    App.setAttributes(f, {
+      'id': 'edit_game_form',
+      'data-id': `${game.id}`
+    });
+
+    // Title
+    let lt = document.createElement('label');
+    lt.textContent = 'Title';
+    let it = document.createElement('input');
+    App.setAttributes(it, {
+      'id': 'input_title', 
+      'type': 'text', 
+      'name': 'username', 
+      'value': `${game.title}`, 
+      'class': 'box-middle'});
+
+    // Category
+    App.renderMiddleBox('category', "");
+    let categoryLabel = document.createElement('label');
+    categoryLabel.htmlFor = box_category;
+
+    Category.all.forEach(category => {
+      let catButton = document.createElement('input');
+      App.setAttributes(catButton, {
+        'id': category.id,
+        'type': 'radio',
+        'name': 'category',
+        'value': category.id,
+      });
+
+      if (catButton.id == game.category_id) {
+        catButton.checked = true;
+      }
+
+      let label = document.createElement('label');
+      label.htmlFor = category.id;
+      let desc = document.createTextNode(category.name);
+      label.append(desc);
+      window.box_category.append(label);
+      window.box_category.append(catButton);
+      let br = document.createElement('br');
+      window.box_category.append(br);
+    });
+
+    f.append(lt, it, categoryLabel, window.box_category);
+
+    let is = document.createElement('input');
+    App.setAttributes(is, {
+      'id': 'create_button',
+      'class': 'submit',
+      'type': 'submit',
+      'value': 'Next'
+    });
+    f.append(is);
+
+    f.addEventListener('submit', e => { this.handleUpdateForm(e);});
+    boxes.appendChild(f);
+  }
+
+  // UPDATE
+  static handleUpdateForm(e, game) {
+    console.log('in Game.handleUpdateForm()')
+    e.preventDefault();
+    // const username = e.target.querySelector('#input_username').value;
+    // const email = e.target.querySelector('#input_email').value;
   }
 }
 
