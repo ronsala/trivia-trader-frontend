@@ -236,10 +236,10 @@ class Question {
     lq.textContent = 'Question';
     let iq = document.createElement('input');
     App.setAttributes(iq, {
-      'id': `input_question_${this.questionNumber}`,
+      'id': `question`,
       'class': 'box-middle',
       'type': 'text', 
-      'name': `input_question_${this.questionNumber}`, 
+      'name': `question`, 
       'value': `${thisQuestion.q}`
     });
     let br = document.createElement('br');
@@ -250,41 +250,47 @@ class Question {
     let answerLetters = ['A', 'B', 'C', 'D'];
     answerLetters.forEach(answerLetter => {
       let la = document.createElement('label');
-      lq.textContent = `Answer ${answerLetter}`;
+      la.textContent = `Answer ${answerLetter}`;
       let answer = document.createElement('input');
       let val = eval(`thisQuestion.a${answerLetter.toLowerCase()}`);
       App.setAttributes(answer, {
-        'id': `${question.name}_${answerLetter}`,
+        'id': `${answerLetter}`,
         'class': 'box-middle',
         'type': 'text', 
-        'name': `${question.name}_${answerLetter}`, 
+        'name': `${answerLetter}`, 
         'value': `${val}`
       });
       f.append(la, answer);
     });
 
     // Correct
+    let lc = document.createElement('label');
+    lc.textContent = `Letter of correct answer`;
     let correct = document.createElement('input');
     App.setAttributes(correct, {
-      'id': `${question.name}_correct`,
+      'id': `correct`,
       'class': 'box-middle',
       'type': 'text', 
-      'name': `${question.name}_correct`, 
+      'name': `correct`, 
       'value': `${thisQuestion.correct}`
     });
-    f.append(correct);
+    f.append(lc, correct);
 
     // Link
-    let ll = document.createElement('label');
-    ll.textContent = 'What is a link that documents the correct answer?';
+
     let link = document.createElement('input');
     App.setAttributes(link, {
-      'id': `${question.name}_link`,
+      'id': `link`,
       'class': 'box-middle',
       'type': 'text', 
-      'name': `${question.name}_link`, 
+      'name': `link`, 
       'value': `${thisQuestion.link}`
     });
+
+    let ll = document.createElement('label');
+    ll.htmlFor = link;
+    ll.textContent = 'What is a link that documents the correct answer?';
+
     f.append(ll, link);
 
     // Submit
@@ -304,14 +310,19 @@ class Question {
   // UPDATE
   static handleUpdateForm(e, questionId) {
     e.preventDefault();
-    let questionInput = window.input_title.value;
-    let categoryInput;
-    document.querySelectorAll('input').forEach(input => {
-      if (input.checked) {
-        categoryInput = input.value;
-      }
-    });
-    this.updateGame(game, titleInput, categoryInput);
+    let questionInput = window.question.value;
+    let aInput = window.A.value;
+    let bInput = window.B.value;
+    let cInput = window.C.value;
+    let dInput = window.D.value;
+    let correctInput = window.correct.value;
+    let linkInput = window.link.value;
+
+    this.updateQuestion(questionId, questionInput, aInput, bInput, cInput, dInput, correctInput, linkInput);
+  }
+
+  static updateQuestion(question_id, q, aa, ab, ac, ad, correct, link) {
+    debugger
   }
 }
 
