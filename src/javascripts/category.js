@@ -16,6 +16,8 @@ class Category {
     window.box_top_p.textContent = 'Q: What category of game do you want to play?';
     App.renderBoxes();
 
+    Category.all = [];
+
     fetch('http://localhost:3000/api/v1/categories')
     .then(response => response.json())
     .then(categories => {

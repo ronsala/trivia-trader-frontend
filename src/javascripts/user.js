@@ -98,7 +98,7 @@ class User {
       this.renderUser(newUser);
     })
     .catch((error) => {
-      window.alert('Email/Password not recognized. Please try again.')
+      window.alert('Email/Password not recognized. Please try again.');
     });
   }
 
