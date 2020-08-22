@@ -5,6 +5,7 @@ class Game {
     this.title = gameAttributes.title;
     this.category_id = gameAttributes.category_id;
     this.user_id = gameAttributes.user_id;
+    this.complete = gameAttributes.complete;
     Game.all.push(this);
   }
 
@@ -41,7 +42,10 @@ class Game {
     .then(() => {
       let allGames = Game.all;
       let categoryGames = allGames.filter(game => game.category_id == categoryId);
-      categoryGames.forEach(game => {
+      // TODO
+      let playableCategoryGames = categoryGames.filter(game => game.complete == true);
+      // categoryGames.forEach(game => {
+      playableCategoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
         document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
@@ -236,7 +240,8 @@ class Game {
   }
 
   static updateGame(game, title, category_id) {
-    const bodyData = {game: {title, category_id}};
+    const bodyData = {game: {title, category_id}};    
+    
     fetch(`http://localhost:3000/api/v1/games/${game.id}`, {
       method: "PATCH",
       headers: {"Content-Type": "application/json",
@@ -248,11 +253,37 @@ class Game {
       if(response.ok) {
         response.json()
         .then(game => {
-          let gameData = game.data;
-          let newGame = new Game(gameData, gameData.attributes);
-          let gameId = newGame.id;
+          let gameId = game.data.id;          
           Question.questionNumber = 0;
           Question.selectUpdateQuestions(gameId);
+        });
+      } else {
+        response.json()
+        .then(errors => {
+          errors.errors.forEach(error => {
+            window.alert(error);
+          });
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  static markGameComplete(gameId, complete) {
+    const bodyData = {game: {complete}};
+    fetch(`http://localhost:3000/api/v1/games/${gameId}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+    },
+      body: JSON.stringify(bodyData)
+    })
+    .then(response => {
+      if(response.ok) {
+        response.json()
+        .then(game => {
+          window.box_top_p.textContent = `Game updated!`;
+          window.boxes.remove();
         });
       } else {
         response.json()

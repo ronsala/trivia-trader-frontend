@@ -175,7 +175,7 @@ class Question {
     let questionInputDId = `input_question_${this.questionNumber}_D`;
     let questionInputD = document.getElementById(questionInputDId).value;
     let questionInputCorrectId = `input_question_${this.questionNumber}_correct`;
-    let questionInputCorrect = document.getElementById(questionInputCorrectId).value;
+    let questionInputCorrect = document.getElementById(questionInputCorrectId).value.toLowerCase();
     let questionInputLinkId = `input_question_${this.questionNumber}_link`;
     let questionInputLink = document.getElementById(questionInputLinkId).value;
     this.postQuestion(questionInput, questionInputA, questionInputB, questionInputC, questionInputD, questionInputCorrect, questionInputLink, newGame);
@@ -227,8 +227,8 @@ class Question {
     App.renderBoxes();
     let f = document.createElement('form');
     f.setAttribute('id', 'update_question_form');
-
-    let thisQuestion = this.remainingQuestions.shift();
+    
+    let thisQuestion = this.remainingQuestions.shift();    
     this.questionNumber ++;
 
     // Question
@@ -302,13 +302,12 @@ class Question {
       'value': 'Next'
     });
     f.append(is);
-
-    f.addEventListener('submit', e => { this.handleUpdateForm(e, thisQuestion.id);});
+    f.addEventListener('submit', e => { this.handleUpdateForm(e, thisQuestion.game_id, thisQuestion.id);});
     boxes.appendChild(f);
   }
 
   // UPDATE
-  static handleUpdateForm(e, questionId) {
+  static handleUpdateForm(e, gameId, questionId) {
     e.preventDefault();
     let questionInput = window.question.value;
     let aInput = window.A.value;
@@ -318,10 +317,10 @@ class Question {
     let correctInput = window.correct.value;
     let linkInput = window.link.value;
 
-    this.updateQuestion(questionId, questionInput, aInput, bInput, cInput, dInput, correctInput, linkInput);
+    this.updateQuestion(gameId, questionId, questionInput, aInput, bInput, cInput, dInput, correctInput, linkInput);
   }
 
-  static updateQuestion(question_id, q, aa, ab, ac, ad, correct, link) {
+  static updateQuestion(gameId, question_id, q, aa, ab, ac, ad, correct, link) {
     const bodyData = {question: {q, aa, ab, ac, ad, correct, link}};
     fetch(`http://localhost:3000/api/v1/questions/${question_id}`, {
       method: "PATCH",
@@ -339,8 +338,7 @@ class Question {
           if (this.questionNumber < 5) {
             this.renderUpdateForm(newQuestion);
           } else {
-            window.box_top_p.textContent = `Game updated!`;
-            window.boxes.remove();
+            Game.markGameComplete(gameId, true);
           }
         });
       } else {
