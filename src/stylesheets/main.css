@@ -6,8 +6,7 @@
   height: 100%;
   box-sizing: border-box;
   padding: 1px;
-  /* margin-top: 10px; */
-  margin: 5px auto;
+  margin: 3px auto;
   background: lightblue;
   color: darkblue;
 }
@@ -26,7 +25,7 @@
   border: 2px solid darkblue;
   margin-bottom: 20px;
   color: red;
-  padding: 5px;
+  padding: 1px;
 }
 
 .btn {
@@ -37,8 +36,8 @@
   position: relative;
   max-width: 250px;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   margin-left: auto;
   margin-right: auto;
 }
