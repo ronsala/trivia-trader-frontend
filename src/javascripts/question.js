@@ -108,43 +108,63 @@ class Question {
       'id': `input_question_${this.questionNumber}`,
       'class': 'box-middle',
       'type': 'text', 
-      'name': `input_question_${this.questionNumber}`, 
-      'placeholder': `Q: What is question ${this.questionNumber}?`
-    });
+      'name': `input_question_${this.questionNumber}`});
     let br = document.createElement('br');
+    let questionLabel = document.createElement('label');
+    questionLabel.htmlFor = `input_question_${this.questionNumber}`;
+    let desc = document.createTextNode(`Question ${this.questionNumber}`);
+    questionLabel.append(desc);
 
-    f.append(br, question);
+    f.append(br, questionLabel, question);
 
     let answerLetters = ['A', 'B', 'C', 'D'];
     answerLetters.forEach(answerLetter => {
+
       let answer = document.createElement('input');
       App.setAttributes(answer, {
         'id': `${question.name}_${answerLetter}`,
         'class': 'box-middle',
         'type': 'text', 
-        'name': `${question.name}_${answerLetter}`, 
-        'placeholder': `What is answer ${answerLetter}?`
-      });
-      f.append(answer);
+        'name': `${question.name}_${answerLetter}`});
+      let answerLabel = document.createElement('label');
+      answerLabel.htmlFor = `${question.name}_${answerLetter}`;
+      let desc = document.createTextNode(`Answer ${answerLetter}`);
+      answerLabel.append(desc);
+      f.append(br, answerLabel, answer);
     });
 
-    let correct = document.createElement('input');
-    App.setAttributes(correct, {
-      'id': `${question.name}_correct`,
-      'class': 'box-middle',
-      'type': 'text', 
-      'name': `${question.name}_correct`, 
-      'placeholder': `What is the letter of the correct answer?`
+    let correctLabel = document.createElement('label');
+    let correctDesc = document.createTextNode('What is the letter of the correct answer?');
+    correctLabel.append(correctDesc);
+    f.append(br, correctLabel, br);
+
+    answerLetters.forEach(answerLetter => {
+      let label = document.createElement('label');
+      let correctButton = document.createElement('input');
+
+      App.setAttributes(correctButton, {
+        'id': `${question.name}_correct`,
+        'type': 'radio',
+        'name': `${question.name}_correct`,
+        'value': answerLetter,
+      });
+      label.appendChild(correctButton);
+      label.innerHTML += answerLetter;
+      label.innerHTML += `<br><br>`;
+      f.append(label);
     });
-    f.append(correct);
+
+    let linkLabel = document.createElement('label');
+    let linkDesc = document.createTextNode('What is a link that documents the correct answer?');
+    linkLabel.append(linkDesc);
+    f.append(br, linkLabel, br);
 
     let link = document.createElement('input');
     App.setAttributes(link, {
       'id': `${question.name}_link`,
       'class': 'box-middle',
       'type': 'text', 
-      'name': `${question.name}_link`, 
-      'placeholder': `What is a link that documents the correct answer?`
+      'name': `${question.name}_link`
     });
     f.append(link);
 
@@ -161,6 +181,7 @@ class Question {
     boxes.appendChild(f);
   }
 
+  // TODO NEXT: Add validations.
   // CREATE
   static handleCreateForm(e, newGame) {
     e.preventDefault();
