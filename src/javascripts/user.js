@@ -124,6 +124,8 @@ class User {
   // INDEX
   static renderUsers() {
     console.log('in renderUsers');
+    window.hero.style.display = 'none';
+    window.button_home.style.display = 'block';
     window.box_top_p.textContent = 'Q: Which user do you want to see?';
     window.boxes.remove();
     App.renderBoxes();
