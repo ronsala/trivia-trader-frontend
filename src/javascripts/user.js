@@ -121,6 +121,31 @@ class User {
     window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
   }
 
+  // INDEX
+  static renderUsers() {
+    console.log('in renderUsers');
+    window.box_top_p.textContent = 'Q: Which user do you want to see?';
+    window.boxes.remove();
+    App.renderBoxes();
+    User.all = [];
+
+    fetch('http://localhost:3000/api/v1/users')
+    .then(response => response.json())
+    .then(users => {
+      users.data.forEach(user => {
+        new User(user, user.attributes);
+      });
+    })
+    .then(() => {
+      User.all.forEach(user => {
+        App.renderMiddleBox(user.id, user.username);
+        let userId = `box_${user.id}`;
+        document.getElementById(userId).addEventListener('click', e => User.renderUser(user));
+      });
+    })
+    .catch(error => console.error(error));
+  }
+
   // NEW
   static renderNewForm() {
     window.box_top_p.textContent = 'Q: What is your info?';

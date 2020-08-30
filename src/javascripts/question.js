@@ -103,6 +103,7 @@ class Question {
 
     this.questionNumber ++;
 
+    // Question
     let question = document.createElement('input');
     App.setAttributes(question, {
       'id': `input_question_${this.questionNumber}`,
@@ -117,6 +118,7 @@ class Question {
 
     f.append(br, questionLabel, question);
 
+    // Answers
     let answerLetters = ['A', 'B', 'C', 'D'];
     answerLetters.forEach(answerLetter => {
 
@@ -133,6 +135,7 @@ class Question {
       f.append(br, answerLabel, answer);
     });
 
+    // Correct
     let correctLabel = document.createElement('label');
     let correctDesc = document.createTextNode('What is the letter of the correct answer?');
     correctLabel.append(correctDesc);
@@ -154,6 +157,7 @@ class Question {
       f.append(label);
     });
 
+    // Link
     let linkLabel = document.createElement('label');
     let linkDesc = document.createTextNode('What is a link that documents the correct answer?');
     linkLabel.append(linkDesc);
@@ -181,7 +185,6 @@ class Question {
     boxes.appendChild(f);
   }
 
-  // TODO NEXT: Add validations.
   // CREATE
   static handleCreateForm(e, newGame) {
     e.preventDefault();
@@ -195,8 +198,15 @@ class Question {
     let questionInputC = document.getElementById(questionInputCId).value;
     let questionInputDId = `input_question_${this.questionNumber}_D`;
     let questionInputD = document.getElementById(questionInputDId).value;
-    let questionInputCorrectId = `input_question_${this.questionNumber}_correct`;
-    let questionInputCorrect = document.getElementById(questionInputCorrectId).value.toLowerCase();
+    // let questionInputCorrectId = `input_question_${this.questionNumber}_correct`;
+    // let questionInputCorrect = document.getElementById(questionInputCorrectId).value.toLowerCase();
+    let questionInputCorrect;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        questionInputCorrect = input.value.toLowerCase();
+      }
+    });
+
     let questionInputLinkId = `input_question_${this.questionNumber}_link`;
     let questionInputLink = document.getElementById(questionInputLinkId).value;
     this.postQuestion(questionInput, questionInputA, questionInputB, questionInputC, questionInputD, questionInputCorrect, questionInputLink, newGame);
@@ -284,21 +294,47 @@ class Question {
       f.append(la, answer);
     });
 
+    // // Correct
+    // let lc = document.createElement('label');
+    // lc.textContent = `Letter of correct answer`;
+    // let correct = document.createElement('input');
+    // App.setAttributes(correct, {
+    //   'id': `correct`,
+    //   'class': 'box-middle',
+    //   'type': 'text', 
+    //   'name': `correct`, 
+    //   'value': `${thisQuestion.correct}`
+    // });
+    // f.append(lc, correct);
+
     // Correct
-    let lc = document.createElement('label');
-    lc.textContent = `Letter of correct answer`;
-    let correct = document.createElement('input');
-    App.setAttributes(correct, {
-      'id': `correct`,
-      'class': 'box-middle',
-      'type': 'text', 
-      'name': `correct`, 
-      'value': `${thisQuestion.correct}`
+    let correctLabel = document.createElement('label');
+    let correctDesc = document.createTextNode('What is the letter of the correct answer?');
+    correctLabel.append(correctDesc);
+    f.append(br, correctLabel, br);
+
+    answerLetters.forEach(answerLetter => {
+      let label = document.createElement('label');
+      let correctButton = document.createElement('input');
+
+      App.setAttributes(correctButton, {
+        'id': `${thisQuestion.name}_correct`,
+        'type': 'radio',
+        'name': `${thisQuestion.name}_correct`,
+        'value': answerLetter,
+      });
+
+      if (correctButton.value.toLowerCase() == thisQuestion.correct) {
+        correctButton.checked = true;
+      }
+
+      label.appendChild(correctButton);
+      label.innerHTML += answerLetter;
+      label.innerHTML += `<br><br>`;
+      f.append(label);
     });
-    f.append(lc, correct);
 
     // Link
-
     let link = document.createElement('input');
     App.setAttributes(link, {
       'id': `link`,
@@ -335,7 +371,13 @@ class Question {
     let bInput = window.B.value;
     let cInput = window.C.value;
     let dInput = window.D.value;
-    let correctInput = window.correct.value;
+    // let correctInput = window.correct.value;
+    let correctInput;
+    document.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        correctInput = input.value.toLowerCase();
+      }
+    });
     let linkInput = window.link.value;
 
     this.updateQuestion(gameId, questionId, questionInput, aInput, bInput, cInput, dInput, correctInput, linkInput);
