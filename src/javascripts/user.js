@@ -123,7 +123,6 @@ class User {
 
   // INDEX
   static renderUsers() {
-    console.log('in renderUsers');
     window.hero.style.display = 'none';
     window.button_home.style.display = 'block';
     window.box_top_p.textContent = 'Q: Which user do you want to see?';
@@ -270,6 +269,9 @@ class User {
         window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
         App.renderButton('delete', 'Delete', user);
         window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
+        window.boxes.innerHTML += `<br><br>`;
+        App.renderMiddleBox('games_list', 'Games by this user:');
+        Game.renderUserGames(user.id);
       }
     }, 250);
   }

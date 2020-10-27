@@ -198,8 +198,7 @@ class Question {
     let questionInputC = document.getElementById(questionInputCId).value;
     let questionInputDId = `input_question_${this.questionNumber}_D`;
     let questionInputD = document.getElementById(questionInputDId).value;
-    // let questionInputCorrectId = `input_question_${this.questionNumber}_correct`;
-    // let questionInputCorrect = document.getElementById(questionInputCorrectId).value.toLowerCase();
+
     let questionInputCorrect;
     document.querySelectorAll('input').forEach(input => {
       if (input.checked) {
@@ -247,10 +246,23 @@ class Question {
   }
 
   // EDIT
-  static selectUpdateQuestions(gameId) {
-    let allQuestions = Question.all;
-    this.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
-    this.renderUpdateForm();
+  static fetchUpdateQuestions(gameId) {
+    Question.all = [];
+    fetch('http://localhost:3000/api/v1/questions')
+    .then(response => response.json())
+    .then(questions => {
+      questions.data.forEach(question => {
+        new Question(question, question.attributes);
+      });
+    })
+    .then(() => {
+      console.log('Question.all:', Question.all);
+      let allQuestions = Question.all;
+      Question.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
+      Question.renderUpdateForm();
+    })
+    // TODO
+    // .catch(error => console.error(error));
   }
 
   static renderUpdateForm() {
@@ -258,7 +270,6 @@ class Question {
     App.renderBoxes();
     let f = document.createElement('form');
     f.setAttribute('id', 'update_question_form');
-    
     let thisQuestion = this.remainingQuestions.shift();    
     this.questionNumber ++;
 
@@ -294,45 +305,34 @@ class Question {
       f.append(la, answer);
     });
 
-    // // Correct
-    // let lc = document.createElement('label');
-    // lc.textContent = `Letter of correct answer`;
-    // let correct = document.createElement('input');
-    // App.setAttributes(correct, {
-    //   'id': `correct`,
-    //   'class': 'box-middle',
-    //   'type': 'text', 
-    //   'name': `correct`, 
-    //   'value': `${thisQuestion.correct}`
-    // });
-    // f.append(lc, correct);
-
     // Correct
-    let correctLabel = document.createElement('label');
-    let correctDesc = document.createTextNode('What is the letter of the correct answer?');
-    correctLabel.append(correctDesc);
-    f.append(br, correctLabel, br);
+    App.renderMiddleBox('correct', "What is the letter of the correct answer?");
 
     answerLetters.forEach(answerLetter => {
       let label = document.createElement('label');
       let correctButton = document.createElement('input');
 
       App.setAttributes(correctButton, {
-        'id': `${thisQuestion.name}_correct`,
+        'id': `${thisQuestion.id}_correct`,
         'type': 'radio',
-        'name': `${thisQuestion.name}_correct`,
+        'name': `${thisQuestion.id}_correct`,
         'value': answerLetter,
       });
 
       if (correctButton.value.toLowerCase() == thisQuestion.correct) {
-        correctButton.checked = true;
+        label.appendChild(correctButton);
+        label.innerHTML += answerLetter;
+        label.innerHTML += `<br><br>`;
+        label.children[0].checked = true;
+      } else {
+        label.appendChild(correctButton);
+        label.innerHTML += answerLetter;
+        label.innerHTML += `<br><br>`;
       }
-
-      label.appendChild(correctButton);
-      label.innerHTML += answerLetter;
-      label.innerHTML += `<br><br>`;
-      f.append(label);
+      window.box_correct.append(label);
     });
+
+    f.append(window.box_correct);
 
     // Link
     let link = document.createElement('input');
