@@ -121,6 +121,32 @@ class User {
     window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
   }
 
+  // INDEX
+  static renderUsers() {
+    window.hero.style.display = 'none';
+    window.button_home.style.display = 'block';
+    window.box_top_p.textContent = 'Q: Which user do you want to see?';
+    window.boxes.remove();
+    App.renderBoxes();
+    User.all = [];
+
+    fetch('http://localhost:3000/api/v1/users')
+    .then(response => response.json())
+    .then(users => {
+      users.data.forEach(user => {
+        new User(user, user.attributes);
+      });
+    })
+    .then(() => {
+      User.all.forEach(user => {
+        App.renderMiddleBox(user.id, user.username);
+        let userId = `box_${user.id}`;
+        document.getElementById(userId).addEventListener('click', e => User.renderUser(user));
+      });
+    })
+    .catch(error => console.error(error));
+  }
+
   // NEW
   static renderNewForm() {
     window.box_top_p.textContent = 'Q: What is your info?';
@@ -243,6 +269,9 @@ class User {
         window.button_edit.addEventListener('click', e => { this.renderUpdateForm(user);});
         App.renderButton('delete', 'Delete', user);
         window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
+        window.boxes.innerHTML += `<br><br>`;
+        App.renderMiddleBox('games_list', 'Games by this user:');
+        Game.renderUserGames(user.id);
       }
     }, 250);
   }

@@ -42,13 +42,43 @@ class Game {
     .then(() => {
       let allGames = Game.all;
       let categoryGames = allGames.filter(game => game.category_id == categoryId);
-      // TODO
       let playableCategoryGames = categoryGames.filter(game => game.complete == true);
-      // categoryGames.forEach(game => {
       playableCategoryGames.forEach(game => {
         App.renderMiddleBox(game.id, game.title);
         let gameId = `box_${game.id}`;
         document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
+      });
+    })
+    .catch(error => console.error(error));
+  }
+
+  static renderUserGames(userId) {
+    console.log('in Game.renderUserGames(userId)')
+    Game.all = [];
+
+    fetch('http://localhost:3000/api/v1/games')
+    .then(response => response.json())
+    .then(games => {
+      games.data.forEach(game => {
+        new Game(game, game.attributes);
+      });
+    })
+    .then(() => {
+      let allGames = Game.all;
+      let userGames = allGames.filter(game => game.user_id == userId);
+      console.log('userGames:', userGames);
+      
+      let playableUserGames = userGames.filter(game => game.complete == true);
+      console.log('playableUserGames:', playableUserGames);
+      
+      playableUserGames.forEach(game => {
+        App.renderMiddleBox(game.id, game.title);
+        let gameId = `box_${game.id}`;
+        if(game.user_id == User.currentUserId) {
+          document.getElementById(gameId).addEventListener('click', e => Game.renderUpdateForm(game));
+        } else {
+          document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
+        }
       });
     })
     .catch(error => console.error(error));
@@ -178,39 +208,63 @@ class Game {
     App.setAttributes(it, {
       'id': 'input_title', 
       'type': 'text', 
-      'name': 'username', 
+      'name': 'input_title', 
       'value': `${game.title}`, 
       'class': 'box-middle'});
 
     // Category
-    App.renderMiddleBox('category', "");
-    let categoryLabel = document.createElement('label');
-    categoryLabel.htmlFor = box_category;
-
-    Category.all.forEach(category => {
-      let catButton = document.createElement('input');
-      App.setAttributes(catButton, {
-        'id': category.id,
-        'type': 'radio',
-        'name': 'category',
-        'value': category.id,
+    App.renderMiddleBox('category', "Category");
+    
+    fetch('http://localhost:3000/api/v1/categories')
+    .then(response => response.json())
+    .then(categories => {
+      categories.data.forEach(category => {
+        let newCategory = new Category(category, category.attributes);
+        let catButton = document.createElement('input');
+        App.setAttributes(catButton, {
+          'id': newCategory.id,
+          'type': 'radio',
+          'name': 'category',
+          'value': newCategory.id,
+        });
+        let label = document.createElement('label');
+        label.htmlFor = newCategory.id;
+        let desc = document.createTextNode(newCategory.name);
+        label.append(desc);
+        window.box_category.append(label);
+        label.insertAdjacentElement('afterend', catButton);
+        let br = document.createElement('br');
+        window.box_category.append(br);
+        if (catButton.id == game.category_id) {
+          catButton.checked = true;
+        }
       });
-
-      if (catButton.id == game.category_id) {
-        catButton.checked = true;
-      }
-
-      let label = document.createElement('label');
-      label.htmlFor = category.id;
-      let desc = document.createTextNode(category.name);
-      label.append(desc);
-      window.box_category.append(label);
-      window.box_category.append(catButton);
-      let br = document.createElement('br');
-      window.box_category.append(br);
     });
 
-    f.append(lt, it, categoryLabel, window.box_category);
+    f.append(it, window.box_category);
+
+    // Category.all.forEach(category => {
+    //   let catButton = document.createElement('input');
+    //   App.setAttributes(catButton, {
+    //     'id': category.id,
+    //     'type': 'radio',
+    //     'name': 'category',
+    //     'value': category.id,
+    //   });
+
+
+
+      // let label = document.createElement('label');
+      // label.htmlFor = category.id;
+      // let desc = document.createTextNode(category.name);
+      // label.append(desc);
+      // window.box_category.append(label);
+      // window.box_category.append(catButton);
+      // let br = document.createElement('br');
+      // window.box_category.append(br);
+    // });
+
+    // f.append(lt, it, categoryLabel, window.box_category);
 
     // Submit
     let is = document.createElement('input');
@@ -255,7 +309,7 @@ class Game {
         .then(game => {
           let gameId = game.data.id;          
           Question.questionNumber = 0;
-          Question.selectUpdateQuestions(gameId);
+          Question.fetchUpdateQuestions(gameId);
         });
       } else {
         response.json()

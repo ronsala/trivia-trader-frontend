@@ -83,8 +83,11 @@ class App {
       }
     }, 250);
 
-    this.renderMiddleBox('c', 'C) Learn more about TriviaTrader.');
-    window.box_c.addEventListener('click', e => {this.renderAbout();});
+    this.renderMiddleBox('c', 'C) See users.');
+    window.box_c.addEventListener('click', e => {User.renderUsers();});
+
+    this.renderMiddleBox('d', 'D) Learn more about TriviaTrader.');
+    window.box_d.addEventListener('click', e => {this.renderAbout();});
 
     window.setTimeout(this.selectLoggingBox, 750);
 }
@@ -119,11 +122,11 @@ class App {
 
   static selectLoggingBox() {
     if(window.login_status.textContent) {
-      App.renderMiddleBox('d', 'D) Log out.');
-      window.box_d.addEventListener('click', e => {User.logout();});
+      App.renderMiddleBox('e', 'E) Log out.');
+      window.box_e.addEventListener('click', e => {User.logout();});
     } else {
-      App.renderMiddleBox('d', 'D) Sign up/Log in.');
-      window.box_d.addEventListener('click', e => {App.renderSignupLogin();});
+      App.renderMiddleBox('e', 'E) Sign up/Log in.');
+      window.box_e.addEventListener('click', e => {App.renderSignupLogin();});
     }
   }
 
