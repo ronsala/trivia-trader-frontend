@@ -271,6 +271,7 @@ class User {
         window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
         window.boxes.innerHTML += `<br><br>`;
         App.renderMiddleBox('games_list', 'Games by this user:');
+        // TODO: Show games for each user.
         Game.renderUserGames(user.id);
       }
     }, 250);
