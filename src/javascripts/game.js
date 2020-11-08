@@ -53,7 +53,6 @@ class Game {
   }
 
   static renderUserGames(userId) {
-    console.log('in Game.renderUserGames(userId)')
     Game.all = [];
 
     fetch('http://localhost:3000/api/v1/games')
@@ -65,21 +64,22 @@ class Game {
     })
     .then(() => {
       let allGames = Game.all;
-      let userGames = allGames.filter(game => game.user_id == userId);
-      console.log('userGames:', userGames);
-      
+      let userGames = allGames.filter(game => game.user_id == userId);      
       let playableUserGames = userGames.filter(game => game.complete == true);
-      console.log('playableUserGames:', playableUserGames);
-      
-      playableUserGames.forEach(game => {
-        App.renderMiddleBox(game.id, game.title);
-        let gameId = `box_${game.id}`;
-        if(game.user_id == User.currentUserId) {
-          document.getElementById(gameId).addEventListener('click', e => Game.renderUpdateForm(game));
-        } else {
-          document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
-        }
-      });
+
+      if (playableUserGames.length != 0) {
+        playableUserGames.forEach(game => {
+          App.renderMiddleBox(game.id, game.title);
+          let gameId = `box_${game.id}`;
+          if(game.user_id == User.currentUserId) {
+            document.getElementById(gameId).addEventListener('click', e => Game.renderUpdateForm(game));
+          } else {
+            document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
+          }
+        });
+      } else {
+        App.renderMiddleBox('no_games', 'No games yet.');
+      }      
     })
     .catch(error => console.error(error));
   }
