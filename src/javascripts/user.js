@@ -273,9 +273,8 @@ class User {
       }
 
       App.renderMiddleBox('games_list', 'Games by this user:');
-      // TODO: Show games for each user.
       Game.renderUserGames(user.id);
-    }, 250);
+    }, 500);
   }
 
   // EDIT
@@ -363,7 +362,6 @@ class User {
         }
       })
       .then(window.localStorage.setItem('jwt_token', ''))
-      .then()
       .then(window.alert('User deleted.'))
       .then(window.login_status.remove())
       .then(window.button_home.remove())

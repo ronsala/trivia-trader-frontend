@@ -71,10 +71,15 @@ class Game {
         playableUserGames.forEach(game => {
           App.renderMiddleBox(game.id, game.title);
           let gameId = `box_${game.id}`;
+          document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
           if(game.user_id == User.currentUserId) {
-            document.getElementById(gameId).addEventListener('click', e => Game.renderUpdateForm(game));
-          } else {
-            document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
+            // TODO:
+            App.renderButton(`edit_${game.id}`, 'Edit', game);
+            let editId = `button_edit_${game.id}`;
+            document.getElementById(editId).addEventListener('click', e => { this.renderUpdateForm(game);});
+            App.renderButton(`delete_${game.id}`, 'Delete', game);
+            let deleteId = `button_delete_${game.id}`;
+            document.getElementById(deleteId).addEventListener('click', e => { this.deleteGame(game);});
           }
         });
       } else {
@@ -243,29 +248,6 @@ class Game {
 
     f.append(it, window.box_category);
 
-    // Category.all.forEach(category => {
-    //   let catButton = document.createElement('input');
-    //   App.setAttributes(catButton, {
-    //     'id': category.id,
-    //     'type': 'radio',
-    //     'name': 'category',
-    //     'value': category.id,
-    //   });
-
-
-
-      // let label = document.createElement('label');
-      // label.htmlFor = category.id;
-      // let desc = document.createTextNode(category.name);
-      // label.append(desc);
-      // window.box_category.append(label);
-      // window.box_category.append(catButton);
-      // let br = document.createElement('br');
-      // window.box_category.append(br);
-    // });
-
-    // f.append(lt, it, categoryLabel, window.box_category);
-
     // Submit
     let is = document.createElement('input');
     App.setAttributes(is, {
@@ -351,6 +333,20 @@ class Game {
     .catch(error => console.error('Error:', error));
   }
 
+  // DESTROY
+  static deleteGame(game) {
+    let user = User.findById(User.currentUserId);
+    fetch(`http://localhost:3000/api/v1/games/${game.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        }
+      })
+      .then(res => console.log(res))
+      .then(User.renderUser(user))
+      .catch(error => console.error('Error:', error));
+  }
 }
 
 Game.all = [];
