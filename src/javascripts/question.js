@@ -256,13 +256,11 @@ class Question {
       });
     })
     .then(() => {
-      console.log('Question.all:', Question.all);
       let allQuestions = Question.all;
       Question.remainingQuestions = allQuestions.filter(el => el.game_id == gameId);
       Question.renderUpdateForm();
     })
-    // TODO
-    // .catch(error => console.error(error));
+    .catch(error => console.error(error));
   }
 
   static renderUpdateForm() {
