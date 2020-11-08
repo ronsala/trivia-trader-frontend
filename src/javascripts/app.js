@@ -8,10 +8,9 @@ class App {
     window.hero.style.display = 'none';
     window.button_home.style.display = 'block';
     window.box_top.textContent = 'About TriviaTrader';
-    // TODO:
-    window.box_a.textContent = "TODO: Text Here";
-    window.box_b.style.display = 'none';
-    window.box_c.style.display = 'none';
+    window.boxes.remove();
+    App.renderBoxes();
+    this.renderMiddleBox('box_a', 'TriviaTrader is your place to show your trivia knowledge. Play games and create your own to stump your friends.');
   }
 
   static renderBoxes() {
