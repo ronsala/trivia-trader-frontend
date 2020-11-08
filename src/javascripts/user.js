@@ -273,6 +273,7 @@ class User {
       }
 
       App.renderMiddleBox('games_list', 'Games by this user:');
+      window.box_games_list.className = 'box-top';
       Game.renderUserGames(user.id);
     }, 500);
   }

@@ -73,7 +73,6 @@ class Game {
           let gameId = `box_${game.id}`;
           document.getElementById(gameId).addEventListener('click', e => Question.fetchQuestions(game.id));
           if(game.user_id == User.currentUserId) {
-            // TODO:
             App.renderButton(`edit_${game.id}`, 'Edit', game);
             let editId = `button_edit_${game.id}`;
             document.getElementById(editId).addEventListener('click', e => { this.renderUpdateForm(game);});
@@ -343,7 +342,6 @@ class Game {
         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
         }
       })
-      .then(res => console.log(res))
       .then(User.renderUser(user))
       .catch(error => console.error('Error:', error));
   }

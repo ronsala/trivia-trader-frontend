@@ -1,5 +1,3 @@
-// For higher level things like attaching event listeners.
-
 class App {
 
   constructor() {

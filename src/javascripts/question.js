@@ -84,6 +84,7 @@ class Question {
 
   static renderNext() {
     App.renderMiddleBox('next', 'Next');
+    window.box_next.className = 'box-top';
     window.box_next.addEventListener('click', e => {this.renderQuestion();});
   }
 
@@ -91,6 +92,7 @@ class Question {
     App.renderMiddleBox('game_over', 'GAME OVER');
     window.box_game_over.classList.add('incorrect');
     App.renderMiddleBox('get_score', 'Get Score');
+    window.box_get_score.className = 'box-top';
     window.box_get_score.addEventListener('click', e => {Game.renderScore();});
   }
 
