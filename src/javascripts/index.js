@@ -1,6 +1,5 @@
-// Entry point to front end.
+// Entry point to frontend.
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new App();
   App.renderHome();
 });

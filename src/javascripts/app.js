@@ -1,9 +1,5 @@
 class App {
 
-  constructor() {
-    // this.adapter = new Adapter();
-  }
-
   static renderAbout() {
     window.hero.style.display = 'none';
     window.button_home.style.display = 'block';
