@@ -376,7 +376,7 @@ class User {
   static addFavorite(currentUserId, categoryId) {
     const bodyData = {"user": {"id": User.currentUserId, "favorite_category_id": categoryId}};
 
-    fetch(`http://localhost:3000/api/v1/favorites`, {
+    fetch(`http://localhost:3000/api/v1/favorite`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -384,25 +384,21 @@ class User {
         },
       body: JSON.stringify(bodyData)
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('data.data.attributes.favorites:', data.data.attributes.favorites);
-        
-        let favs = data.data.attributes.favorites;
-        User.showFavorite(favs);
-      });
+      .then(response => {
+        if(response.ok) {
+          Game.renderFavorite();
+        } else {
+          response.json()
+          .then(errors => {
+            errors.errors.forEach(error => {
+              window.alert(error);
+            });
+          });
+        }
+      })
+      .catch(error => console.error('Error:', error));
   }
-
-
-
-  static showFavorites(favs) {
-    console.log('favs:', favs);
-    
-  }
-
 }
 
 User.all = [];
 User.currentUserId = '';
-
-module.exports = User;
