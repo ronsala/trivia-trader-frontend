@@ -1,3 +1,5 @@
+// const { currentUserId } = require("./user");
+
 class Game {
 
   constructor(game, gameAttributes) {
@@ -27,9 +29,22 @@ class Game {
 
   // INDEX
   static renderGames(categoryId) {
+    if(User.currentUserId) {
+      let favButton = document.createElement('button');
+      App.setAttributes(favButton, {
+        'id': 'fav_button',
+        'name': 'fav_button',
+        'value': categoryId
+      });
+      favButton.textContent = 'Make this category a favorite.';
+      window.content.insertBefore(favButton, box_top);
+      window.fav_button.addEventListener('click', e => {User.addFavorite(User.currentUserId, categoryId);});
+    }
+
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
     window.boxes.remove();
     App.renderBoxes();
+
     Game.all = [];
 
     fetch('http://localhost:3000/api/v1/games')

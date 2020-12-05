@@ -7,6 +7,21 @@ class User {
     User.all.push(this);
   }
 
+  static addFavorite(currentUserId, categoryId) {
+    const bodyData = {"user": {"id": User.currentUserId, "favorite_category_id": categoryId}};
+
+    fetch(`http://localhost:3000/api/v1/favorites`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        },
+      body: JSON.stringify(bodyData)
+      })
+      .then(res => res.json())
+      .then(console.log(res.json))
+  }
+
   static getCurrentUser() {
     fetch(`http://localhost:3000/api/v1/verify`, {
       method: "POST",
