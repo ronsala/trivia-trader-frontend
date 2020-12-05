@@ -1,5 +1,7 @@
 // const { currentUserId } = require("./user");
 
+// const User = require("./user");
+
 class Game {
 
   constructor(game, gameAttributes) {
@@ -28,19 +30,9 @@ class Game {
   }
 
   // INDEX
-  static renderGames(categoryId) {
-    if(User.currentUserId) {
-      let favButton = document.createElement('button');
-      App.setAttributes(favButton, {
-        'id': 'fav_button',
-        'name': 'fav_button',
-        'value': categoryId
-      });
-      favButton.textContent = 'Make this category a favorite.';
-      window.content.insertBefore(favButton, box_top);
-      window.fav_button.addEventListener('click', e => {User.addFavorite(User.currentUserId, categoryId);});
-    }
 
+
+  static renderGames(categoryId) {
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
     window.boxes.remove();
     App.renderBoxes();
@@ -65,6 +57,55 @@ class Game {
       });
     })
     .catch(error => console.error(error));
+
+    Game.getFavorites(categoryId);
+  }
+
+  static getFavorites(categoryId) {
+    const userId = User.currentUserId;
+    let url = new URL('http://localhost:3000/api/v1/favorites')
+    url.search = new URLSearchParams({id: userId});
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+          }
+        })
+      .then(response => response.json())
+      .then(data => {
+        if(data.data.attributes.favorites.includes(Number(categoryId))) {
+          Game.renderFavorite();
+        } else {
+          Game.renderFavoriteButton();
+        }
+      });
+  }
+
+  static renderFavoriteButton() {
+    console.log('in renderFavoriteButton');
+    
+    // debugger
+    // if(favs.include(categoryId)) {
+    //   let favorite = document.createElement('button');
+    //   favorite.textContent = 'Favorite';
+    //   favorite.style.backgroundColor = 'yellow';
+    // } else {
+    //   let favButton = document.createElement('button');
+    //   App.setAttributes(favButton, {
+    //     'id': 'fav_button',
+    //     'name': 'fav_button',
+    //     'value': categoryId
+    //   });
+    //   favButton.textContent = 'Make this category a favorite.';
+    //   window.content.insertBefore(favButton, box_top);
+    //   window.fav_button.addEventListener('click', e => {User.addFavorite(User.currentUserId, categoryId);});
+    // }
+  }
+
+  static renderFavorite() {
+    console.log('in renderFavorite')
   }
 
   static renderUserGames(userId) {
