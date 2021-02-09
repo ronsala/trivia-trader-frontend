@@ -26,10 +26,12 @@ class Game {
   }
 
   // INDEX
+
   static renderGames(categoryId) {
     window.box_top_p.textContent = 'Q: Which game do you want to play?';
     window.boxes.remove();
     App.renderBoxes();
+
     Game.all = [];
 
     fetch('http://localhost:3000/api/v1/games')
@@ -50,6 +52,52 @@ class Game {
       });
     })
     .catch(error => console.error(error));
+
+    Game.getFavorites(categoryId);
+  }
+
+  static getFavorites(categoryId) {
+    const userId = User.currentUserId;
+    let url = new URL('http://localhost:3000/api/v1/favorites')
+    url.search = new URLSearchParams({id: userId});
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+          }
+        })
+      .then(response => response.json())
+      .then(data => {
+        if(data.data.attributes.favorites.includes(Number(categoryId))) {
+          Game.renderFavorite();
+        } else {
+          Game.renderFavoriteButton(categoryId);
+        }
+      });
+  }
+
+  static renderFavoriteButton(categoryId) {    
+    let favButton = document.createElement('button');
+    App.setAttributes(favButton, {
+      'id': 'fav_button',
+      'name': 'fav_button',
+      'value': categoryId
+    });
+    favButton.textContent = 'Make this category a favorite.';
+    window.content.insertBefore(favButton, box_top);
+    window.fav_button.addEventListener('click', e => {User.addFavorite(User.currentUserId, categoryId);});
+  }
+
+  static renderFavorite() {
+    if(window.fav_button) {
+      window.fav_button.remove();
+    }
+    let favorite = document.createElement('button');
+    favorite.textContent = 'Favorite Category';
+    favorite.style.backgroundColor = 'yellow';
+    window.content.insertBefore(favorite, box_top);
   }
 
   static renderUserGames(userId) {

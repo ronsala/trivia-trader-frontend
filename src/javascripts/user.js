@@ -4,6 +4,7 @@ class User {
     this.id = user.id;
     this.username = userAttributes.username;
     this.email = userAttributes.email;
+    this.favorites = userAttributes.favorites;
     User.all.push(this);
   }
 
@@ -271,11 +272,39 @@ class User {
         window.button_delete.addEventListener('click', e => { this.deleteUser(user);});
         window.boxes.innerHTML += `<br><br>`;
       }
+    }, 250);    
 
+    window.setTimeout(() => {
+      window.boxes.innerHTML += `<br>`;
       App.renderMiddleBox('games_list', 'Games by this user:');
       window.box_games_list.className = 'box-top';
       Game.renderUserGames(user.id);
-    }, 500);
+    }, 500);    
+
+    window.setTimeout(() => {
+      window.boxes.innerHTML += `<br><br>`;
+      App.renderMiddleBox('favorites_list', 'Favorite categories:');
+      window.box_favorites_list.className = 'box-top';
+      if (user.favorites.length != 0) {
+        Category.all = [];
+
+        fetch('http://localhost:3000/api/v1/categories')
+        .then(response => response.json())
+        .then(categories => {
+          categories.data.forEach(category => {
+            let cat = new Category(category, category.attributes);
+            if (user.favorites.includes(Number(cat.id))) {
+              App.renderMiddleBox(cat.id, cat.name);
+              let boxId = `box_${cat.id}`;
+              document.getElementById(boxId).addEventListener('click', e => Game.renderGames(cat.id));
+            }
+          });
+        });
+      } else {
+        App.renderMiddleBox('no_favorites', 'No favorites yet.');
+      }
+    }, 750);    
+
   }
 
   // EDIT
@@ -371,9 +400,34 @@ class User {
       .then(App.renderHome())
       .catch(error => console.error('Error:', error));
   }
+
+  //FAVORITE
+  static addFavorite(currentUserId, categoryId) {
+    const bodyData = {"user": {"id": User.currentUserId, "favorite_category_id": categoryId}};
+
+    fetch(`http://localhost:3000/api/v1/favorite`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+        },
+      body: JSON.stringify(bodyData)
+      })
+      .then(response => {
+        if(response.ok) {
+          Game.renderFavorite();
+        } else {
+          response.json()
+          .then(errors => {
+            errors.errors.forEach(error => {
+              window.alert(error);
+            });
+          });
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
 }
 
 User.all = [];
 User.currentUserId = '';
-
-module.exports = User;
