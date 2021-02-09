@@ -1,4 +1,4 @@
-# Trivia Trader [IN PROGRESS]
+# Trivia Trader
 
 This is the frontend for Trivia Trader. See a more extensive README at <https://github.com/ronsala/trivia-trader-backend>.
 
